@@ -1,0 +1,20 @@
+name: NikocraftServer
+version: ${project.version}
+main: de.nikocraft.nikocraftserver.Main
+api-version: 1.17
+authors: [ Nikocraft ]
+description: The Main Plugin of the Nikocraft Minecraft Server.
+prefix: Server Main Plugin
+commands:
+  permission:
+    aliases: [ perm ]
+    description: "Permission control [ADMIN]"
+    usage: "Type '/permission help' for help!"
+    permission: server.command.permission
+    permission-message: "§cYou haven't the permission to control permissions!"
+  enderchest:
+    aliases: [ ec ]
+    description: "Open the enderchest [DEFAULT]"
+    usage: "COMING SOON"
+    permission: server.enderchest.own
+    permission-message: "§cYou haven't the permission to own a enderchest!"

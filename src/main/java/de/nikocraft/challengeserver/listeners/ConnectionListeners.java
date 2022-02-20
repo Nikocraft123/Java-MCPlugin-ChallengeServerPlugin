@@ -1,0 +1,73 @@
+//PACKAGE
+package de.nikocraft.nikocraftserver.listeners;
+
+
+//IMPORTS
+import de.nikocraft.nikocraftserver.Main;
+import de.nikocraft.nikocraftserver.permissions.CustomPermissibleBase;
+import de.nikocraft.nikocraftserver.tablists.TablistManager;
+import org.bukkit.ChatColor;
+import org.bukkit.craftbukkit.v1_18_R1.entity.CraftHumanEntity;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import java.lang.reflect.Field;
+
+
+//CONNECTION LISTENER CLASS
+public class ConnectionListeners implements Listener {
+
+    //EVENT HANDLER METHODS
+
+    //Called, if a player logged in the server
+    @EventHandler
+    public void onLogin(PlayerLoginEvent event) {
+
+        try {
+            //Try to set the permissible base of the player to the custom permissible base
+            Field field = CraftHumanEntity.class.getDeclaredField("perm");
+            field.setAccessible(true);
+            field.set(event.getPlayer(), new CustomPermissibleBase(event.getPlayer()));
+            field.setAccessible(false);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            //Catch Error
+            e.printStackTrace();
+        }
+
+        //Load the rank of the player
+        Main.getInstance().getPermissionManager().getPlayerRank(event.getPlayer());
+
+    }
+
+    //Called, if a player joined
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+
+        //Send welcome message to player
+        event.getPlayer().sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD + ChatColor.UNDERLINE + "Welcome on the Nikocraft Server!" +
+                ChatColor.GREEN + ChatColor.ITALIC + " " + event.getPlayer().getName() + "\n \n" + ChatColor.DARK_PURPLE +
+                "To get help, type '/info'!\nGood fun!\n ");
+
+        //Set join message
+        event.setJoinMessage(ChatColor.GRAY + ">> " + ChatColor.DARK_GREEN + ChatColor.BOLD + event.getPlayer().getName() +
+                ChatColor.RESET + ChatColor.GRAY + " joined the server!");
+
+        //Set the tablist of the player
+        TablistManager.setTablistHeaderFooter(event.getPlayer());
+        TablistManager.setAllPlayerTeams();
+
+    }
+
+    //Called, if a player quited
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+
+        //Set quit message
+        event.setQuitMessage(ChatColor.GRAY + "<< " + ChatColor.DARK_RED + ChatColor.BOLD + event.getPlayer().getName() +
+                ChatColor.RESET + ChatColor.GRAY + " left the server!");
+
+    }
+
+}

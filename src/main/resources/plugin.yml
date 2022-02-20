@@ -1,10 +1,10 @@
-name: NikocraftServer
+name: ChallengeServer
 version: ${project.version}
-main: de.nikocraft.nikocraftserver.Main
-api-version: 1.17
+main: de.nikocraft.challengeserver.Main
+api-version: 1.18
 authors: [ Nikocraft ]
-description: The Main Plugin of the Nikocraft Minecraft Server.
-prefix: Server Main Plugin
+description: The main plugin of the challenge minecraft server
+prefix: Challenge Server Plugin
 commands:
   permission:
     aliases: [ perm ]

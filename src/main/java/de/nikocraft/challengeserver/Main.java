@@ -55,7 +55,7 @@ public final class Main extends JavaPlugin {
         instance = this;
 
         //Load configurations
-        System.out.println(getPrefix() + "Load configurations ...");
+        getLogger().info(getPrefix() + "Load configurations ...");
         String configPath = "./configs/";
         mainConfig = new Config(configPath, "MainConfig.yml");
         permissionConfig = new Config(configPath, "PermissionConfig.yml");
@@ -63,7 +63,7 @@ public final class Main extends JavaPlugin {
         inventoryConfig = new Config(configPath, "InventoryConfig.yml");
 
         //Send info
-        System.out.println(getPrefix() + "Plugin loaded.");
+        getLogger().info(getPrefix() + "Plugin loaded.");
 
     }
 
@@ -72,29 +72,29 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
 
         //Register listeners
-        System.out.println(getPrefix() + "Register listeners ...");
+        getLogger().info(getPrefix() + "Register listeners ...");
         Bukkit.getPluginManager().registerEvents(new ConnectionListeners(), this);
 
         //Register commands
-        System.out.println(getPrefix() + "Register commands ...");
+        getLogger().info(getPrefix() + "Register commands ...");
         getCommand("permission").setExecutor(new PermissionCommand());
         getCommand("enderchest").setExecutor(new EnderchestCommand());
 
         //Define the permission manager
-        System.out.println(getPrefix() + "Load permission system ...");
+        getLogger().info(getPrefix() + "Load permission system ...");
         permissionManager = new PermissionManager();
 
         //Define the enderchest manager
-        System.out.println(getPrefix() + "Load enderchests ...");
+        getLogger().info(getPrefix() + "Load enderchests ...");
         enderchestManager = new EnderchestManager();
 
         //Update all tablist [Only for reload]
-        System.out.println(getPrefix() + "Load all tablist ...");
+        getLogger().info(getPrefix() + "Load all tablist ...");
         TablistManager.setAllPlayerTeams();
         for (Player player : Bukkit.getOnlinePlayers()) TablistManager.setTablistHeaderFooter(player);
 
         //Send info
-        System.out.println(getPrefix() + "Plugin enabled.");
+        getLogger().info(getPrefix() + "Plugin enabled.");
 
     }
 
@@ -103,18 +103,18 @@ public final class Main extends JavaPlugin {
     public void onDisable() {
 
         //Save all enderchests
-        System.out.println(getPrefix() + "Save enderchests ...");
+        getLogger().info(getPrefix() + "Save enderchests ...");
         enderchestManager.save();
 
         //Save configurations
-        System.out.println(getPrefix() + "Save configurations ...");
+        getLogger().info(getPrefix() + "Save configurations ...");
         mainConfig.save();
         permissionConfig.save();
         worldConfig.save();
         inventoryConfig.save();
 
         //Send info
-        System.out.println(getPrefix() + "Plugin disabled.");
+        getLogger().info(getPrefix() + "Plugin disabled.");
 
     }
 
@@ -136,7 +136,7 @@ public final class Main extends JavaPlugin {
     public static Main getInstance() { return instance; }
 
     //The plugin prefix
-    public static String getPrefix() { return prefix; }
+    public static String getPrefix() { return ""; }
 
     //The permission manager of the permission system
     public PermissionManager getPermissionManager() { return permissionManager; }

@@ -11,7 +11,7 @@
 
     <name>ChallengeServer</name>
 
-    <description>The main plugin of the challenge minecraft server.</description>
+    <description>The main plugin of the challenge minecraft server</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

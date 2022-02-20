@@ -1,10 +1,10 @@
 //PACKAGE
-package de.nikocraft.nikocraftserver.inventories.enderchests;
+package de.nikocraft.challengeserver.inventories.enderchests;
 
 
 //IMPORTS
-import de.nikocraft.nikocraftserver.inventories.InventoryBuilder;
-import de.nikocraft.nikocraftserver.utils.Base64Utils;
+import de.nikocraft.challengeserver.inventories.InventoryBuilder;
+import de.nikocraft.challengeserver.utils.Base64Utils;
 import org.bukkit.ChatColor;
 import java.io.IOException;
 import java.util.UUID;

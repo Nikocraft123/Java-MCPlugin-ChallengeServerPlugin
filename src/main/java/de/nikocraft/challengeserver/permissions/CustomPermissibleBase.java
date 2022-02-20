@@ -1,9 +1,9 @@
 //PACKAGE
-package de.nikocraft.nikocraftserver.permissions;
+package de.nikocraft.challengeserver.permissions;
 
 
 //IMPORTS
-import de.nikocraft.nikocraftserver.Main;
+import de.nikocraft.challengeserver.Main;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissibleBase;
 import java.util.ArrayList;

@@ -1,10 +1,10 @@
 //PACKAGE
-package de.nikocraft.nikocraftserver.inventories.enderchests;
+package de.nikocraft.challengeserver.inventories.enderchests;
 
 
 //IMPORTS
-import de.nikocraft.nikocraftserver.Main;
-import de.nikocraft.nikocraftserver.utils.Config;
+import de.nikocraft.challengeserver.Main;
+import de.nikocraft.challengeserver.utils.Config;
 import java.io.IOException;
 import java.util.*;
 

@@ -1,10 +1,10 @@
 //PACKAGE
-package de.nikocraft.nikocraftserver.tablists;
+package de.nikocraft.challengeserver.tablists;
 
 
 //IMPORTS
-import de.nikocraft.nikocraftserver.Main;
-import de.nikocraft.nikocraftserver.permissions.Rank;
+import de.nikocraft.challengeserver.Main;
+import de.nikocraft.challengeserver.permissions.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -22,9 +22,9 @@ public class TablistManager {
 
         //Set the header of the tablist
         player.setPlayerListHeader(ChatColor.DARK_GRAY.toString() + ChatColor.STRIKETHROUGH + "            " + ChatColor.GRAY +
-                " [ " + ChatColor.GOLD + ChatColor.BOLD + "NIKOCRAFT SERVER" + ChatColor.GRAY + " ] " + ChatColor.DARK_GRAY +
+                " [ " + ChatColor.GOLD + ChatColor.BOLD + "CHALLENGE SERVER" + ChatColor.GRAY + " ] " + ChatColor.DARK_GRAY +
                 ChatColor.STRIKETHROUGH + "            " +
-                ChatColor.RED + ChatColor.BOLD + "\n" + "!Vorsicht BETA Server!" + "\n");
+                ChatColor.RED + ChatColor.BOLD + "\n" + "!Vorsicht ALPHA Server!" + "\n");
 
         //Set the footer of the tablist
         player.setPlayerListFooter("\n" + ChatColor.DARK_GRAY.toString() + ChatColor.STRIKETHROUGH + "            " + ChatColor.GRAY +

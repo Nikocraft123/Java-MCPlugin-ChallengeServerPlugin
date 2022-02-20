@@ -1,5 +1,5 @@
 //PACKAGE
-package de.nikocraft.nikocraftserver.utils;
+package de.nikocraft.challengeserver.utils;
 
 
 //IMPORTS

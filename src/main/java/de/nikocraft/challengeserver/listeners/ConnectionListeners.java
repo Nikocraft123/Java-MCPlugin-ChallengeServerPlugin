@@ -1,11 +1,11 @@
 //PACKAGE
-package de.nikocraft.nikocraftserver.listeners;
+package de.nikocraft.challengeserver.listeners;
 
 
 //IMPORTS
-import de.nikocraft.nikocraftserver.Main;
-import de.nikocraft.nikocraftserver.permissions.CustomPermissibleBase;
-import de.nikocraft.nikocraftserver.tablists.TablistManager;
+import de.nikocraft.challengeserver.Main;
+import de.nikocraft.challengeserver.permissions.CustomPermissibleBase;
+import de.nikocraft.challengeserver.tablists.TablistManager;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftHumanEntity;
 import org.bukkit.event.EventHandler;

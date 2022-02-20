@@ -1,11 +1,10 @@
 //PACKAGE
-package de.nikocraft.nikocraftserver.commands;
+package de.nikocraft.challengeserver.commands;
 
 //IMPORTS
-import de.nikocraft.nikocraftserver.Main;
-import de.nikocraft.nikocraftserver.inventories.enderchests.Enderchest;
-import de.nikocraft.nikocraftserver.utils.CommandUtils;
-import org.bukkit.ChatColor;
+import de.nikocraft.challengeserver.Main;
+import de.nikocraft.challengeserver.inventories.enderchests.Enderchest;
+import de.nikocraft.challengeserver.utils.CommandUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

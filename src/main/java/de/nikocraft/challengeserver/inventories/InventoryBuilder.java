@@ -1,9 +1,9 @@
 //PACKAGE
-package de.nikocraft.nikocraftserver.inventories;
+package de.nikocraft.challengeserver.inventories;
 
 
 //IMPORTS
-import de.nikocraft.nikocraftserver.utils.Base64Utils;
+import de.nikocraft.challengeserver.utils.Base64Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;

@@ -1,11 +1,11 @@
 //PACKAGE
-package de.nikocraft.nikocraftserver.permissions;
+package de.nikocraft.challengeserver.permissions;
 
 
 //IMPORTS
-import de.nikocraft.nikocraftserver.Main;
-import de.nikocraft.nikocraftserver.tablists.TablistManager;
-import de.nikocraft.nikocraftserver.utils.Config;
+import de.nikocraft.challengeserver.Main;
+import de.nikocraft.challengeserver.tablists.TablistManager;
+import de.nikocraft.challengeserver.utils.Config;
 import org.bukkit.entity.Player;
 import java.util.ArrayList;
 

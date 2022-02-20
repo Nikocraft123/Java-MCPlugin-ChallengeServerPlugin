@@ -1,15 +1,15 @@
 //PACKAGE
-package de.nikocraft.nikocraftserver;
+package de.nikocraft.challengeserver;
 
 
 //IMPORTS
-import de.nikocraft.nikocraftserver.commands.EnderchestCommand;
-import de.nikocraft.nikocraftserver.commands.PermissionCommand;
-import de.nikocraft.nikocraftserver.inventories.enderchests.EnderchestManager;
-import de.nikocraft.nikocraftserver.listeners.ConnectionListeners;
-import de.nikocraft.nikocraftserver.tablists.TablistManager;
-import de.nikocraft.nikocraftserver.utils.Config;
-import de.nikocraft.nikocraftserver.permissions.PermissionManager;
+import de.nikocraft.challengeserver.commands.EnderchestCommand;
+import de.nikocraft.challengeserver.commands.PermissionCommand;
+import de.nikocraft.challengeserver.inventories.enderchests.EnderchestManager;
+import de.nikocraft.challengeserver.listeners.ConnectionListeners;
+import de.nikocraft.challengeserver.tablists.TablistManager;
+import de.nikocraft.challengeserver.utils.Config;
+import de.nikocraft.challengeserver.permissions.PermissionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,7 +24,7 @@ public final class Main extends JavaPlugin {
     private static Main instance;
 
     //The plugin prefix
-    private static final String prefix = "[Server Main Plugin] ";
+    private static final String prefix = "[Challenge Server Plugin] ";
 
     //The permission manager of the permission system
     private PermissionManager permissionManager;

@@ -1,5 +1,5 @@
 //PACKAGE
-package de.nikocraft.nikocraftserver.permissions;
+package de.nikocraft.challengeserver.permissions;
 
 
 //IMPORTS

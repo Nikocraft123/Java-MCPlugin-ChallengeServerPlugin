@@ -1,11 +1,11 @@
 //PACKAGE
-package de.nikocraft.nikocraftserver.commands;
+package de.nikocraft.challengeserver.commands;
 
 
 //IMPORTS
-import de.nikocraft.nikocraftserver.Main;
-import de.nikocraft.nikocraftserver.permissions.Rank;
-import de.nikocraft.nikocraftserver.utils.CommandUtils;
+import de.nikocraft.challengeserver.Main;
+import de.nikocraft.challengeserver.permissions.Rank;
+import de.nikocraft.challengeserver.utils.CommandUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

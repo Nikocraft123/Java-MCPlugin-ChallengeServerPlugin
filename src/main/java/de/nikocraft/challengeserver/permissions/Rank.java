@@ -53,7 +53,7 @@ public enum Rank {
             //Try to convert the input to an integer
             int intInput = Integer.parseInt(input);
 
-            //Than return the value from the from ID method
+            //Then return the value from the from ID method
             return fromRankId(intInput);
         }
         catch (NumberFormatException ignored) {}

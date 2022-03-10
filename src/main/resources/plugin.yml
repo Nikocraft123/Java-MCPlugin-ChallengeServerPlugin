@@ -15,6 +15,6 @@ commands:
   enderchest:
     aliases: [ ec ]
     description: "Open the enderchest [DEFAULT]"
-    usage: "COMING SOON"
+    usage: "Type '/enderchest help' for help!"
     permission: server.enderchest.own
     permission-message: "§cYou haven't the permission to own a enderchest!"

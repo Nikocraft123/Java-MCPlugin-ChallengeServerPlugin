@@ -92,7 +92,7 @@ public class EnderchestManager {
 
     }
 
-    //Get a enderchest of a player from UUID
+    //Get an enderchest of a player from UUID
     public Enderchest getEnderchest(UUID uuid) {
 
         //If the enderchest found, return it
@@ -109,7 +109,7 @@ public class EnderchestManager {
 
     }
 
-    //Set a enderchest of a player
+    //Set an enderchest of a player
     public void setEnderchest(UUID uuid, Enderchest enderchest) {
 
         //Put the enderchest into the enderchest map

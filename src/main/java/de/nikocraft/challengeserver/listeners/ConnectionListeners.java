@@ -7,7 +7,7 @@ import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.permissions.CustomPermissibleBase;
 import de.nikocraft.challengeserver.tablists.TablistManager;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_18_R1.entity.CraftHumanEntity;
+import org.bukkit.craftbukkit.v1_18_R2.entity.CraftHumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -46,7 +46,7 @@ public class ConnectionListeners implements Listener {
     public void onJoin(PlayerJoinEvent event) {
 
         //Send welcome message to player
-        event.getPlayer().sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD + ChatColor.UNDERLINE + "Welcome on the Nikocraft Server!" +
+        event.getPlayer().sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD + ChatColor.UNDERLINE + "Welcome on the Challenge Server!" +
                 ChatColor.GREEN + ChatColor.ITALIC + " " + event.getPlayer().getName() + "\n \n" + ChatColor.DARK_PURPLE +
                 "To get help, type '/info'!\nGood fun!\n ");
 

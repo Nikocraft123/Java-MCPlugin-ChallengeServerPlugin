@@ -58,7 +58,7 @@ public class PermissionManager {
 
     }
 
-    //Add a extra permission to a player
+    //Add an extra permission to a player
     public boolean addPlayerExtraPermission(Player player, String permission) {
 
         //If the permission already contains, return false
@@ -81,7 +81,7 @@ public class PermissionManager {
 
     }
 
-    //Remove a extra permission to a player
+    //Remove an extra permission to a player
     public boolean removePlayerExtraPermission(Player player, String permission) {
 
         //If the permission doesn't contains, return false

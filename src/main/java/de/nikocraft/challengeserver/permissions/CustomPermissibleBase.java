@@ -45,11 +45,11 @@ public class CustomPermissibleBase extends PermissibleBase {
         //If the extra permission list contains not permission, return false
         if (extraPermissions.contains("!" + permission)) return false;
 
-        //If the rank not contains the permission, return false
-        if (Main.getInstance().getPermissionManager().getRankPermissions(rank).contains("!" + permission)) return false;
-
         //If the extra permission list contains permission, return true
         if (extraPermissions.contains(permission)) return true;
+
+        //If the rank not contains the permission, return false
+        if (Main.getInstance().getPermissionManager().getRankPermissions(rank).contains("!" + permission)) return false;
 
         //If the rank contains the permission, return true
         if (Main.getInstance().getPermissionManager().getRankPermissions(rank).contains(permission)) return true;

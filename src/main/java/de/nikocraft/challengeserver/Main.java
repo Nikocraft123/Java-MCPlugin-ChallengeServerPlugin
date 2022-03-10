@@ -6,8 +6,10 @@ package de.nikocraft.challengeserver;
 import de.nikocraft.challengeserver.commands.EnderchestCommand;
 import de.nikocraft.challengeserver.commands.PermissionCommand;
 import de.nikocraft.challengeserver.inventories.enderchests.EnderchestManager;
+import de.nikocraft.challengeserver.listeners.ChatListeners;
 import de.nikocraft.challengeserver.listeners.ConnectionListeners;
 import de.nikocraft.challengeserver.tablists.TablistManager;
+import de.nikocraft.challengeserver.timers.Timer;
 import de.nikocraft.challengeserver.utils.Config;
 import de.nikocraft.challengeserver.permissions.PermissionManager;
 import org.bukkit.Bukkit;
@@ -31,6 +33,9 @@ public final class Main extends JavaPlugin {
 
     //The enderchest manager of all player enderchests
     private EnderchestManager enderchestManager;
+
+    //The timer
+    private Timer timer;
 
     //The main configuration of the plugin
     private Config mainConfig;
@@ -74,6 +79,7 @@ public final class Main extends JavaPlugin {
         //Register listeners
         getLogger().info(getPrefix() + "Register listeners ...");
         Bukkit.getPluginManager().registerEvents(new ConnectionListeners(), this);
+        Bukkit.getPluginManager().registerEvents(new ChatListeners(), this);
 
         //Register commands
         getLogger().info(getPrefix() + "Register commands ...");
@@ -87,6 +93,10 @@ public final class Main extends JavaPlugin {
         //Define the enderchest manager
         getLogger().info(getPrefix() + "Load enderchests ...");
         enderchestManager = new EnderchestManager();
+
+        //Define the timer
+        getLogger().info(getPrefix() + "Load timer ...");
+        timer = new Timer();
 
         //Update all tablist [Only for reload]
         getLogger().info(getPrefix() + "Load all tablist ...");
@@ -105,6 +115,10 @@ public final class Main extends JavaPlugin {
         //Save all enderchests
         getLogger().info(getPrefix() + "Save enderchests ...");
         enderchestManager.save();
+
+        //Save the timer
+        getLogger().info(getPrefix() + "Save timer ...");
+        timer.save();
 
         //Save configurations
         getLogger().info(getPrefix() + "Save configurations ...");
@@ -143,6 +157,9 @@ public final class Main extends JavaPlugin {
 
     //The enderchest manager of all player enderchests
     public EnderchestManager getEnderchestManager() { return enderchestManager; }
+
+    //The timer
+    public Timer getTimer() { return timer; }
 
     //The main configuration of the plugin
     public Config getMainConfig() { return mainConfig; }

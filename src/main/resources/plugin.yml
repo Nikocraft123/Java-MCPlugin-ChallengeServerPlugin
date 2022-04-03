@@ -2,6 +2,7 @@ name: ChallengeServer
 version: ${project.version}
 main: de.nikocraft.challengeserver.Main
 api-version: 1.18
+load: STARTUP
 authors: [ Nikocraft ]
 description: The main plugin of the challenge minecraft server
 prefix: Challenge Server Plugin
@@ -10,7 +11,7 @@ commands:
     aliases: [ perm ]
     description: "Permission control [ADMIN]"
     usage: "Type '/permission help' for help!"
-    permission: server.command.permission
+    permission: server.permission.control
     permission-message: "§cYou haven't the permission to control permissions!"
   enderchest:
     aliases: [ ec ]
@@ -18,3 +19,13 @@ commands:
     usage: "Type '/enderchest help' for help!"
     permission: server.enderchest.own
     permission-message: "§cYou haven't the permission to own a enderchest!"
+  timer:
+    aliases: [ tm ]
+    description: "Timer control [DEFAULT]"
+    usage: "Type '/timer help' for help!"
+    permission: server.timer.control
+    permission-message: "§cYou haven't the permission to control the timer!"
+  world:
+    aliases: [ wd ]
+    description: "World teleport and reset [DEFAULT/ADMIN]"
+    usage: "Type '/world help' for help!"

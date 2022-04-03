@@ -6,7 +6,9 @@ package de.nikocraft.challengeserver.listeners;
 import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.permissions.CustomPermissibleBase;
 import de.nikocraft.challengeserver.tablists.TablistManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_18_R2.entity.CraftHumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -45,6 +47,9 @@ public class ConnectionListeners implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
 
+        //Teleport the player to lobby
+        event.getPlayer().teleport(new Location(Bukkit.getWorld("lobby"), 0, 0, 0));
+
         //Send welcome message to player
         event.getPlayer().sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD + ChatColor.UNDERLINE + "Welcome on the Challenge Server!" +
                 ChatColor.GREEN + ChatColor.ITALIC + " " + event.getPlayer().getName() + "\n \n" + ChatColor.DARK_PURPLE +
@@ -63,6 +68,14 @@ public class ConnectionListeners implements Listener {
     //Called, if a player quited
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
+
+        //Check if the player is in the game world
+        if (event.getPlayer().getLocation().getWorld().getName().equals("world")) {
+
+            //Save the player position
+            Main.getInstance().getWorldManager().setPlayerPosition(event.getPlayer());
+
+        }
 
         //Set quit message
         event.setQuitMessage(ChatColor.GRAY + "<< " + ChatColor.DARK_RED + ChatColor.BOLD + event.getPlayer().getName() +

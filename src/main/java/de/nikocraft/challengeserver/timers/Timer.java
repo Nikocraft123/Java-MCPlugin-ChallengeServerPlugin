@@ -5,8 +5,12 @@ package de.nikocraft.challengeserver.timers;
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.utils.Config;
+import de.nikocraft.challengeserver.utils.MathUtils;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 
 //TIMER CLASS
@@ -45,6 +49,9 @@ public class Timer {
         if (config.getConfig().contains("timer.defaultTime")) defaultTime = config.getConfig().getInt("timer.defaultTime"); else defaultTime = 0;
         if (config.getConfig().contains("timer.mode")) mode = config.getConfig().getString("timer.mode"); else mode = "stop";
 
+        //Run the timer
+        run();
+
     }
 
 
@@ -74,35 +81,50 @@ public class Timer {
             @Override
             public void run() {
 
-                //Return, if the timer is not running, return
-                if (!isRunning()) return;
+                //If the timer is not running, return
+                if (isRunning()) {
 
-                //If the mode "stop":
-                if (getMode().equals("stop")) {
-                    //Time + 1
-                    setTime(getTime() + 1);
-                }
-                //If the mode "count":
-                if (getMode().equals("count")) {
-                    //Time - 1
-                    setTime(getTime() - 1);
-
-                    //If the timer run off:
-                    if (getTime() == 0) {
-
-                        //Send message
-                        Bukkit.broadcastMessage(getChatPrefix() + ChatColor.YELLOW +
-                                ChatColor.UNDERLINE + "The timer run off!");
-
-                        //Call timer reset
-                        TimerReset();
-
+                    //If the mode "stop":
+                    if (getMode().equals("stop")) {
+                        //Time + 1
+                        setTime(getTime() + 1);
                     }
+
+                    //If the mode "count":
+                    if (getMode().equals("count")) {
+
+                        //Time - 1
+                        setTime(getTime() - 1);
+
+                        //If the timer run off:
+                        if (getTime() <= 0) {
+
+                            //Send message
+                            Bukkit.broadcastMessage(getChatPrefix() + ChatColor.YELLOW +
+                                    ChatColor.UNDERLINE + "The timer run off!");
+
+                            //Call timer reset
+                            TimerReset();
+
+                        }
+                    }
+
+                }
+
+                //Format time
+                String formattedTime = MathUtils.convertSecondsToFormattedTime(getTime(), true);
+
+                //Update actionbars
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    if (isRunning()) player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY +
+                            "« " + formattedTime + ChatColor.GRAY + " »"));
+                    else player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "« " +
+                            formattedTime + ChatColor.GREEN + ChatColor.ITALIC + " paused" + ChatColor.GRAY + " »"));
                 }
 
             }
 
-        }, 1, 1);
+        }, 20, 20);
 
     }
 

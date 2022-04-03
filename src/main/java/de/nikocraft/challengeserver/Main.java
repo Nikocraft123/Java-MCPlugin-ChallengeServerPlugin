@@ -5,6 +5,8 @@ package de.nikocraft.challengeserver;
 //IMPORTS
 import de.nikocraft.challengeserver.commands.EnderchestCommand;
 import de.nikocraft.challengeserver.commands.PermissionCommand;
+import de.nikocraft.challengeserver.commands.TimerCommand;
+import de.nikocraft.challengeserver.commands.WorldCommand;
 import de.nikocraft.challengeserver.inventories.enderchests.EnderchestManager;
 import de.nikocraft.challengeserver.listeners.ChatListeners;
 import de.nikocraft.challengeserver.listeners.ConnectionListeners;
@@ -12,7 +14,11 @@ import de.nikocraft.challengeserver.tablists.TablistManager;
 import de.nikocraft.challengeserver.timers.Timer;
 import de.nikocraft.challengeserver.utils.Config;
 import de.nikocraft.challengeserver.permissions.PermissionManager;
+import de.nikocraft.challengeserver.worlds.WorldManager;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.WorldCreator;
+import org.bukkit.WorldType;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -33,6 +39,9 @@ public final class Main extends JavaPlugin {
 
     //The enderchest manager of all player enderchests
     private EnderchestManager enderchestManager;
+
+    //The world manager of the game world
+    private WorldManager worldManager;
 
     //The timer
     private Timer timer;
@@ -58,6 +67,9 @@ public final class Main extends JavaPlugin {
 
         //Set the instance to this
         instance = this;
+
+        //Load the lobby world
+        Bukkit.createWorld(new WorldCreator("lobby"));
 
         //Load configurations
         getLogger().info(getPrefix() + "Load configurations ...");
@@ -85,6 +97,8 @@ public final class Main extends JavaPlugin {
         getLogger().info(getPrefix() + "Register commands ...");
         getCommand("permission").setExecutor(new PermissionCommand());
         getCommand("enderchest").setExecutor(new EnderchestCommand());
+        getCommand("timer").setExecutor(new TimerCommand());
+        getCommand("world").setExecutor(new WorldCommand());
 
         //Define the permission manager
         getLogger().info(getPrefix() + "Load permission system ...");
@@ -92,6 +106,10 @@ public final class Main extends JavaPlugin {
 
         //Define the enderchest manager
         getLogger().info(getPrefix() + "Load enderchests ...");
+        enderchestManager = new EnderchestManager();
+
+        //Define the world manager
+        getLogger().info(getPrefix() + "Load world manager ...");
         enderchestManager = new EnderchestManager();
 
         //Define the timer
@@ -115,6 +133,10 @@ public final class Main extends JavaPlugin {
         //Save all enderchests
         getLogger().info(getPrefix() + "Save enderchests ...");
         enderchestManager.save();
+
+        //Save all positions off the players
+        getLogger().info(getPrefix() + "Save game world ...");
+        worldManager.save();
 
         //Save the timer
         getLogger().info(getPrefix() + "Save timer ...");
@@ -157,6 +179,9 @@ public final class Main extends JavaPlugin {
 
     //The enderchest manager of all player enderchests
     public EnderchestManager getEnderchestManager() { return enderchestManager; }
+
+    //The world manager of the game world
+    public WorldManager getWorldManager() { return worldManager; }
 
     //The timer
     public Timer getTimer() { return timer; }

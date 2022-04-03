@@ -84,7 +84,7 @@ public class PermissionManager {
     //Remove an extra permission to a player
     public boolean removePlayerExtraPermission(Player player, String permission) {
 
-        //If the permission doesn't contains, return false
+        //If the permission doesn't contain, return false
         if (!getPlayerExtraPermissions(player).contains(permission)) return false;
 
         //Get player permission list

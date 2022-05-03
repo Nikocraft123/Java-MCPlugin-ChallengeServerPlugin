@@ -4,7 +4,6 @@ package de.nikocraft.challengeserver.commands;
 
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
-import de.nikocraft.challengeserver.inventories.enderchests.Enderchest;
 import de.nikocraft.challengeserver.utils.CommandUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,6 +15,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -49,6 +49,24 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
             case "reset":
             case "r":
 
+                //Check resetting
+                if (Main.getInstance().getWorldManager().isResetting()) {
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Already resetting!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Already resetting!");
+
+                    //Return true
+                    return true;
+                }
+
+                //Get the seed
+                String seed = null;
+                if (args.length >= 2) seed = args[1];
+
+                //Reset the world
+                Main.getInstance().getWorldManager().resetWorld(seed);
+
+                //Return true
                 return true;
 
             case "lobby":
@@ -66,11 +84,16 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                 //Get the player from the sender
                 Player player = (Player) sender;
 
-                //Save the player position
-                Main.getInstance().getWorldManager().setPlayerPosition(player);
+                //Check if the player is in the game world
+                if (Arrays.asList("world", "world_nether", "world_the_end").contains(player.getLocation().getWorld().getName())) {
+
+                    //Save the player position
+                    Main.getInstance().getWorldManager().setPlayerPosition(player);
+
+                }
 
                 //Teleport the player to lobby
-                player.teleport(new Location(Bukkit.getWorld("lobby"), 0, 0, 0));
+                Main.getInstance().getMultiverseCore().teleportPlayer(player, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
 
                 //Send message to sender
                 sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "You successfully teleported to lobby world!");
@@ -91,11 +114,21 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                     return false;
                 }
 
+
+                //If the game world is resetting
+                if (Main.getInstance().getWorldManager().isResetting()) {
+                    //Send message to sender
+                    sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Cannot join game world because it is resetting!");
+
+                    //Return true
+                    return true;
+                }
+
                 //Get the player from the sender
                 Player player = (Player) sender;
 
                 //Teleport the player to game world player position
-                player.teleport(Main.getInstance().getWorldManager().getPlayerPosition(player));
+                Main.getInstance().getMultiverseCore().teleportPlayer(player, player, Main.getInstance().getWorldManager().getPlayerPosition(player));
 
                 //Send message to sender
                 sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "You successfully teleported to game world!");

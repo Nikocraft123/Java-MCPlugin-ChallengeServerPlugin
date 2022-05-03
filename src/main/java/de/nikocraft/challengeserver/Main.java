@@ -3,6 +3,8 @@ package de.nikocraft.challengeserver;
 
 
 //IMPORTS
+import com.onarandombox.MultiverseCore.MultiverseCore;
+import com.onarandombox.multiverseinventories.MultiverseInventories;
 import de.nikocraft.challengeserver.commands.EnderchestCommand;
 import de.nikocraft.challengeserver.commands.PermissionCommand;
 import de.nikocraft.challengeserver.commands.TimerCommand;
@@ -58,6 +60,10 @@ public final class Main extends JavaPlugin {
     //The inventory configuration
     private Config inventoryConfig;
 
+    //The multiverse api
+    private MultiverseCore multiverseCore;
+    private MultiverseInventories multiverseInventories;
+
 
     //OVERRIDE METHODS
 
@@ -67,9 +73,6 @@ public final class Main extends JavaPlugin {
 
         //Set the instance to this
         instance = this;
-
-        //Load the lobby world
-        Bukkit.createWorld(new WorldCreator("lobby"));
 
         //Load configurations
         getLogger().info(getPrefix() + "Load configurations ...");
@@ -87,6 +90,13 @@ public final class Main extends JavaPlugin {
     //Called, if the plugin is enabling
     @Override
     public void onEnable() {
+
+        //Load the multiverse api
+        multiverseCore = (MultiverseCore) Bukkit.getPluginManager().getPlugin("Multiverse-Core");
+        multiverseInventories = (MultiverseInventories) Bukkit.getPluginManager().getPlugin("Multiverse-Inventories");
+
+        //Load the lobby world
+        Bukkit.createWorld(new WorldCreator("lobby"));
 
         //Register listeners
         getLogger().info(getPrefix() + "Register listeners ...");
@@ -110,7 +120,7 @@ public final class Main extends JavaPlugin {
 
         //Define the world manager
         getLogger().info(getPrefix() + "Load world manager ...");
-        enderchestManager = new EnderchestManager();
+        worldManager = new WorldManager();
 
         //Define the timer
         getLogger().info(getPrefix() + "Load timer ...");
@@ -134,7 +144,7 @@ public final class Main extends JavaPlugin {
         getLogger().info(getPrefix() + "Save enderchests ...");
         enderchestManager.save();
 
-        //Save all positions off the players
+        //Save dimensions of the players
         getLogger().info(getPrefix() + "Save game world ...");
         worldManager.save();
 
@@ -197,5 +207,9 @@ public final class Main extends JavaPlugin {
 
     //The inventory configuration
     public Config getInventoryConfig() { return inventoryConfig; }
+
+    //The multiverse api
+    public MultiverseCore getMultiverseCore() { return multiverseCore; }
+    public MultiverseInventories getMultiverseInventories() { return multiverseInventories; }
 
 }

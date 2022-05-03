@@ -16,6 +16,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 
 
 //CONNECTION LISTENER CLASS
@@ -48,7 +49,7 @@ public class ConnectionListeners implements Listener {
     public void onJoin(PlayerJoinEvent event) {
 
         //Teleport the player to lobby
-        event.getPlayer().teleport(new Location(Bukkit.getWorld("lobby"), 0, 0, 0));
+        Main.getInstance().getMultiverseCore().teleportPlayer(event.getPlayer(), event.getPlayer(), new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
 
         //Send welcome message to player
         event.getPlayer().sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD + ChatColor.UNDERLINE + "Welcome on the Challenge Server!" +
@@ -70,7 +71,7 @@ public class ConnectionListeners implements Listener {
     public void onQuit(PlayerQuitEvent event) {
 
         //Check if the player is in the game world
-        if (event.getPlayer().getLocation().getWorld().getName().equals("world")) {
+        if (Arrays.asList("world", "world_nether", "world_the_end").contains(event.getPlayer().getLocation().getWorld().getName())) {
 
             //Save the player position
             Main.getInstance().getWorldManager().setPlayerPosition(event.getPlayer());

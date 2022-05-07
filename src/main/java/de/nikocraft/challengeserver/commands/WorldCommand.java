@@ -59,9 +59,19 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
 
+                //Check confirmation
+                if (args[args.length - 1] != "confirm") {
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Please confirm with 'confirm' as last argument!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Please confirm with 'confirm' as as last argument!");
+
+                    //Return false
+                    return false;
+                }
+
                 //Get the seed
                 String seed = null;
-                if (args.length >= 2) seed = args[1];
+                if (args.length > 2) seed = args[1];
 
                 //Reset the world
                 Main.getInstance().getWorldManager().resetWorld(seed);

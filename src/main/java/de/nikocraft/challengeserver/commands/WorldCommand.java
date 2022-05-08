@@ -82,69 +82,150 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
             case "lobby":
             case "l": {
 
-                //If the sender is not a player
-                if (!isPlayer) {
-                    //Send message to sender
-                    sender.sendMessage(CommandUtils.getConsolePrefix() + "You must are a player to teleport to lobby world!");
+                //Switch in the count of arguments
+                switch (args.length) {
 
-                    //Return false
-                    return false;
+                    case 1:
+
+                        //If the sender is not a player
+                        if (!isPlayer) {
+                            //Send message to sender
+                            sender.sendMessage(CommandUtils.getConsolePrefix() + "You must are a player to teleport to lobby world!");
+
+                            //Return false
+                            return false;
+                        }
+
+                        //Get the player from the sender
+                        Player player = (Player) sender;
+
+                        //Check if the player is in the game world
+                        if (Arrays.asList("world", "world_nether", "world_the_end").contains(player.getLocation().getWorld().getName())) {
+
+                            //Save the player position
+                            Main.getInstance().getWorldManager().setPlayerPosition(player);
+
+                        }
+
+                        //Teleport the player to lobby
+                        Main.getInstance().getMultiverseCore().teleportPlayer(sender, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
+
+                        //Send message to sender
+                        sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "You successfully teleported to lobby world!");
+
+                        //Return true
+                        return true;
+
+                    case 2:
+
+                        //Get the player to teleport
+                        Player target = Bukkit.getPlayer(args[1]);
+
+                        //If the targeted player doesn't found
+                        if (target == null) {
+                            //Send message to sender
+                            if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Cannot found the player " + ChatColor.ITALIC + args[1] + ChatColor.RED + "!");
+                            else sender.sendMessage(CommandUtils.getConsolePrefix() + "Cannot found the player '" + args[1] + "'!");
+
+                            //Return false
+                            return false;
+                        }
+
+                        //Check if the player is in the game world
+                        if (Arrays.asList("world", "world_nether", "world_the_end").contains(target.getLocation().getWorld().getName())) {
+
+                            //Save the player position
+                            Main.getInstance().getWorldManager().setPlayerPosition(target);
+
+                        }
+
+                        //Teleport the player to lobby
+                        Main.getInstance().getMultiverseCore().teleportPlayer(sender, target, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
+
+                        //Send message to sender
+                        if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "'" + ChatColor.ITALIC + target + ChatColor.GREEN + "' successfully teleported to lobby world!");
+                        else sender.sendMessage(CommandUtils.getConsolePrefix() + "'" + target + "' successfully teleported to lobby world!");
+
+                        //Return true
+                        return true;
+
                 }
-
-                //Get the player from the sender
-                Player player = (Player) sender;
-
-                //Check if the player is in the game world
-                if (Arrays.asList("world", "world_nether", "world_the_end").contains(player.getLocation().getWorld().getName())) {
-
-                    //Save the player position
-                    Main.getInstance().getWorldManager().setPlayerPosition(player);
-
-                }
-
-                //Teleport the player to lobby
-                Main.getInstance().getMultiverseCore().teleportPlayer(player, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
-
-                //Send message to sender
-                sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "You successfully teleported to lobby world!");
-
-                //Return true
-                return true;
 
             }
             case "game":
             case "g": {
 
-                //If the sender is not a player
-                if (!isPlayer) {
-                    //Send message to sender
-                    sender.sendMessage(CommandUtils.getConsolePrefix() + "You must are a player to teleport to game world!");
+                //Switch in the count of arguments
+                switch (args.length) {
 
-                    //Return false
-                    return false;
+                    case 1:
+
+                        //If the sender is not a player
+                        if (!isPlayer) {
+                            //Send message to sender
+                            sender.sendMessage(CommandUtils.getConsolePrefix() + "You must are a player to teleport to game world!");
+
+                            //Return false
+                            return false;
+                        }
+
+                        //If the game world is resetting
+                        if (Main.getInstance().getWorldManager().isResetting()) {
+                            //Send message to sender
+                            sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Cannot join game world because it is resetting!");
+
+                            //Return true
+                            return true;
+                        }
+
+                        //Get the player from the sender
+                        Player player = (Player) sender;
+
+                        //Teleport the player to game world player position
+                        Main.getInstance().getMultiverseCore().teleportPlayer(sender, player, Main.getInstance().getWorldManager().getPlayerPosition(player));
+
+                        //Send message to sender
+                        sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "You successfully teleported to game world!");
+
+                        //Return true
+                        return true;
+
+                    case 2:
+
+                        //If the game world is resetting
+                        if (Main.getInstance().getWorldManager().isResetting()) {
+                            //Send message to sender
+                            if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Cannot join game world because it is resetting!");
+                            else sender.sendMessage(CommandUtils.getConsolePrefix() + "Cannot join game world because it is resetting!");
+
+                            //Return true
+                            return true;
+                        }
+
+                        //Get the player to teleport
+                        Player target = Bukkit.getPlayer(args[1]);
+
+                        //If the targeted player doesn't found
+                        if (target == null) {
+                            //Send message to sender
+                            if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Cannot found the player " + ChatColor.ITALIC + args[1] + ChatColor.RED + "!");
+                            else sender.sendMessage(CommandUtils.getConsolePrefix() + "Cannot found the player '" + args[1] + "'!");
+
+                            //Return false
+                            return false;
+                        }
+
+                        //Teleport the player to game world player position
+                        Main.getInstance().getMultiverseCore().teleportPlayer(sender, target, Main.getInstance().getWorldManager().getPlayerPosition(target));
+
+                        //Send message to sender
+                        if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "'" + ChatColor.ITALIC + target + ChatColor.GREEN + "' successfully teleported to game world!");
+                        else sender.sendMessage(CommandUtils.getConsolePrefix() + "'" + target + "' successfully teleported to game world!");
+
+                        //Return true
+                        return true;
+
                 }
-
-
-                //If the game world is resetting
-                if (Main.getInstance().getWorldManager().isResetting()) {
-                    //Send message to sender
-                    sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Cannot join game world because it is resetting!");
-
-                    //Return true
-                    return true;
-                }
-
-                //Get the player from the sender
-                Player player = (Player) sender;
-
-                //Teleport the player to game world player position
-                Main.getInstance().getMultiverseCore().teleportPlayer(player, player, Main.getInstance().getWorldManager().getPlayerPosition(player));
-
-                //Send message to sender
-                sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "You successfully teleported to game world!");
-
-                //Return true
-                return true;
 
             }
             case "help":
@@ -157,16 +238,16 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                             "\n \n" + ChatColor.AQUA + "Usage" + ChatColor.GRAY + ":\n" +
                             ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world help|h\n" +
                             ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world reset|r <seed> confirm\n" +
-                            ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world lobby|l\n" +
-                            ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world game|g\n");
+                            ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world lobby|l <player>\n" +
+                            ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world game|g <player>\n");
                 }
                 else {
                     sender.sendMessage(CommandUtils.getConsolePrefix() + "Help for the command '/world':\n \nAlias: '/wd'" +
                             "\n \nUsage:\n" +
                             "- /world help|h\n" +
                             "- /world reset|r <seed> confirm\n" +
-                            "- /world lobby|l\n" +
-                            "- /world game|g\n");
+                            "- /world lobby|l <player>\n" +
+                            "- /world game|g <player>\n");
                 }
 
                 //Return true
@@ -199,6 +280,17 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
             result.add("lobby");
             result.add("game");
             result.add("help");
+        }
+
+        //If 2 arguments exist:
+        else if (args.length == 2) {
+            if (Arrays.asList("lobby", "game").contains(args[0])) {
+                //For in all online players
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    //Add the player name to result
+                    result.add(player.getName());
+                }
+            }
         }
 
         //Return the formatted result

@@ -27,5 +27,13 @@ commands:
     permission-message: "§cYou haven't the permission to control the timer!"
   world:
     aliases: [ wd ]
-    description: "World teleport and reset [DEFAULT/OPERATOR]"
+    description: "World teleport and reset [OPERATOR]"
     usage: "Type '/world help' for help!"
+    permission: server.world.control
+    permission-message: "§cYou haven't the permission to teleport players between or reset worlds!"
+  lobby:
+    description: "Teleport to lobby [DEFAULT]"
+    usage: "No arguments"
+  game:
+    description: "Teleport to game [DEFAULT]"
+    usage: "No arguments"

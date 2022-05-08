@@ -5,13 +5,11 @@ package de.nikocraft.challengeserver;
 //IMPORTS
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.multiverseinventories.MultiverseInventories;
-import de.nikocraft.challengeserver.commands.EnderchestCommand;
-import de.nikocraft.challengeserver.commands.PermissionCommand;
-import de.nikocraft.challengeserver.commands.TimerCommand;
-import de.nikocraft.challengeserver.commands.WorldCommand;
+import de.nikocraft.challengeserver.commands.*;
 import de.nikocraft.challengeserver.inventories.enderchests.EnderchestManager;
 import de.nikocraft.challengeserver.listeners.ChatListeners;
 import de.nikocraft.challengeserver.listeners.ConnectionListeners;
+import de.nikocraft.challengeserver.listeners.PlayerListeners;
 import de.nikocraft.challengeserver.tablists.TablistManager;
 import de.nikocraft.challengeserver.timers.Timer;
 import de.nikocraft.challengeserver.utils.Config;
@@ -102,6 +100,7 @@ public final class Main extends JavaPlugin {
         getLogger().info(getPrefix() + "Register listeners ...");
         Bukkit.getPluginManager().registerEvents(new ConnectionListeners(), this);
         Bukkit.getPluginManager().registerEvents(new ChatListeners(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerListeners(), this);
 
         //Register commands
         getLogger().info(getPrefix() + "Register commands ...");
@@ -109,6 +108,8 @@ public final class Main extends JavaPlugin {
         getCommand("enderchest").setExecutor(new EnderchestCommand());
         getCommand("timer").setExecutor(new TimerCommand());
         getCommand("world").setExecutor(new WorldCommand());
+        getCommand("lobby").setExecutor(new LobbyWorldCommand());
+        getCommand("game").setExecutor(new GameWorldCommand());
 
         //Define the permission manager
         getLogger().info(getPrefix() + "Load permission system ...");

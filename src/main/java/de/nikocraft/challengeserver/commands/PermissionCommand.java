@@ -239,7 +239,7 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
         //Get the targeted player
         Player target = Bukkit.getPlayer(args[1]);
 
-        //If the targeted player doesn't founded
+        //If the targeted player doesn't found
         if (target == null) {
 
             //Send message to sender

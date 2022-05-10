@@ -7,6 +7,7 @@ import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.timers.Timer;
 import de.nikocraft.challengeserver.utils.CommandUtils;
 import de.nikocraft.challengeserver.utils.MathUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -234,22 +235,41 @@ public class TimerCommand implements CommandExecutor, TabCompleter {
         //Define a result list
         ArrayList<String> result = new ArrayList<>();
 
-        //If 1 argument exist:
-        if (args.length == 1) {
-            //Add commands to the list
-            result.add("resume");
-            result.add("pause");
-            result.add("reset");
-            result.add("time");
-            result.add("mode");
-            result.add("help");
-        }
+        //Switch in the count of arguments
+        switch (args.length) {
 
-        //If 2 arguments exist and the first argument is "mode":
-        else if (args.length == 2 && args[0].equals("mode")) {
-            //Add modes to the list
-            result.add("stop");
-            result.add("count");
+            case 1:
+
+                //Add commands to the list
+                result.add("resume");
+                result.add("pause");
+                result.add("reset");
+                result.add("time");
+                result.add("mode");
+                result.add("help");
+
+            case 2:
+
+                //If the first argument is "mode"
+                if (args[0].equals("mode")) {
+                    //Add modes to the list
+                    result.add("stop");
+                    result.add("count");
+                }
+
+                //If the first argument is "time"
+                else if (args[0].equals("time")) {
+                    //Add times to the list
+                    result.add("60");
+                    result.add("600");
+                    result.add("1800");
+                    result.add("3600");
+                    result.add("7200");
+                    result.add("21600");
+                    result.add("43200");
+                    result.add("86400");
+                }
+
         }
 
         //Return the formatted result

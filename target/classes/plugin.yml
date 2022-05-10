@@ -1,5 +1,5 @@
 name: ChallengeServer
-version: ${project.version}
+version: Alpha-1.1
 main: de.nikocraft.challengeserver.Main
 api-version: 1.18
 authors: [ Nikocraft ]

@@ -60,7 +60,7 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                 }
 
                 //Check confirmation
-                if (args[args.length - 1] != "confirm") {
+                if (!args[args.length - 1].equals("confirm")) {
                     //Send message to sender
                     if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Please confirm with 'confirm' as last argument!");
                     else sender.sendMessage(CommandUtils.getConsolePrefix() + "Please confirm with 'confirm' as as last argument!");
@@ -124,7 +124,7 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                         //If the targeted player doesn't found
                         if (target == null) {
                             //Send message to sender
-                            if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Cannot found the player " + ChatColor.ITALIC + args[1] + ChatColor.RED + "!");
+                            if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Cannot found the player '" + ChatColor.ITALIC + args[1] + ChatColor.RED + "'!");
                             else sender.sendMessage(CommandUtils.getConsolePrefix() + "Cannot found the player '" + args[1] + "'!");
 
                             //Return false
@@ -181,6 +181,15 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                         //Get the player from the sender
                         Player player = (Player) sender;
 
+                        //Check if the player is already in the game world
+                        if (Arrays.asList("world", "world_nether", "world_the_end").contains(player.getLocation().getWorld().getName())) {
+                            //Send message to sender
+                            sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "You are already in the game world!");
+
+                            //Return true
+                            return true;
+                        }
+
                         //Teleport the player to game world player position
                         Main.getInstance().getMultiverseCore().teleportPlayer(sender, player, Main.getInstance().getWorldManager().getPlayerPosition(player));
 
@@ -208,11 +217,21 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                         //If the targeted player doesn't found
                         if (target == null) {
                             //Send message to sender
-                            if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Cannot found the player " + ChatColor.ITALIC + args[1] + ChatColor.RED + "!");
+                            if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Cannot found the player '" + ChatColor.ITALIC + args[1] + ChatColor.RED + "'!");
                             else sender.sendMessage(CommandUtils.getConsolePrefix() + "Cannot found the player '" + args[1] + "'!");
 
                             //Return false
                             return false;
+                        }
+
+                        //Check if the player is already in the game world
+                        if (Arrays.asList("world", "world_nether", "world_the_end").contains(target.getLocation().getWorld().getName())) {
+                            //Send message to sender
+                            if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "The player '" + ChatColor.ITALIC + args[1] + ChatColor.RED + "' is already in the game world!");
+                            else sender.sendMessage(CommandUtils.getConsolePrefix() + "The player '" + args[1] + "' is already in the game world!");
+
+                            //Return true
+                            return true;
                         }
 
                         //Teleport the player to game world player position
@@ -273,24 +292,28 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
         //Define a result list
         ArrayList<String> result = new ArrayList<>();
 
-        //If 1 argument exist:
-        if (args.length == 1) {
-            //Add commands to the list
-            result.add("reset");
-            result.add("lobby");
-            result.add("game");
-            result.add("help");
-        }
+        //Switch in the count of arguments
+        switch (args.length) {
 
-        //If 2 arguments exist:
-        else if (args.length == 2) {
-            if (Arrays.asList("lobby", "game").contains(args[0])) {
-                //For in all online players
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    //Add the player name to result
-                    result.add(player.getName());
+            case 1:
+
+                //Add commands to the list
+                result.add("reset");
+                result.add("lobby");
+                result.add("game");
+                result.add("help");
+
+            case 2:
+
+                //If the argument is lobby or game
+                if (Arrays.asList("lobby", "game").contains(args[0])) {
+                    //For in all online players
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        //Add the player name to result
+                        result.add(player.getName());
+                    }
                 }
-            }
+
         }
 
         //Return the formatted result

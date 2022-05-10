@@ -5,6 +5,7 @@ package de.nikocraft.challengeserver;
 //IMPORTS
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.multiverseinventories.MultiverseInventories;
+import de.nikocraft.challengeserver.challenges.ChallengeManager;
 import de.nikocraft.challengeserver.commands.*;
 import de.nikocraft.challengeserver.inventories.enderchests.EnderchestManager;
 import de.nikocraft.challengeserver.listeners.ChatListeners;
@@ -16,9 +17,7 @@ import de.nikocraft.challengeserver.utils.Config;
 import de.nikocraft.challengeserver.permissions.PermissionManager;
 import de.nikocraft.challengeserver.worlds.WorldManager;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.WorldCreator;
-import org.bukkit.WorldType;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -42,6 +41,9 @@ public final class Main extends JavaPlugin {
 
     //The world manager of the game world
     private WorldManager worldManager;
+
+    //The challenge manager for all challenge engines
+    private ChallengeManager challengeManager;
 
     //The timer
     private Timer timer;
@@ -110,6 +112,8 @@ public final class Main extends JavaPlugin {
         getCommand("world").setExecutor(new WorldCommand());
         getCommand("lobby").setExecutor(new LobbyWorldCommand());
         getCommand("game").setExecutor(new GameWorldCommand());
+        getCommand("parkour").setExecutor(new ParkourCommand());
+        getCommand("challenge").setExecutor(new ChallengeCommand());
 
         //Define the permission manager
         getLogger().info(getPrefix() + "Load permission system ...");
@@ -122,6 +126,10 @@ public final class Main extends JavaPlugin {
         //Define the world manager
         getLogger().info(getPrefix() + "Load world manager ...");
         worldManager = new WorldManager();
+
+        //Define the challenge manager
+        getLogger().info(getPrefix() + "Load challenge manager ...");
+        challengeManager = new ChallengeManager();
 
         //Define the timer
         getLogger().info(getPrefix() + "Load timer ...");
@@ -193,6 +201,9 @@ public final class Main extends JavaPlugin {
 
     //The world manager of the game world
     public WorldManager getWorldManager() { return worldManager; }
+
+    //The challenge manager for all challenge engines
+    public ChallengeManager getChallengeManager() { return challengeManager; }
 
     //The timer
     public Timer getTimer() { return timer; }

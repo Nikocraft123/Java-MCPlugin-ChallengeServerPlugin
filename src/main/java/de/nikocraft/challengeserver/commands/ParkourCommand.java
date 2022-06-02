@@ -41,9 +41,12 @@ public class ParkourCommand implements CommandExecutor, TabCompleter {
                 result.add("info");
                 result.add("create");
                 result.add("delete");
-                result.add("add");
-                result.add("modify");
-                result.add("remove");
+                result.add("start");
+                result.add("destination");
+                result.add("checkpoint_add");
+                result.add("checkpoint_remove");
+                result.add("activate");
+                result.add("deactivate");
                 result.add("help");
 
         }

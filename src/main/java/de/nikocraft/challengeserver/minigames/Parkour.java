@@ -3,6 +3,7 @@ package de.nikocraft.challengeserver.minigames;
 
 
 //IMPORTS
+import de.nikocraft.challengeserver.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import java.util.ArrayList;
@@ -66,26 +67,14 @@ public class Parkour {
 
     }
 
-    //Remove a parkour checkpoint
-    public boolean removeCheckpoint(Location checkpoint) {
+    //Remove the last parkour checkpoint
+    public boolean removeLastCheckpoint() {
 
-        //Lowest distance and nearest checkpoint
-        double distance = 2;
-        int nearestCheckpoint = -1;
-
-        //Loop for all checkpoints
-        for (Location cp : checkpoints) {
-            if (checkpoint.distance(cp) < distance) {
-                distance = checkpoint.distance(cp);
-                nearestCheckpoint = checkpoints.indexOf(cp);
-            }
-        }
-
-        //If no checkpoint was found, return false
-        if (nearestCheckpoint == -1) return false;
+        //Delete the checkpoint from config
+        Main.getInstance().getParkourManager().getConfig().getConfig().set("parkour." + name + ".checkpoints." + (checkpoints.size() - 1), null);
 
         //Remove the checkpoint from the checkpoint list
-        checkpoints.remove(nearestCheckpoint);
+        checkpoints.remove(checkpoints.size() - 1);
 
         //Return true
         return true;
@@ -112,9 +101,6 @@ public class Parkour {
 
 
     //SETTERS
-
-    //The parkour name
-    public void setName(String name) { this.name = name; }
 
     //The parkour start
     public void setStart(Location start) { this.start = start; }

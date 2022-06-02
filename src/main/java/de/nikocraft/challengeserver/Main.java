@@ -169,6 +169,10 @@ public final class Main extends JavaPlugin {
         getLogger().info(getPrefix() + "Save timer ...");
         timer.save();
 
+        //Save the parkour list
+        getLogger().info(getPrefix() + "Save parkour data ...");
+        parkourManager.save();
+
         //Save configurations
         getLogger().info(getPrefix() + "Save configurations ...");
         mainConfig.save();
@@ -212,6 +216,9 @@ public final class Main extends JavaPlugin {
 
     //The challenge manager for all challenge engines
     public ChallengeManager getChallengeManager() { return challengeManager; }
+
+    //The parkour manager for all parkour in lobby
+    public ParkourManager getParkourManager() { return parkourManager; }
 
     //The timer
     public Timer getTimer() { return timer; }

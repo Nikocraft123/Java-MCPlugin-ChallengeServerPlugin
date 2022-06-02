@@ -11,6 +11,7 @@ import de.nikocraft.challengeserver.inventories.enderchests.EnderchestManager;
 import de.nikocraft.challengeserver.listeners.ChatListeners;
 import de.nikocraft.challengeserver.listeners.ConnectionListeners;
 import de.nikocraft.challengeserver.listeners.PlayerListeners;
+import de.nikocraft.challengeserver.minigames.ParkourManager;
 import de.nikocraft.challengeserver.tablists.TablistManager;
 import de.nikocraft.challengeserver.timers.Timer;
 import de.nikocraft.challengeserver.utils.Config;
@@ -44,6 +45,9 @@ public final class Main extends JavaPlugin {
 
     //The challenge manager for all challenge engines
     private ChallengeManager challengeManager;
+
+    //The parkour manager for all parkour in lobby
+    private ParkourManager parkourManager;
 
     //The timer
     private Timer timer;
@@ -130,6 +134,10 @@ public final class Main extends JavaPlugin {
         //Define the challenge manager
         getLogger().info(getPrefix() + "Load challenge manager ...");
         challengeManager = new ChallengeManager();
+
+        //Define the parkour manager
+        getLogger().info(getPrefix() + "Load parkour manager ...");
+        parkourManager = new ParkourManager() ;
 
         //Define the timer
         getLogger().info(getPrefix() + "Load timer ...");

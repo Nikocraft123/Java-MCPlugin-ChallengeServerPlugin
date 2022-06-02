@@ -26,7 +26,13 @@ public class PlayerListeners implements Listener {
         if (player.getLocation().getWorld().getName().equals("lobby")) {
 
             //Check for void
-            if (player.getLocation().getY() < 60.0) {
+            if (player.getLocation().getY() < 40.0) {
+                Main.getInstance().getCommand("lobby").execute(player, "lobby", new String[]{});
+            }
+
+            //Check for lobby area exiting
+            if (player.getLocation().getX() < -100.0 | player.getLocation().getX() > 100.0 |
+                    player.getLocation().getZ() < -100.0 | player.getLocation().getZ() > 100.0) {
                 Main.getInstance().getCommand("lobby").execute(player, "lobby", new String[]{});
             }
 

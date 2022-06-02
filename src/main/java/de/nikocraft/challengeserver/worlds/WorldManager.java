@@ -111,12 +111,12 @@ public class WorldManager {
             Bukkit.broadcastMessage(getChatPrefix() + ChatColor.GRAY + "Create world 'world_nether' ...");
             worldManager.addWorld("world_nether", World.Environment.NETHER, seed, WorldType.NORMAL, true, null);
             worldManager.getMVWorld("world_nether").setGameMode(GameMode.SURVIVAL);
-        }, 1000);
+        }, 700);
         BukkitTask taskWorldEnd = Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             Bukkit.broadcastMessage(getChatPrefix() + ChatColor.GRAY + "Create world 'world_the_end' ...");
             worldManager.addWorld("world_the_end", World.Environment.THE_END, seed, WorldType.NORMAL, true, null);
             worldManager.getMVWorld("world_the_end").setGameMode(GameMode.SURVIVAL);
-        }, 1200);
+        }, 900);
 
         BukkitTask taskFinish = Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 
@@ -138,7 +138,7 @@ public class WorldManager {
             //Set resetting to false
             setResetting(false);
 
-        }, 1400);
+        }, 1100);
 
     }
 

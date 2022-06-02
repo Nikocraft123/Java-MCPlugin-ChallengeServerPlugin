@@ -13,6 +13,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -110,6 +112,9 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                         //Teleport the player to lobby
                         Main.getInstance().getMultiverseCore().teleportPlayer(sender, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
 
+                        //Give the player resistance
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 255, false, false));
+
                         //Send message to sender
                         sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "You successfully teleported to lobby world!");
 
@@ -141,6 +146,9 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
 
                         //Teleport the player to lobby
                         Main.getInstance().getMultiverseCore().teleportPlayer(sender, target, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
+
+                        //Give the player resistance
+                        target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 255, false, false));
 
                         //Send message to sender
                         if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "'" + ChatColor.ITALIC + target + ChatColor.GREEN + "' successfully teleported to lobby world!");
@@ -190,6 +198,9 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                             return true;
                         }
 
+                        //Remove the player resistance
+                        player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+
                         //Teleport the player to game world player position
                         Main.getInstance().getMultiverseCore().teleportPlayer(sender, player, Main.getInstance().getWorldManager().getPlayerPosition(player));
 
@@ -233,6 +244,9 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                             //Return true
                             return true;
                         }
+
+                        //Remove the player resistance
+                        target.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
 
                         //Teleport the player to game world player position
                         Main.getInstance().getMultiverseCore().teleportPlayer(sender, target, Main.getInstance().getWorldManager().getPlayerPosition(target));

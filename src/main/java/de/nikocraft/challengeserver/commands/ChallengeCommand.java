@@ -49,6 +49,8 @@ public class ChallengeCommand implements CommandExecutor, TabCompleter {
                 result.add("stop");
                 result.add("help");
 
+                break;
+
             case 2:
 
                 //If argument 1 is "config"
@@ -59,6 +61,8 @@ public class ChallengeCommand implements CommandExecutor, TabCompleter {
                         result.add(challenge.name().toLowerCase());
                     }
                 }
+
+                break;
 
             case 3:
 
@@ -74,6 +78,8 @@ public class ChallengeCommand implements CommandExecutor, TabCompleter {
                     result.add("43200");
                     result.add("86400");
                 }
+
+                break;
 
         }
 

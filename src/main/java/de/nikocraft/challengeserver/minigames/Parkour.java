@@ -70,6 +70,9 @@ public class Parkour {
     //Remove the last parkour checkpoint
     public boolean removeLastCheckpoint() {
 
+        //If no checkpoint is available, return false
+        if (checkpoints.size() == 0) return false;
+
         //Delete the checkpoint from config
         Main.getInstance().getParkourManager().getConfig().getConfig().set("parkour." + name + ".checkpoints." + (checkpoints.size() - 1), null);
 

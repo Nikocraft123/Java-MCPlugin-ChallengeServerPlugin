@@ -144,6 +144,19 @@ public class ParkourManager {
 
     }
 
+    //Get parkour
+    public Parkour getParkour(String name) {
+
+        //Loop for every parkour
+        for (Parkour parkour : parkours) {
+            if (parkour.getName().equals(name)) return parkour;
+        }
+
+        //If no parkour found, return null
+        return null;
+
+    }
+
 
     //GETTERS
 

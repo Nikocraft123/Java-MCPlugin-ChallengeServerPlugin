@@ -21,7 +21,7 @@ commands:
     permission-message: "§cYou haven't the permission to own a enderchest!"
   timer:
     aliases: [ tm ]
-    description: "Timer control [DEFAULT]"
+    description: "Timer control [OPERATOR]"
     usage: "Type '/timer help' for help!"
     permission: server.timer.control
     permission-message: "§cYou haven't the permission to control the timer!"
@@ -34,9 +34,13 @@ commands:
   lobby:
     description: "Teleport to lobby [DEFAULT]"
     usage: "No arguments"
+    permission: server.world.teleport
+    permission-message: "§cYou haven't the permission to teleport between worlds!"
   game:
     description: "Teleport to game [DEFAULT]"
     usage: "No arguments"
+    permission: server.world.teleport
+    permission-message: "§cYou haven't the permission to teleport between worlds!"
   parkour:
     aliases: [ pk ]
     description: "Control for parkour [OPERATOR]"
@@ -49,3 +53,15 @@ commands:
     usage: "Type '/challenge help' for help!"
     permission: server.challenge.control
     permission-message: "§cYou haven't the permission to control challenges!"
+  checkpoint:
+    aliases: [ cp ]
+    description: "Teleport to last parkour checkpoint [DEFAULT]"
+    usage: "No arguments"
+    permission: server.parkour.play
+    permission-message: "§cYou haven't the permission to play the parkour!"
+  cancel:
+    aliases: [ cc ]
+    description: "Exit running parkour [DEFAULT]"
+    usage: "No arguments"
+    permission: server.parkour.play
+    permission-message: "§cYou haven't the permission to play the parkour!"

@@ -4,6 +4,9 @@ package de.nikocraft.challengeserver.listeners;
 
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
+import de.nikocraft.challengeserver.minigames.Parkour;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,13 +30,13 @@ public class PlayerListeners implements Listener {
 
             //Check for void
             if (player.getLocation().getY() < 40.0) {
-                Main.getInstance().getCommand("lobby").execute(player, "lobby", new String[]{});
+                Main.getInstance().getMultiverseCore().teleportPlayer(player, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
             }
 
             //Check for lobby area exiting
             if (player.getLocation().getX() < -100.0 | player.getLocation().getX() > 100.0 |
                     player.getLocation().getZ() < -100.0 | player.getLocation().getZ() > 100.0) {
-                Main.getInstance().getCommand("lobby").execute(player, "lobby", new String[]{});
+                Main.getInstance().getMultiverseCore().teleportPlayer(player, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
             }
 
             //Check for portal
@@ -41,6 +44,11 @@ public class PlayerListeners implements Listener {
                     player.getLocation().getY() >= 100.0 & player.getLocation().getY() <= 110.0 &
                     player.getLocation().getZ() >= 39.0 & player.getLocation().getZ() <= 40.0) {
                 Main.getInstance().getCommand("game").execute(player, "game", new String[]{});
+            }
+
+            //Handle parkour
+            for (Parkour parkour : Main.getInstance().getParkourManager().getParkours()) {
+                parkour.handleMovement(event);
             }
 
         }

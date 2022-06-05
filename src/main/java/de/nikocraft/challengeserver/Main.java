@@ -119,8 +119,7 @@ public final class Main extends JavaPlugin {
         getCommand("parkour").setExecutor(new ParkourCommand());
         getCommand("challenge").setExecutor(new ChallengeCommand());
         getCommand("checkpoint").setExecutor(new CheckpointCommand());
-        //TODO Change EXECUTOR
-        getCommand("cancel").setExecutor(new CheckpointCommand());
+        getCommand("cancel").setExecutor(new CancelCommand());
 
         //Define the permission manager
         getLogger().info(getPrefix() + "Load permission system ...");

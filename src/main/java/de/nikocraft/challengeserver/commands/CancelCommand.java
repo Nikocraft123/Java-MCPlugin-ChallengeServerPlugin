@@ -7,7 +7,9 @@ import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.minigames.Parkour;
 import de.nikocraft.challengeserver.minigames.ParkourManager;
 import de.nikocraft.challengeserver.utils.CommandUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,7 +20,7 @@ import java.util.List;
 
 
 //LOBBY WORLD COMMAND CLASS
-public class CheckpointCommand implements CommandExecutor, TabCompleter {
+public class CancelCommand implements CommandExecutor, TabCompleter {
 
     //OVERRIDE METHODS
 
@@ -41,23 +43,19 @@ public class CheckpointCommand implements CommandExecutor, TabCompleter {
         //Go through all parkours
         for (Parkour parkour : Main.getInstance().getParkourManager().getParkours()) {
 
-            //Get the player checkpoint
-            int checkpoint = parkour.getCheckpoint(player);
+            //Remove the player from the list
+            if (parkour.removePlayer(player)) {
 
-            //If the checkpoint is -1, continue
-            if (checkpoint == -1) continue;
+                //Teleport the player to the spawn
+                Main.getInstance().getMultiverseCore().teleportPlayer(player, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
 
-            //Teleport the player to the last checkpoint
-            if (checkpoint == 0) {
-                Main.getInstance().getMultiverseCore().teleportPlayer(player, player, parkour.getStart());
-            } else
-                Main.getInstance().getMultiverseCore().teleportPlayer(player, player, parkour.getCheckpoints().get(checkpoint - 1));
+                //Send a message to the player
+                player.sendMessage(ParkourManager.getChatPrefix() + ChatColor.YELLOW + "Cancelled parkour.");
 
-            //Send a message to the player
-            player.sendMessage(ParkourManager.getChatPrefix() + ChatColor.DARK_PURPLE + "Try it again! You can do it! xD");
+                //Return true
+                return true;
 
-            //Return true
-            return true;
+            }
 
         }
 

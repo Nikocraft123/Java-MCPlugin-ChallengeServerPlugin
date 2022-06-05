@@ -2,8 +2,10 @@ de\nikocraft\challengeserver\Main.class
 de\nikocraft\challengeserver\inventories\enderchests\Enderchest.class
 de\nikocraft\challengeserver\timers\Timer.class
 de\nikocraft\challengeserver\commands\GameWorldCommand.class
+de\nikocraft\challengeserver\commands\CancelCommand.class
 de\nikocraft\challengeserver\listeners\ConnectionListeners.class
 de\nikocraft\challengeserver\utils\CommandUtils.class
+de\nikocraft\challengeserver\commands\CheckpointCommand.class
 de\nikocraft\challengeserver\minigames\ParkourManager.class
 de\nikocraft\challengeserver\utils\Config.class
 de\nikocraft\challengeserver\challenges\deathrun\DeathrunChallenge.class

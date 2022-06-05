@@ -6,6 +6,7 @@ package de.nikocraft.challengeserver.minigames;
 import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.utils.Config;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import java.util.ArrayList;
 import java.util.List;
@@ -154,6 +155,18 @@ public class ParkourManager {
 
         //If no parkour found, return null
         return null;
+
+    }
+
+
+    //STATIC METHODS
+
+    //Get the prefix of the parkour for the chat
+    public static String getChatPrefix() {
+
+        //Return prefix string
+        return ChatColor.GRAY + "[" + ChatColor.DARK_GREEN + ChatColor.BOLD + "Parkour" + ChatColor.RESET +
+                ChatColor.GRAY + "] " + ChatColor.WHITE;
 
     }
 

@@ -5,9 +5,15 @@ package de.nikocraft.challengeserver.minigames;
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerMoveEvent;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 //PARKOUR CLASS
@@ -30,6 +36,9 @@ public class Parkour {
     //Is the parkour active
     private boolean active;
 
+    //The player map for last checkpoint
+    private final Map<String, Integer> players;
+
 
     //CONSTRUCTORS
     public Parkour(String name) {
@@ -43,6 +52,9 @@ public class Parkour {
         this.checkpoints = new ArrayList<>();
         this.active = false;
 
+        //Define the player map
+        players = new HashMap<>();
+
     }
 
     public Parkour(String name, Location start, Location destination, List<Location> checkpoints, boolean active) {
@@ -53,6 +65,9 @@ public class Parkour {
         this.destination = destination;
         this.checkpoints = checkpoints;
         this.active = active;
+
+        //Define the player map
+        players = new HashMap<>();
 
     }
 
@@ -81,6 +96,115 @@ public class Parkour {
 
         //Return true
         return true;
+
+    }
+
+    //Add a player to the map
+    public boolean addPlayer(Player player) {
+
+        //If the player is already in the map, cancel
+        if (players.containsKey(player.getName())) return false;
+
+        //Add the player name to the map
+        players.put(player.getName(), 0);
+
+        //Return true
+        return true;
+
+    }
+
+    //Remove a player from the map
+    public boolean removePlayer(Player player) {
+
+        //If the player is not in the map, cancel
+        if (!players.containsKey(player.getName())) return false;
+
+        //Remove the player name from the map
+        players.remove(player.getName());
+
+        //Return true
+        return true;
+
+    }
+
+    //Get the checkpoint of a player
+    public int getCheckpoint(Player player) {
+
+        //If the player is not in the map, return -1
+        if (!players.containsKey(player.getName())) return -1;
+
+        //Return the player checkpoint from the map
+        return players.get(player.getName());
+
+    }
+
+    //Set the checkpoint of a player
+    public boolean setCheckpoint(Player player, int checkpoint) {
+
+        //If the player is not in the map, return false
+        if (!players.containsKey(player.getName())) return false;
+
+        //If the player already reached this checkpoint, return false
+        if (players.get(player.getName()) == checkpoint) return false;
+
+        //Set the player checkpoint to the map
+        players.put(player.getName(), checkpoint);
+
+        //Return true
+        return true;
+
+    }
+
+    //Handle movement
+    public void handleMovement(PlayerMoveEvent event) {
+
+        //Check for start
+        if (start.distance(event.getPlayer().getLocation()) < 1.5) {
+
+            //If the player is already in the map, cancel
+            if (!players.containsKey(event.getPlayer().getName())) {
+
+                //Remove the player from all other parkours
+                for (Parkour parkour : Main.getInstance().getParkourManager().getParkours()) {
+                    parkour.removePlayer(event.getPlayer());
+                }
+
+                //Add the player to the parkour
+                addPlayer(event.getPlayer());
+
+                //Send a message to the player
+                event.getPlayer().sendMessage(ParkourManager.getChatPrefix() + ChatColor.GREEN +
+                        "Welcome to this parkour! Can you finish it?\n" + ChatColor.YELLOW + "Use '/cp' to teleport to your last checkpoint.\n" +
+                        "Exit the parkour with '/cc'.");
+
+            }
+
+        }
+
+        //Check for destination
+        if (destination.distance(event.getPlayer().getLocation()) < 1.5) {
+
+            //Remove the player from the parkour
+            if (removePlayer(event.getPlayer()))
+                event.getPlayer().sendMessage(ParkourManager.getChatPrefix() + ChatColor.GREEN +
+                        "CONGRATULATION! You finished this parkour successfully!\n");
+
+            //Teleport the player to spawn
+            Main.getInstance().getMultiverseCore().teleportPlayer(event.getPlayer(), event.getPlayer(), new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
+
+        }
+
+        //Check for checkpoints
+        for (Location checkpoint : checkpoints) {
+            if (checkpoint.distance(event.getPlayer().getLocation()) < 1.5) {
+
+                //Set the player checkpoint to the parkour
+                if (setCheckpoint(event.getPlayer(), checkpoints.indexOf(checkpoint) + 1))
+                    event.getPlayer().sendMessage(ParkourManager.getChatPrefix() + ChatColor.GREEN +
+                            "CONGRATULATION! You successfully reached checkpoint " + (checkpoints.indexOf(checkpoint) + 1) + ". Hang on!\n");
+
+            }
+        }
 
     }
 

@@ -103,6 +103,9 @@ public class Timer {
                             Bukkit.broadcastMessage(getChatPrefix() + ChatColor.YELLOW +
                                     ChatColor.UNDERLINE + "The timer run off!");
 
+                            //TODO
+                            Main.getInstance().getDeathrunChallenge().timeOver();
+
                             //Call timer reset
                             TimerReset();
 

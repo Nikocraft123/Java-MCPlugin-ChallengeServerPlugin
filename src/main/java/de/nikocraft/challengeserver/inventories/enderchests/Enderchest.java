@@ -3,7 +3,7 @@ package de.nikocraft.challengeserver.inventories.enderchests;
 
 
 //IMPORTS
-import de.nikocraft.challengeserver.inventories.InventoryBuilder;
+import de.nikocraft.challengeserver.utils.InventoryBuilder;
 import de.nikocraft.challengeserver.utils.Base64Utils;
 import org.bukkit.ChatColor;
 import java.io.IOException;

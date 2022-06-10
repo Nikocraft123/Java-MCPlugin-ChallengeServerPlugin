@@ -4,6 +4,7 @@ package de.nikocraft.challengeserver.listeners;
 
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
+import de.nikocraft.challengeserver.challenges.deathrun.DeathrunScoreboard;
 import de.nikocraft.challengeserver.permissions.CustomPermissibleBase;
 import de.nikocraft.challengeserver.tablists.TablistManager;
 import org.bukkit.Bukkit;
@@ -52,10 +53,7 @@ public class ConnectionListeners implements Listener {
     public void onJoin(PlayerJoinEvent event) {
 
         //Teleport the player to lobby
-        Main.getInstance().getMultiverseCore().teleportPlayer(event.getPlayer(), event.getPlayer(), new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
-
-        //Give the player resistance
-        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 255, false, false));
+        Main.getInstance().getWorldManager().teleportToLobby(event.getPlayer(), false);
 
         //Send welcome message to player
         event.getPlayer().sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD + ChatColor.UNDERLINE + "Welcome on the Challenge Server!" +
@@ -65,6 +63,9 @@ public class ConnectionListeners implements Listener {
         //Set join message
         event.setJoinMessage(ChatColor.GRAY + ">> " + ChatColor.DARK_GREEN + ChatColor.BOLD + event.getPlayer().getName() +
                 ChatColor.RESET + ChatColor.GRAY + " joined the server!");
+
+        //Set the sidebar scoreboard
+        Main.getInstance().getDeathrunChallenge().getScoreboards().add(new DeathrunScoreboard(event.getPlayer()));
 
         //Set the tablist of the player
         TablistManager.setTablistHeaderFooter(event.getPlayer());

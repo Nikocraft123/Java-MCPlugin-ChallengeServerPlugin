@@ -6,10 +6,12 @@ package de.nikocraft.challengeserver;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.multiverseinventories.MultiverseInventories;
 import de.nikocraft.challengeserver.challenges.ChallengeManager;
+import de.nikocraft.challengeserver.challenges.deathrun.DeathrunChallenge;
 import de.nikocraft.challengeserver.commands.*;
 import de.nikocraft.challengeserver.inventories.enderchests.EnderchestManager;
 import de.nikocraft.challengeserver.listeners.ChatListeners;
 import de.nikocraft.challengeserver.listeners.ConnectionListeners;
+import de.nikocraft.challengeserver.listeners.InteractListeners;
 import de.nikocraft.challengeserver.listeners.PlayerListeners;
 import de.nikocraft.challengeserver.minigames.ParkourManager;
 import de.nikocraft.challengeserver.tablists.TablistManager;
@@ -68,6 +70,9 @@ public final class Main extends JavaPlugin {
     private MultiverseCore multiverseCore;
     private MultiverseInventories multiverseInventories;
 
+    //TODO
+    private DeathrunChallenge deathrunChallenge;
+
 
     //OVERRIDE METHODS
 
@@ -107,6 +112,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ConnectionListeners(), this);
         Bukkit.getPluginManager().registerEvents(new ChatListeners(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerListeners(), this);
+        Bukkit.getPluginManager().registerEvents(new InteractListeners(), this);
 
         //Register commands
         getLogger().info(getPrefix() + "Register commands ...");
@@ -118,8 +124,8 @@ public final class Main extends JavaPlugin {
         getCommand("game").setExecutor(new GameWorldCommand());
         getCommand("parkour").setExecutor(new ParkourCommand());
         getCommand("challenge").setExecutor(new ChallengeCommand());
-        getCommand("checkpoint").setExecutor(new CheckpointCommand());
-        getCommand("cancel").setExecutor(new CancelCommand());
+        getCommand("parkour_checkpoint").setExecutor(new ParkourCheckpointCommand());
+        getCommand("parkour_cancel").setExecutor(new ParkourCancelCommand());
 
         //Define the permission manager
         getLogger().info(getPrefix() + "Load permission system ...");
@@ -149,6 +155,9 @@ public final class Main extends JavaPlugin {
         getLogger().info(getPrefix() + "Load all tablist ...");
         TablistManager.setAllPlayerTeams();
         for (Player player : Bukkit.getOnlinePlayers()) TablistManager.setTablistHeaderFooter(player);
+
+        //TODO
+        deathrunChallenge = new DeathrunChallenge();
 
         //Send info
         getLogger().info(getPrefix() + "Plugin enabled.");
@@ -240,5 +249,8 @@ public final class Main extends JavaPlugin {
     //The multiverse api
     public MultiverseCore getMultiverseCore() { return multiverseCore; }
     public MultiverseInventories getMultiverseInventories() { return multiverseInventories; }
+
+    //TODO
+    public DeathrunChallenge getDeathrunChallenge() { return deathrunChallenge; }
 
 }

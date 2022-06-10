@@ -172,10 +172,14 @@ public class Parkour {
                 //Add the player to the parkour
                 addPlayer(event.getPlayer());
 
+                //Set player inventory
+                Main.getInstance().getParkourManager().setPlayerInventoryItems(event.getPlayer());
+
                 //Send a message to the player
                 event.getPlayer().sendMessage(ParkourManager.getChatPrefix() + ChatColor.GREEN +
-                        "Welcome to this parkour! Can you finish it?\n" + ChatColor.YELLOW + "Use '/cp' to teleport to your last checkpoint.\n" +
-                        "Exit the parkour with '/cc'.");
+                        "Welcome to this parkour! Can you finish it?\n \n" + ChatColor.YELLOW +
+                        "Use the items in your hotbar to teleport to your last checkpoint or exit the parkour. " +
+                        "Alternatively you can use the commands '/parkour_checkpoint' and '/parkour_cancel'.");
 
             }
 

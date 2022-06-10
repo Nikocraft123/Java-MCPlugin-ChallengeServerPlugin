@@ -5,9 +5,14 @@ package de.nikocraft.challengeserver.minigames;
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.utils.Config;
+import de.nikocraft.challengeserver.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,6 +160,26 @@ public class ParkourManager {
 
         //If no parkour found, return null
         return null;
+
+    }
+
+    //Set player inventory items
+    public void setPlayerInventoryItems(Player player) {
+
+        //Build the last checkpoint item
+        ItemStack checkpointItem = new ItemBuilder(Material.LIGHT_WEIGHTED_PRESSURE_PLATE, 1)
+                .setDisplayName(ChatColor.GOLD.toString() + ChatColor.BOLD + "Last Checkpoint " + ChatColor.GRAY + "(Right Click)")
+                .setLocalizedName("checkpoint").setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Teleport to the last checkpoint.").build();
+
+        //Build the cancel item
+        ItemStack cancelItem = new ItemBuilder(Material.OAK_DOOR, 1)
+                .setDisplayName(ChatColor.RED.toString() + ChatColor.BOLD + "Cancel " + ChatColor.GRAY + "(Right Click)")
+                .setLocalizedName("cancel").setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Cancel the parkour run.").build();
+
+        //Set the item to the players inventory
+        player.getInventory().setItem(0, checkpointItem);
+        player.getInventory().setItem(1, cancelItem);
+        player.updateInventory();
 
     }
 

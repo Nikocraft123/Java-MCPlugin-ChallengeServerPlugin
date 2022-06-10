@@ -20,7 +20,7 @@ import java.util.List;
 
 
 //LOBBY WORLD COMMAND CLASS
-public class CancelCommand implements CommandExecutor, TabCompleter {
+public class ParkourCancelCommand implements CommandExecutor, TabCompleter {
 
     //OVERRIDE METHODS
 

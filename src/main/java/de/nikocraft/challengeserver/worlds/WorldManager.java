@@ -12,8 +12,8 @@ import de.nikocraft.challengeserver.utils.Config;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitTask;
-
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -42,6 +42,67 @@ public class WorldManager {
 
     //METHODS
 
+    //Teleport to lobby
+    public void teleportToLobby(Player player, boolean sendMessage) {
+
+        //Check if the player is in the game world
+        if (Arrays.asList("world", "world_nether", "world_the_end").contains(player.getLocation().getWorld().getName())) {
+
+            //Save the player position
+            setPlayerPosition(player);
+
+        }
+
+        //Teleport the player to lobby
+        Main.getInstance().getMultiverseCore().teleportPlayer(player, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
+
+        //Give the player effects
+        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 255, false, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 99999, 255, false, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 99999, 255, false, false));
+
+        //Send message to player
+        if (sendMessage) player.sendMessage(getChatPrefix() + ChatColor.GREEN + "You successfully teleported to lobby world!");
+
+    }
+
+    //Teleport to game
+    public boolean teleportToGame(Player player, boolean sendMessage) {
+
+        //If the game world is resetting
+        if (Main.getInstance().getWorldManager().isResetting()) {
+            //Send message to player
+            if (sendMessage) player.sendMessage(getChatPrefix() + ChatColor.RED + "Cannot join game world because it is resetting!");
+
+            //Return false
+            return false;
+        }
+
+        //Check if the player is in the game world
+        if (Arrays.asList("world", "world_nether", "world_the_end").contains(player.getLocation().getWorld().getName())) {
+            //Send message to player
+            if (sendMessage) player.sendMessage(getChatPrefix() + ChatColor.RED + "You are already in the game world!");
+
+            //Return true
+            return true;
+        }
+
+        //Remove the player effects
+        player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+        player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+        player.removePotionEffect(PotionEffectType.SATURATION);
+
+        //Teleport the player to game world player position
+        Main.getInstance().getMultiverseCore().teleportPlayer(player, player, getPlayerPosition(player));
+
+        //Send message to player
+        if (sendMessage) player.sendMessage(getChatPrefix() + ChatColor.GREEN + "You successfully teleported to game world!");
+
+        //Return true
+        return true;
+
+    }
+
     //Reset world
     public void resetWorld(String seed) {
 
@@ -55,6 +116,8 @@ public class WorldManager {
         Main.getInstance().getLogger().info(getConsolePrefix() + "Move all players to lobby ...");
         for (Player player : Bukkit.getOnlinePlayers()) {
 
+            //TODO Change TP
+
             //Check if the player is in the game world
             if (Arrays.asList("world", "world_nether", "world_the_end").contains(player.getLocation().getWorld().getName())) {
 
@@ -63,6 +126,8 @@ public class WorldManager {
 
                 //Teleport the player to lobby
                 Main.getInstance().getMultiverseCore().teleportPlayer(player, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
+
+                //TODO RESISTANCE
 
             }
 
@@ -74,7 +139,8 @@ public class WorldManager {
         //Load group manager
         WorldGroupManager groupManager = Main.getInstance().getMultiverseInventories().getGroupManager();
 
-        BukkitTask taskPrepare = Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+        //Prepare
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 
             //Send message
             Bukkit.broadcastMessage(getChatPrefix() + ChatColor.GRAY + "Prepare ...");
@@ -82,6 +148,12 @@ public class WorldManager {
             //Delete old inventory group
             Main.getInstance().getLogger().info(getConsolePrefix() + "Delete old inventory group ...");
             if (groupManager.hasGroup("world")) groupManager.removeGroup(groupManager.getGroup("world"));
+            try {
+                FileUtils.deleteDirectory(new File("./plugins/Multiverse-Inventories/worlds/world"));
+                FileUtils.deleteDirectory(new File("./plugins/Multiverse-Inventories/worlds/world_nether"));
+                FileUtils.deleteDirectory(new File("./plugins/Multiverse-Inventories/worlds/world_the_end"));
+                FileUtils.deleteDirectory(new File("./plugins/Multiverse-Inventories/groups/world"));
+            } catch (IOException ignored) {}
 
             //Delete old worlds
             Main.getInstance().getLogger().info(getConsolePrefix() + "Delete old worlds ...");
@@ -91,8 +163,7 @@ public class WorldManager {
                     worldManager.removeWorldFromConfig(world);
                     try {
                         FileUtils.deleteDirectory(new File("./" + world));
-                    } catch (IOException ignored) {
-                    }
+                    } catch (IOException ignored) {}
                 }
             }
 
@@ -102,23 +173,24 @@ public class WorldManager {
         }, 100);
 
         //Create new worlds
-        BukkitTask taskWorld = Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             Bukkit.broadcastMessage(getChatPrefix() + ChatColor.GRAY + "Create world 'world' ...");
             worldManager.addWorld("world", World.Environment.NORMAL, seed, WorldType.NORMAL, true, null);
             worldManager.getMVWorld("world").setGameMode(GameMode.SURVIVAL);
-        }, 300);
-        BukkitTask taskWorldNether = Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+        }, 200);
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             Bukkit.broadcastMessage(getChatPrefix() + ChatColor.GRAY + "Create world 'world_nether' ...");
             worldManager.addWorld("world_nether", World.Environment.NETHER, seed, WorldType.NORMAL, true, null);
             worldManager.getMVWorld("world_nether").setGameMode(GameMode.SURVIVAL);
-        }, 700);
-        BukkitTask taskWorldEnd = Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+        }, 400);
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             Bukkit.broadcastMessage(getChatPrefix() + ChatColor.GRAY + "Create world 'world_the_end' ...");
             worldManager.addWorld("world_the_end", World.Environment.THE_END, seed, WorldType.NORMAL, true, null);
             worldManager.getMVWorld("world_the_end").setGameMode(GameMode.SURVIVAL);
-        }, 900);
+        }, 600);
 
-        BukkitTask taskFinish = Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+        //Finish
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 
             //Send message
             Bukkit.broadcastMessage(getChatPrefix() + ChatColor.GRAY + "Finish ...");
@@ -132,13 +204,17 @@ public class WorldManager {
             group.getShares().addAll(Sharables.allOf());
             groupManager.updateGroup(group);
 
+            //Reload multiverse
+            Main.getInstance().getMultiverseCore().reloadConfig();
+            Main.getInstance().getMultiverseInventories().reloadConfig();
+
             //Send message
             Bukkit.broadcastMessage(getChatPrefix() + ChatColor.GREEN + "World reset completed!");
 
             //Set resetting to false
             setResetting(false);
 
-        }, 1100);
+        }, 800);
 
     }
 

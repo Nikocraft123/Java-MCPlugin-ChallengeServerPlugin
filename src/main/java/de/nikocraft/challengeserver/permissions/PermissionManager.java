@@ -6,6 +6,7 @@ package de.nikocraft.challengeserver.permissions;
 import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.tablists.TablistManager;
 import de.nikocraft.challengeserver.utils.Config;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import java.util.ArrayList;
 
@@ -76,6 +77,9 @@ public class PermissionManager {
         //Save the configuration to update changes
         config.save();
 
+        //Update the player commands
+        player.updateCommands();
+
         //Return true
         return true;
 
@@ -98,6 +102,9 @@ public class PermissionManager {
 
         //Save the configuration to update changes
         config.save();
+
+        //Update the player commands
+        player.updateCommands();
 
         //Return true
         return true;
@@ -122,6 +129,11 @@ public class PermissionManager {
         //Save the configuration to update changes
         config.save();
 
+        //Update the player commands
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.updateCommands();
+        }
+
         //Return true
         return true;
 
@@ -145,6 +157,11 @@ public class PermissionManager {
         //Save the configuration to update changes
         config.save();
 
+        //Update the player commands
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.updateCommands();
+        }
+
         //Return true
         return true;
 
@@ -164,6 +181,9 @@ public class PermissionManager {
 
         //Save the configuration to update changes
         config.save();
+
+        //Update the player commands
+        player.updateCommands();
 
         //Update all tablist
         TablistManager.setAllPlayerTeams();
@@ -187,6 +207,9 @@ public class PermissionManager {
 
         //Save the configuration to update changes
         config.save();
+
+        //Update the player commands
+        player.updateCommands();
 
         //Return guest rank
         return Rank.Guest;

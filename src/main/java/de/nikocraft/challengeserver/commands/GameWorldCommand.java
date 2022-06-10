@@ -4,10 +4,14 @@ package de.nikocraft.challengeserver.commands;
 
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
+import de.nikocraft.challengeserver.utils.CommandUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +25,23 @@ public class GameWorldCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        //Return the result
-        return Main.getInstance().getCommand("world").execute(sender, "world", new String[]{"game"});
+        //If the sender is not a player
+        if (!(sender instanceof Player)) {
+            //Send message to sender
+            sender.sendMessage(CommandUtils.getConsolePrefix() + "You must be a player to teleport to game world!");
+
+            //Return false
+            return false;
+        }
+
+        //Get the player from the sender
+        Player player = (Player) sender;
+
+        //Teleport the player to the lobby
+        Main.getInstance().getWorldManager().teleportToGame(player, true);
+
+        //Return true
+        return true;
 
     }
 

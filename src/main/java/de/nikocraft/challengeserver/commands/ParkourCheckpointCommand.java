@@ -18,7 +18,7 @@ import java.util.List;
 
 
 //LOBBY WORLD COMMAND CLASS
-public class CheckpointCommand implements CommandExecutor, TabCompleter {
+public class ParkourCheckpointCommand implements CommandExecutor, TabCompleter {
 
     //OVERRIDE METHODS
 

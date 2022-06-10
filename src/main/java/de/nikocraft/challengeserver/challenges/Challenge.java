@@ -2,16 +2,29 @@
 package de.nikocraft.challengeserver.challenges;
 
 
-//CHALLENGE ENUM
-public enum Challenge {
+import org.bukkit.event.player.PlayerMoveEvent;
 
-    //ENTRIES
-    Deathrun();
-
+//ABSTRACT CHALLENGE BUILDER CLASS
+public abstract class Challenge {
 
     //CONSTRUCTOR
-    Challenge() {
+    public Challenge() {
 
     }
+
+
+    //ABSTRACT METHODS
+
+    //Load
+    public abstract void load();
+
+    //Update
+    public abstract void update();
+
+    //Time over
+    public abstract void timeOver();
+
+    //On move
+    public abstract void onMove(PlayerMoveEvent event);
 
 }

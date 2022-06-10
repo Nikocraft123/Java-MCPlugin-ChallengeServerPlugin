@@ -25,6 +25,9 @@ public class PlayerListeners implements Listener {
         //Get the player
         Player player = event.getPlayer();
 
+        //TODO
+        Main.getInstance().getDeathrunChallenge().onMove(event);
+
         //Check if the player is in the lobby
         if (player.getLocation().getWorld().getName().equals("lobby")) {
 
@@ -43,7 +46,7 @@ public class PlayerListeners implements Listener {
             if (player.getLocation().getX() >= -5.0 & player.getLocation().getX() <= 6.0 &
                     player.getLocation().getY() >= 100.0 & player.getLocation().getY() <= 110.0 &
                     player.getLocation().getZ() >= 39.0 & player.getLocation().getZ() <= 40.0) {
-                Main.getInstance().getCommand("game").execute(player, "game", new String[]{});
+                Main.getInstance().getWorldManager().teleportToGame(player, true);
             }
 
             //Handle parkour

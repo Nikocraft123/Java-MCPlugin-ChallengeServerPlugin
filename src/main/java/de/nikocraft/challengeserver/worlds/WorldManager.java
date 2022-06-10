@@ -116,20 +116,8 @@ public class WorldManager {
         Main.getInstance().getLogger().info(getConsolePrefix() + "Move all players to lobby ...");
         for (Player player : Bukkit.getOnlinePlayers()) {
 
-            //TODO Change TP
-
-            //Check if the player is in the game world
-            if (Arrays.asList("world", "world_nether", "world_the_end").contains(player.getLocation().getWorld().getName())) {
-
-                //Save the player position
-                setPlayerPosition(player);
-
-                //Teleport the player to lobby
-                Main.getInstance().getMultiverseCore().teleportPlayer(player, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
-
-                //TODO RESISTANCE
-
-            }
+            //Teleport the player to lobby
+            teleportToLobby(player, true);
 
         }
 

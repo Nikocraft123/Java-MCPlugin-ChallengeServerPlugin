@@ -3,7 +3,6 @@ package de.nikocraft.challengeserver.utils;
 
 
 //IMPORTS
-import de.nikocraft.challengeserver.utils.Base64Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;

@@ -4,7 +4,7 @@ package de.nikocraft.challengeserver.commands;
 
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
-import de.nikocraft.challengeserver.minigames.Parkour;
+import de.nikocraft.challengeserver.minigame.parkours.Parkour;
 import de.nikocraft.challengeserver.utils.CommandUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

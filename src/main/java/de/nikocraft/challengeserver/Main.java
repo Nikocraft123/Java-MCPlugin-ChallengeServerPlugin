@@ -13,7 +13,7 @@ import de.nikocraft.challengeserver.listeners.ChatListeners;
 import de.nikocraft.challengeserver.listeners.ConnectionListeners;
 import de.nikocraft.challengeserver.listeners.InteractListeners;
 import de.nikocraft.challengeserver.listeners.PlayerListeners;
-import de.nikocraft.challengeserver.minigames.ParkourManager;
+import de.nikocraft.challengeserver.minigame.parkours.ParkourManager;
 import de.nikocraft.challengeserver.tablists.TablistManager;
 import de.nikocraft.challengeserver.timers.Timer;
 import de.nikocraft.challengeserver.utils.Config;

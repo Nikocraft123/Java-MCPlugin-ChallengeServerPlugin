@@ -4,7 +4,7 @@ package de.nikocraft.challengeserver.listeners;
 
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
-import de.nikocraft.challengeserver.minigames.Parkour;
+import de.nikocraft.challengeserver.minigame.parkours.Parkour;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

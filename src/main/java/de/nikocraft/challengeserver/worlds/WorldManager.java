@@ -8,6 +8,8 @@ import com.onarandombox.multiverseinventories.WorldGroup;
 import com.onarandombox.multiverseinventories.profile.WorldGroupManager;
 import com.onarandombox.multiverseinventories.share.Sharables;
 import de.nikocraft.challengeserver.Main;
+import de.nikocraft.challengeserver.inventories.players.PlayerInventoryDefault;
+import de.nikocraft.challengeserver.minigames.parkours.Parkour;
 import de.nikocraft.challengeserver.utils.Config;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.*;
@@ -53,8 +55,20 @@ public class WorldManager {
 
         }
 
+        //Remove the player from all the parkour list
+        for (Parkour parkour : Main.getInstance().getParkourManager().getParkours()) {
+            parkour.removePlayer(player);
+        }
+
         //Teleport the player to lobby
         Main.getInstance().getMultiverseCore().teleportPlayer(player, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
+
+        //Set the inventory manager for the player
+        Main.getInstance().getPlayerInventoryManager().setPlayerInventoryMode(player, new PlayerInventoryDefault(player), false);
+        Main.getInstance().getPlayerInventoryManager().setPlayerInventoryActive(player, true, true);
+
+        //Set the player gamemode
+        player.setGameMode(GameMode.ADVENTURE);
 
         //Give the player effects
         player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 255, false, false));
@@ -91,6 +105,14 @@ public class WorldManager {
         player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
         player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
         player.removePotionEffect(PotionEffectType.SATURATION);
+
+        //Set the player gamemode
+        player.setGameMode(GameMode.SURVIVAL);
+
+        //Remove the player from all the parkour list
+        for (Parkour parkour : Main.getInstance().getParkourManager().getParkours()) {
+            parkour.removePlayer(player);
+        }
 
         //Teleport the player to game world player position
         Main.getInstance().getMultiverseCore().teleportPlayer(player, player, getPlayerPosition(player));

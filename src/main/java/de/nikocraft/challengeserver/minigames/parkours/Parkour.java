@@ -1,9 +1,11 @@
 //PACKAGE
-package de.nikocraft.challengeserver.minigame.parkours;
+package de.nikocraft.challengeserver.minigames.parkours;
 
 
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
+import de.nikocraft.challengeserver.inventories.players.PlayerInventoryDefault;
+import de.nikocraft.challengeserver.inventories.players.PlayerInventoryParkour;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -158,57 +160,65 @@ public class Parkour {
     //Handle movement
     public void handleMovement(PlayerMoveEvent event) {
 
-        //Check for start
-        if (start.distance(event.getPlayer().getLocation()) < 1.5) {
+        try {
 
-            //If the player is already in the map, cancel
-            if (!players.containsKey(event.getPlayer().getName())) {
+            //Check for start
+            if (start.distance(event.getPlayer().getLocation()) < 1.5) {
 
-                //Remove the player from all other parkours
-                for (Parkour parkour : Main.getInstance().getParkourManager().getParkours()) {
-                    parkour.removePlayer(event.getPlayer());
+                //If the player is already in the map, cancel
+                if (!players.containsKey(event.getPlayer().getName())) {
+
+                    //Remove the player from all other parkours
+                    for (Parkour parkour : Main.getInstance().getParkourManager().getParkours()) {
+                        parkour.removePlayer(event.getPlayer());
+                    }
+
+                    //Add the player to the parkour
+                    addPlayer(event.getPlayer());
+
+                    //Set player inventory mode
+                    Main.getInstance().getPlayerInventoryManager().setPlayerInventoryMode(event.getPlayer(), new PlayerInventoryParkour(event.getPlayer()), true);
+
+                    //Send a message to the player
+                    event.getPlayer().sendMessage(ParkourManager.getChatPrefix() + ChatColor.GREEN +
+                            "Welcome to this parkour! Can you finish it?\n \n" + ChatColor.YELLOW +
+                            "Use the items in your hotbar to teleport to your last checkpoint or exit the parkour. " +
+                            "Alternatively you can use the commands '/parkour_checkpoint' and '/parkour_cancel'.");
+
                 }
 
-                //Add the player to the parkour
-                addPlayer(event.getPlayer());
-
-                //Set player inventory
-                Main.getInstance().getParkourManager().setPlayerInventoryItems(event.getPlayer());
-
-                //Send a message to the player
-                event.getPlayer().sendMessage(ParkourManager.getChatPrefix() + ChatColor.GREEN +
-                        "Welcome to this parkour! Can you finish it?\n \n" + ChatColor.YELLOW +
-                        "Use the items in your hotbar to teleport to your last checkpoint or exit the parkour. " +
-                        "Alternatively you can use the commands '/parkour_checkpoint' and '/parkour_cancel'.");
-
             }
 
-        }
+            //Check for destination
+            if (destination.distance(event.getPlayer().getLocation()) < 1.5) {
 
-        //Check for destination
-        if (destination.distance(event.getPlayer().getLocation()) < 1.5) {
-
-            //Remove the player from the parkour
-            if (removePlayer(event.getPlayer()))
-                event.getPlayer().sendMessage(ParkourManager.getChatPrefix() + ChatColor.GREEN +
-                        "CONGRATULATION! You finished this parkour successfully!\n");
-
-            //Teleport the player to spawn
-            Main.getInstance().getMultiverseCore().teleportPlayer(event.getPlayer(), event.getPlayer(), new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
-
-        }
-
-        //Check for checkpoints
-        for (Location checkpoint : checkpoints) {
-            if (checkpoint.distance(event.getPlayer().getLocation()) < 1.5) {
-
-                //Set the player checkpoint to the parkour
-                if (setCheckpoint(event.getPlayer(), checkpoints.indexOf(checkpoint) + 1))
+                //Remove the player from the parkour
+                if (removePlayer(event.getPlayer()))
                     event.getPlayer().sendMessage(ParkourManager.getChatPrefix() + ChatColor.GREEN +
-                            "CONGRATULATION! You successfully reached checkpoint " + (checkpoints.indexOf(checkpoint) + 1) + ". Hang on!\n");
+                            "CONGRATULATION! You finished this parkour successfully!\n");
+
+                //Teleport the player to spawn
+                Main.getInstance().getMultiverseCore().teleportPlayer(event.getPlayer(), event.getPlayer(), new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
+
+                //Set player inventory mode
+                Main.getInstance().getPlayerInventoryManager().setPlayerInventoryMode(event.getPlayer(), new PlayerInventoryDefault(event.getPlayer()), true);
 
             }
+
+            //Check for checkpoints
+            for (Location checkpoint : checkpoints) {
+                if (checkpoint.distance(event.getPlayer().getLocation()) < 1.5) {
+
+                    //Set the player checkpoint to the parkour
+                    if (setCheckpoint(event.getPlayer(), checkpoints.indexOf(checkpoint) + 1))
+                        event.getPlayer().sendMessage(ParkourManager.getChatPrefix() + ChatColor.GREEN +
+                                "CONGRATULATION! You successfully reached checkpoint " + (checkpoints.indexOf(checkpoint) + 1) + ". Hang on!\n");
+
+                }
+            }
+
         }
+        catch (IllegalArgumentException ignored) {}
 
     }
 

@@ -4,8 +4,9 @@ package de.nikocraft.challengeserver.commands;
 
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
-import de.nikocraft.challengeserver.minigame.parkours.Parkour;
-import de.nikocraft.challengeserver.minigame.parkours.ParkourManager;
+import de.nikocraft.challengeserver.inventories.players.PlayerInventoryDefault;
+import de.nikocraft.challengeserver.minigames.parkours.Parkour;
+import de.nikocraft.challengeserver.minigames.parkours.ParkourManager;
 import de.nikocraft.challengeserver.utils.CommandUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -48,6 +49,9 @@ public class ParkourCancelCommand implements CommandExecutor, TabCompleter {
 
                 //Teleport the player to the spawn
                 Main.getInstance().getMultiverseCore().teleportPlayer(player, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
+
+                //Set player inventory mode
+                Main.getInstance().getPlayerInventoryManager().setPlayerInventoryMode(player, new PlayerInventoryDefault(player), true);
 
                 //Send a message to the player
                 player.sendMessage(ParkourManager.getChatPrefix() + ChatColor.YELLOW + "Cancelled parkour.");

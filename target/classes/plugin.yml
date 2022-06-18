@@ -63,3 +63,9 @@ commands:
     usage: "No arguments"
     permission: server.parkour.play
     permission-message: "§cYou haven't the permission to play the parkour!"
+  inventory:
+    aliases: [ inv ]
+    description: "Control inventory mode and see other inventories [OPERATOR]"
+    usage: "Type '/inventory help' for help!"
+    permission: server.inventory.control
+    permission-message: "§cYou haven't the permission to control your inventory mode and see other inventories!"

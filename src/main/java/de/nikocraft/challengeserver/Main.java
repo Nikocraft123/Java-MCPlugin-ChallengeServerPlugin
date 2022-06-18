@@ -9,11 +9,9 @@ import de.nikocraft.challengeserver.challenges.ChallengeManager;
 import de.nikocraft.challengeserver.challenges.deathrun.DeathrunChallenge;
 import de.nikocraft.challengeserver.commands.*;
 import de.nikocraft.challengeserver.inventories.enderchests.EnderchestManager;
-import de.nikocraft.challengeserver.listeners.ChatListeners;
-import de.nikocraft.challengeserver.listeners.ConnectionListeners;
-import de.nikocraft.challengeserver.listeners.InteractListeners;
-import de.nikocraft.challengeserver.listeners.PlayerListeners;
-import de.nikocraft.challengeserver.minigame.parkours.ParkourManager;
+import de.nikocraft.challengeserver.inventories.players.PlayerInventoryManager;
+import de.nikocraft.challengeserver.listeners.*;
+import de.nikocraft.challengeserver.minigames.parkours.ParkourManager;
 import de.nikocraft.challengeserver.tablists.TablistManager;
 import de.nikocraft.challengeserver.timers.Timer;
 import de.nikocraft.challengeserver.utils.Config;
@@ -48,8 +46,11 @@ public final class Main extends JavaPlugin {
     //The challenge manager for all challenge engines
     private ChallengeManager challengeManager;
 
-    //The parkour manager for all parkour in lobby
+    //The parkour manager for all parkour in the lobby
     private ParkourManager parkourManager;
+
+    //The player inventory manager for players in the lobby
+    private PlayerInventoryManager playerInventoryManager;
 
     //The timer
     private Timer timer;
@@ -104,15 +105,14 @@ public final class Main extends JavaPlugin {
         multiverseCore = (MultiverseCore) Bukkit.getPluginManager().getPlugin("Multiverse-Core");
         multiverseInventories = (MultiverseInventories) Bukkit.getPluginManager().getPlugin("Multiverse-Inventories");
 
-        //Load the lobby world
-        Bukkit.createWorld(new WorldCreator("lobby"));
-
         //Register listeners
         getLogger().info(getPrefix() + "Register listeners ...");
         Bukkit.getPluginManager().registerEvents(new ConnectionListeners(), this);
         Bukkit.getPluginManager().registerEvents(new ChatListeners(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerListeners(), this);
         Bukkit.getPluginManager().registerEvents(new InteractListeners(), this);
+        Bukkit.getPluginManager().registerEvents(new InventoryListeners(), this);
+        Bukkit.getPluginManager().registerEvents(new ItemListeners(), this);
 
         //Register commands
         getLogger().info(getPrefix() + "Register commands ...");
@@ -126,6 +126,7 @@ public final class Main extends JavaPlugin {
         getCommand("challenge").setExecutor(new ChallengeCommand());
         getCommand("parkour_checkpoint").setExecutor(new ParkourCheckpointCommand());
         getCommand("parkour_cancel").setExecutor(new ParkourCancelCommand());
+        getCommand("inventory").setExecutor(new InventoryCommand());
 
         //Define the permission manager
         getLogger().info(getPrefix() + "Load permission system ...");
@@ -145,7 +146,11 @@ public final class Main extends JavaPlugin {
 
         //Define the parkour manager
         getLogger().info(getPrefix() + "Load parkour manager ...");
-        parkourManager = new ParkourManager() ;
+        parkourManager = new ParkourManager();
+
+        //Define the player inventory manager
+        getLogger().info(getPrefix() + "Load player inventory manager ...");
+        playerInventoryManager = new PlayerInventoryManager();
 
         //Define the timer
         getLogger().info(getPrefix() + "Load timer ...");
@@ -230,6 +235,9 @@ public final class Main extends JavaPlugin {
 
     //The parkour manager for all parkour in lobby
     public ParkourManager getParkourManager() { return parkourManager; }
+
+    //The player inventory manager for players in the lobby
+    public PlayerInventoryManager getPlayerInventoryManager() { return playerInventoryManager; }
 
     //The timer
     public Timer getTimer() { return timer; }

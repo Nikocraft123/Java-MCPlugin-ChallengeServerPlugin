@@ -5,6 +5,8 @@ package de.nikocraft.challengeserver.listeners;
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.challenges.deathrun.DeathrunScoreboard;
+import de.nikocraft.challengeserver.inventories.players.PlayerInventoryDefault;
+import de.nikocraft.challengeserver.minigames.parkours.Parkour;
 import de.nikocraft.challengeserver.permissions.CustomPermissibleBase;
 import de.nikocraft.challengeserver.tablists.TablistManager;
 import org.bukkit.ChatColor;
@@ -66,6 +68,10 @@ public class ConnectionListeners implements Listener {
         TablistManager.setTablistHeaderFooter(event.getPlayer());
         TablistManager.setAllPlayerTeams();
 
+        //Set the inventory manager for the player
+        Main.getInstance().getPlayerInventoryManager().setPlayerInventoryMode(event.getPlayer(), new PlayerInventoryDefault(event.getPlayer()), false);
+        Main.getInstance().getPlayerInventoryManager().setPlayerInventoryActive(event.getPlayer(), true, true);
+
     }
 
     //Called, if a player quited
@@ -79,6 +85,14 @@ public class ConnectionListeners implements Listener {
             Main.getInstance().getWorldManager().setPlayerPosition(event.getPlayer());
 
         }
+
+        //Remove the player from all the parkour list
+        for (Parkour parkour : Main.getInstance().getParkourManager().getParkours()) {
+            parkour.removePlayer(event.getPlayer());
+        }
+
+        //Remove the player from the inventory manager
+        Main.getInstance().getPlayerInventoryManager().removePlayer(event.getPlayer());
 
         //Set quit message
         event.setQuitMessage(ChatColor.GRAY + "<< " + ChatColor.DARK_RED + ChatColor.BOLD + event.getPlayer().getName() +

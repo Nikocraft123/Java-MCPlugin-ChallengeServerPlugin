@@ -4,7 +4,7 @@ package de.nikocraft.challengeserver.listeners;
 
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
-import de.nikocraft.challengeserver.minigame.parkours.Parkour;
+import de.nikocraft.challengeserver.minigames.parkours.Parkour;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -45,7 +45,8 @@ public class PlayerListeners implements Listener {
             //Check for portal
             if (player.getLocation().getX() >= -5.0 & player.getLocation().getX() <= 6.0 &
                     player.getLocation().getY() >= 100.0 & player.getLocation().getY() <= 110.0 &
-                    player.getLocation().getZ() >= 39.0 & player.getLocation().getZ() <= 40.0) {
+                    player.getLocation().getZ() >= 39.0 & player.getLocation().getZ() <= 40.0 &
+                    player.hasPermission("server.world.teleport")) {
                 Main.getInstance().getWorldManager().teleportToGame(player, true);
             }
 

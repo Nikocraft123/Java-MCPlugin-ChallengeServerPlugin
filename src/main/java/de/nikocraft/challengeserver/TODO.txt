@@ -1,7 +1,6 @@
 Barrier particle at border
 Fix scoreboard bug
 Add bossbar
-Fix permission problems
 Add info command
-Add holograms
 Add hall of fame
+See inventories

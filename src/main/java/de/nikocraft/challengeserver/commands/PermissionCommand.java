@@ -159,16 +159,28 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
 
                     case "add":
                         //Add completes to result
-                        result.add("server.");
-                        result.add("bukkit.");
-                        result.add("spigot.");
-                        result.add("minecraft.");
-                        result.add("*");
-                        result.add("!");
-                        result.add("!server.");
-                        result.add("!bukkit.");
-                        result.add("!spigot.");
-                        result.add("!minecraft.");
+                        switch (args[3].split("[.]").length) {
+                            case 1:
+                                result.add("*");
+                                result.add("!");
+                                result.add("server.");
+                                result.add("bukkit.");
+                                result.add("spigot.");
+                                result.add("minecraft.");
+                                result.add("multiverse.");
+                                result.add("worldedit.");
+                                result.add("!server.");
+                                result.add("!bukkit.");
+                                result.add("!spigot.");
+                                result.add("!minecraft.");
+                                result.add("!multiverse.");
+                                result.add("!worldedit.");
+                            case 2:
+                                result.add(args[3].split("[.]")[0] + ".*");
+                                result.add(args[3].split("[.]")[0] + ".command.");
+                            default:
+                                result.add(args[3].split("[.]")[args[3].split("[.]").length - 2] + ".*");
+                        }
 
                         break;
                     case "remove":

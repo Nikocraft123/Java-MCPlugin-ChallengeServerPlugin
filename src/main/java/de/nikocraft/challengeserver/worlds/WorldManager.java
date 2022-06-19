@@ -32,6 +32,9 @@ public class WorldManager {
     //Resetting
     private boolean resetting = false;
 
+    //Open
+    private boolean open = false;
+
 
     //CONSTRUCTOR
     public WorldManager() {
@@ -92,6 +95,15 @@ public class WorldManager {
             return false;
         }
 
+        //Check is the world closed and the player has no world permission
+        if (!isOpen() && !player.hasPermission("server.world.control")) {
+            //Send message to player
+            if (sendMessage) player.sendMessage(getChatPrefix() + ChatColor.RED + "Cannot join game world because it is closed!");
+
+            //Return false
+            return false;
+        }
+
         //Check if the player is in the game world
         if (Arrays.asList("world", "world_nether", "world_the_end").contains(player.getLocation().getWorld().getName())) {
             //Send message to player
@@ -138,8 +150,13 @@ public class WorldManager {
         Main.getInstance().getLogger().info(getConsolePrefix() + "Move all players to lobby ...");
         for (Player player : Bukkit.getOnlinePlayers()) {
 
-            //Teleport the player to lobby
-            teleportToLobby(player, true);
+            //Check if the player is in the game world
+            if (Arrays.asList("world", "world_nether", "world_the_end").contains(player.getLocation().getWorld().getName())) {
+
+                //Teleport the player to lobby
+                teleportToLobby(player, true);
+
+            }
 
         }
 
@@ -313,10 +330,16 @@ public class WorldManager {
     //Resetting
     public boolean isResetting() { return resetting; }
 
+    //Open
+    public boolean isOpen() { return open; }
+
 
     //SETTERS
 
     //Resetting
     public void setResetting(boolean resetting) { this.resetting = resetting; }
+
+    //Open
+    public void setOpen(boolean open) { this.open = open; }
 
 }

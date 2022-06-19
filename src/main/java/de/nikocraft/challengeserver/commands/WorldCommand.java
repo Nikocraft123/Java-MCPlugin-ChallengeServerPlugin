@@ -123,7 +123,7 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                         }
 
                         //Teleport the targeted player to the lobby
-                        Main.getInstance().getWorldManager().teleportToLobby(target, true);
+                        Main.getInstance().getWorldManager().teleportToLobby(target, false);
 
                         //Send message to sender
                         if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "'" + ChatColor.ITALIC + target.getName() + ChatColor.GREEN + "' successfully teleported to lobby world!");
@@ -177,13 +177,13 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                         }
 
                         //Teleport the player to the lobby
-                        boolean resetting = !Main.getInstance().getWorldManager().teleportToGame(target, true);
+                        boolean resettingOrClosed = !Main.getInstance().getWorldManager().teleportToGame(target, false);
 
-                        //If the world is resetting
-                        if (resetting) {
+                        //If the world is resetting or closed
+                        if (resettingOrClosed) {
                             //Send message to sender
-                            if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Cannot join game world because it is resetting!");
-                            else sender.sendMessage(CommandUtils.getConsolePrefix() + "Cannot join game world because it is resetting!");
+                            if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Cannot join game world because it is resetting or closed!");
+                            else sender.sendMessage(CommandUtils.getConsolePrefix() + "Cannot join game world because it is resetting or closed!");
 
                             //Return true
                             return true;
@@ -199,6 +199,65 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                 }
 
             }
+            case "open":
+            case "o":
+
+                //If the world is already open
+                if (Main.getInstance().getWorldManager().isOpen()) {
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "The world is already open!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "The world is already open!");
+
+                    //Return false
+                    return false;
+                }
+
+                //Set the world to open
+                Main.getInstance().getWorldManager().setOpen(true);
+
+                //Send message to sender
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "World opened!");
+                else sender.sendMessage(CommandUtils.getConsolePrefix() + "World opened!");
+
+                //Return true
+                return true;
+
+            case "close":
+            case "c":
+
+                //If the world is already closed
+                if (!Main.getInstance().getWorldManager().isOpen()) {
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "The world is already closed!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "The world is already closed!");
+
+                    //Return false
+                    return false;
+                }
+
+                //Loop for all online players
+                for (Player player : Bukkit.getOnlinePlayers()) {
+
+                    //Check if the player is in the game world
+                    if (Arrays.asList("world", "world_nether", "world_the_end").contains(player.getLocation().getWorld().getName())) {
+
+                        //Teleport the player to lobby
+                        Main.getInstance().getWorldManager().teleportToLobby(player, true);
+
+                    }
+
+                }
+
+                //Set the world to closed
+                Main.getInstance().getWorldManager().setOpen(false);
+
+                //Send message to sender
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "World closed!");
+                else sender.sendMessage(CommandUtils.getConsolePrefix() + "World closed!");
+
+                //Return true
+                return true;
+
             case "help":
             case "h":
 
@@ -210,7 +269,9 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                             ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world help|h\n" +
                             ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world reset|r <seed> confirm\n" +
                             ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world lobby|l <player>\n" +
-                            ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world game|g <player>\n");
+                            ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world game|g <player>\n" +
+                            ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world open|o\n" +
+                            ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world close|c\n");
                 }
                 else {
                     sender.sendMessage(CommandUtils.getConsolePrefix() + "Help for the command '/world':\n \nAlias: '/wd'" +
@@ -218,7 +279,9 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                             "- /world help|h\n" +
                             "- /world reset|r <seed> confirm\n" +
                             "- /world lobby|l <player>\n" +
-                            "- /world game|g <player>\n");
+                            "- /world game|g <player>\n" +
+                            "- /world open|o\n" +
+                            "- /world close|c\n");
                 }
 
                 //Return true
@@ -253,6 +316,8 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                 result.add("reset");
                 result.add("lobby");
                 result.add("game");
+                result.add("open");
+                result.add("close");
                 result.add("help");
 
             case 2:

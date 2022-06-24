@@ -4,6 +4,7 @@ package de.nikocraft.challengeserver.timers;
 
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
+import de.nikocraft.challengeserver.challenges.Challenge;
 import de.nikocraft.challengeserver.utils.Config;
 import de.nikocraft.challengeserver.utils.MathUtils;
 import net.md_5.bungee.api.ChatMessageType;
@@ -81,13 +82,15 @@ public class Timer {
             @Override
             public void run() {
 
-                //If the timer is not running, return
+                //If the timer is running
                 if (isRunning()) {
 
                     //If the mode "stop":
                     if (getMode().equals("stop")) {
+
                         //Time + 1
                         setTime(getTime() + 1);
+
                     }
 
                     //If the mode "count":
@@ -103,8 +106,21 @@ public class Timer {
                             Bukkit.broadcastMessage(getChatPrefix() + ChatColor.YELLOW +
                                     ChatColor.UNDERLINE + "The timer run off!");
 
-                            //TODO
-                            Main.getInstance().getDeathrunChallenge().timeOver();
+                            //Get the active challenge
+                            Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();
+
+                            //If the challenge is not null
+                            if (challenge != null) {
+
+                                //If the challenge is running
+                                if (challenge.isRunning()) {
+
+                                    //End the challenge
+                                    challenge.end();
+
+                                }
+
+                            }
 
                             //Call timer reset
                             TimerReset();

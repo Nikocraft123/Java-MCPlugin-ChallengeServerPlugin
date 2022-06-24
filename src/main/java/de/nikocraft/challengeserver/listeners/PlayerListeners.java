@@ -4,13 +4,18 @@ package de.nikocraft.challengeserver.listeners;
 
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
+import de.nikocraft.challengeserver.challenges.Challenge;
 import de.nikocraft.challengeserver.minigames.parkours.Parkour;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 
 //PLAYER LISTENER CLASS
@@ -25,8 +30,16 @@ public class PlayerListeners implements Listener {
         //Get the player
         Player player = event.getPlayer();
 
-        //TODO
-        Main.getInstance().getDeathrunChallenge().onMove(event);
+        //Get the active challenge
+        Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();
+
+        //If the challenge is not null
+        if (challenge != null) {
+
+            //Call the challenge event
+            challenge.onMove(event);
+
+        }
 
         //Check if the player is in the lobby
         if (player.getLocation().getWorld().getName().equals("lobby")) {
@@ -54,6 +67,74 @@ public class PlayerListeners implements Listener {
             for (Parkour parkour : Main.getInstance().getParkourManager().getParkours()) {
                 parkour.handleMovement(event);
             }
+
+        }
+
+    }
+
+    //Called, if a player died
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event) {
+
+        //Get the active challenge
+        Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();
+
+        //If the challenge is not null
+        if (challenge != null) {
+
+            //Call the challenge event
+            challenge.onDeath(event);
+
+        }
+
+    }
+
+    //Called, if a player respawned
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent event) {
+
+        //Get the active challenge
+        Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();
+
+        //If the challenge is not null
+        if (challenge != null) {
+
+            //Call the challenge event
+            challenge.onRespawn(event);
+
+        }
+
+    }
+
+    //Called, if a player entered a bed
+    @EventHandler
+    public void onSleep(PlayerBedEnterEvent event) {
+
+        //Get the active challenge
+        Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();
+
+        //If the challenge is not null
+        if (challenge != null) {
+
+            //Call the challenge event
+            challenge.onSleep(event);
+
+        }
+
+    }
+
+    //Called, if a player entered a portal
+    @EventHandler
+    public void onPortal(PlayerPortalEvent event) {
+
+        //Get the active challenge
+        Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();
+
+        //If the challenge is not null
+        if (challenge != null) {
+
+            //Call the challenge event
+            challenge.onPortal(event);
 
         }
 

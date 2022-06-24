@@ -21,6 +21,9 @@ public class ChallengeManager {
     //The map of all challenges
     private final Map<String, Challenge> challenges;
 
+    //Active challenge
+    private String active;
+
 
     //CONSTRUCTOR
     public ChallengeManager() {
@@ -31,6 +34,10 @@ public class ChallengeManager {
         //Define all challenges
         challenges.put("deathrun", new DeathrunChallenge());
 
+        //Define active with an empty string
+        active = "";
+
+        //Run the update scheduler
         run();
 
     }
@@ -41,18 +48,102 @@ public class ChallengeManager {
     //Run
     private void run() {
 
-        //Scheduler
+        //Scheduler update
         Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
             //Run
             @Override
             public void run() {
 
-                Main.getInstance().getDeathrunChallenge().update();
+                //Get the active challenge
+                Challenge challenge = getActiveChallenge();
+
+                //If the challenge is not null
+                if (challenge != null) {
+
+                    //If the challenge is running
+                    if (challenge.isRunning()) {
+
+                        //Update the challenge
+                        challenge.update();
+
+                    }
+
+                }
 
             }
 
         }, 20, 20);
+
+        //Scheduler fast update
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+
+            //Run
+            @Override
+            public void run() {
+
+                //Get the active challenge
+                Challenge challenge = getActiveChallenge();
+
+                //If the challenge is not null
+                if (challenge != null) {
+
+                    //If the challenge is running
+                    if (challenge.isRunning()) {
+
+                        //Update the challenge
+                        challenge.fastUpdate();
+
+                    }
+
+                }
+
+            }
+
+        }, 5, 5);
+
+        //Scheduler tick update
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
+
+            //Run
+            @Override
+            public void run() {
+
+                //Get the active challenge
+                Challenge challenge = getActiveChallenge();
+
+                //If the challenge is not null
+                if (challenge != null) {
+
+                    //If the challenge is running
+                    if (challenge.isRunning()) {
+
+                        //Update the challenge
+                        challenge.tickUpdate();
+
+                    }
+
+                }
+
+            }
+
+        }, 1, 1);
+
+    }
+
+    //Get active challenge
+    public Challenge getActiveChallenge() {
+
+        //Return the active challenge from the map
+        return challenges.get(active);
+
+    }
+
+    //Set active challenge
+    public void setActiveChallenge(String name) {
+
+        //Set the name of the new active challenge
+        active = name;
 
     }
 

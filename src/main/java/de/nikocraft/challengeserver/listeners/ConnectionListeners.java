@@ -4,11 +4,13 @@ package de.nikocraft.challengeserver.listeners;
 
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
+import de.nikocraft.challengeserver.challenges.Challenge;
 import de.nikocraft.challengeserver.challenges.deathrun.DeathrunScoreboard;
 import de.nikocraft.challengeserver.inventories.players.PlayerInventoryDefault;
 import de.nikocraft.challengeserver.minigames.parkours.Parkour;
 import de.nikocraft.challengeserver.permissions.CustomPermissibleBase;
 import de.nikocraft.challengeserver.tablists.TablistManager;
+import de.nikocraft.challengeserver.utils.CommandUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_18_R2.entity.CraftHumanEntity;
 import org.bukkit.event.EventHandler;
@@ -61,8 +63,15 @@ public class ConnectionListeners implements Listener {
         event.setJoinMessage(ChatColor.GRAY + ">> " + ChatColor.DARK_GREEN + ChatColor.BOLD + event.getPlayer().getName() +
                 ChatColor.RESET + ChatColor.GRAY + " joined the server!");
 
-        //Set the sidebar scoreboard
-        Main.getInstance().getDeathrunChallenge().getScoreboards().add(new DeathrunScoreboard(event.getPlayer()));
+        //Get the active challenge
+        Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();
+
+        //If the challenge is null
+        if (challenge != null) {
+
+            challenge.onJoin(event);
+
+        }
 
         //Set the tablist of the player
         TablistManager.setTablistHeaderFooter(event.getPlayer());
@@ -93,6 +102,16 @@ public class ConnectionListeners implements Listener {
 
         //Remove the player from the inventory manager
         Main.getInstance().getPlayerInventoryManager().removePlayer(event.getPlayer());
+
+        //Get the active challenge
+        Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();
+
+        //If the challenge is null
+        if (challenge != null) {
+
+            challenge.onQuit(event);
+
+        }
 
         //Set quit message
         event.setQuitMessage(ChatColor.GRAY + "<< " + ChatColor.DARK_RED + ChatColor.BOLD + event.getPlayer().getName() +

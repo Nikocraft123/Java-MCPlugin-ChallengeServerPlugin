@@ -21,15 +21,12 @@ public class TablistManager {
     public static void setTablistHeaderFooter(Player player) {
 
         //Set the header of the tablist
-        player.setPlayerListHeader(ChatColor.DARK_GRAY.toString() + ChatColor.STRIKETHROUGH + "             " + ChatColor.GRAY +
-                " [ " + ChatColor.GOLD + ChatColor.BOLD + "CHALLENGE SERVER" + ChatColor.GRAY + " ] " + ChatColor.DARK_GRAY +
-                ChatColor.STRIKETHROUGH + "             " +
+        player.setPlayerListHeader(ChatColor.GRAY + "          [ " + ChatColor.GOLD + ChatColor.BOLD + "CHALLENGE SERVER" + ChatColor.GRAY + " ]          " +
                 ChatColor.RED + ChatColor.BOLD + "\n" + "!Vorsicht ALPHA Server!" + "\n");
 
         //Set the footer of the tablist
-        player.setPlayerListFooter("\n" + ChatColor.DARK_GRAY.toString() + ChatColor.STRIKETHROUGH + "            " + ChatColor.GRAY +
-                " [ " + ChatColor.DARK_PURPLE + "IP: 5.tcp.eu.ngrok.io:17882" + ChatColor.ITALIC + Main.getIp() + ChatColor.GRAY + " ] " + ChatColor.DARK_GRAY +
-                ChatColor.STRIKETHROUGH + "            ");
+        player.setPlayerListFooter("\n" + ChatColor.GRAY +
+                "[ " + ChatColor.DARK_PURPLE + "IP: " + Main.getInstance().getServerIP() + ChatColor.ITALIC + Main.getIp() + ChatColor.GRAY + " ]");
 
     }
 

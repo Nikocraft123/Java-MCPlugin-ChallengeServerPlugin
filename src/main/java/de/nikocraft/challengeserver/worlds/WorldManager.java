@@ -8,6 +8,7 @@ import com.onarandombox.multiverseinventories.WorldGroup;
 import com.onarandombox.multiverseinventories.profile.WorldGroupManager;
 import com.onarandombox.multiverseinventories.share.Sharables;
 import de.nikocraft.challengeserver.Main;
+import de.nikocraft.challengeserver.challenges.Challenge;
 import de.nikocraft.challengeserver.inventories.players.PlayerInventoryDefault;
 import de.nikocraft.challengeserver.minigames.parkours.Parkour;
 import de.nikocraft.challengeserver.utils.Config;
@@ -78,6 +79,17 @@ public class WorldManager {
         player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 99999, 255, false, false));
         player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 99999, 255, false, false));
 
+        //Get the active challenge
+        Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();
+
+        //If the challenge is not null
+        if (challenge != null) {
+
+            //Call the challenge event
+            challenge.onLeaveGame(player);
+
+        }
+
         //Send message to player
         if (sendMessage) player.sendMessage(getChatPrefix() + ChatColor.GREEN + "You successfully teleported to lobby world!");
 
@@ -128,6 +140,17 @@ public class WorldManager {
 
         //Teleport the player to game world player position
         Main.getInstance().getMultiverseCore().teleportPlayer(player, player, getPlayerPosition(player));
+
+        //Get the active challenge
+        Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();
+
+        //If the challenge is not null
+        if (challenge != null) {
+
+            //Call the challenge event
+            challenge.onEnterGame(player);
+
+        }
 
         //Send message to player
         if (sendMessage) player.sendMessage(getChatPrefix() + ChatColor.GREEN + "You successfully teleported to game world!");

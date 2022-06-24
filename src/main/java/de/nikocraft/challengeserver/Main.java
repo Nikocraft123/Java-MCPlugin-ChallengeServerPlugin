@@ -5,8 +5,8 @@ package de.nikocraft.challengeserver;
 //IMPORTS
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.multiverseinventories.MultiverseInventories;
+import de.nikocraft.challengeserver.challenges.Challenge;
 import de.nikocraft.challengeserver.challenges.ChallengeManager;
-import de.nikocraft.challengeserver.challenges.deathrun.DeathrunChallenge;
 import de.nikocraft.challengeserver.commands.*;
 import de.nikocraft.challengeserver.inventories.enderchests.EnderchestManager;
 import de.nikocraft.challengeserver.inventories.players.PlayerInventoryManager;
@@ -18,7 +18,6 @@ import de.nikocraft.challengeserver.utils.Config;
 import de.nikocraft.challengeserver.permissions.PermissionManager;
 import de.nikocraft.challengeserver.worlds.WorldManager;
 import org.bukkit.Bukkit;
-import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -33,6 +32,9 @@ public final class Main extends JavaPlugin {
 
     //The plugin prefix
     private static final String prefix = "[Challenge Server Plugin] ";
+
+    //The IP of the server
+    private String serverIP = "Unknown";
 
     //The permission manager of the permission system
     private PermissionManager permissionManager;
@@ -70,9 +72,6 @@ public final class Main extends JavaPlugin {
     //The multiverse api
     private MultiverseCore multiverseCore;
     private MultiverseInventories multiverseInventories;
-
-    //TODO
-    private DeathrunChallenge deathrunChallenge;
 
 
     //OVERRIDE METHODS
@@ -127,6 +126,7 @@ public final class Main extends JavaPlugin {
         getCommand("parkour_checkpoint").setExecutor(new ParkourCheckpointCommand());
         getCommand("parkour_cancel").setExecutor(new ParkourCancelCommand());
         getCommand("inventory").setExecutor(new InventoryCommand());
+        getCommand("ip").setExecutor(new IpCommand());
 
         //Define the permission manager
         getLogger().info(getPrefix() + "Load permission system ...");
@@ -161,8 +161,10 @@ public final class Main extends JavaPlugin {
         TablistManager.setAllPlayerTeams();
         for (Player player : Bukkit.getOnlinePlayers()) TablistManager.setTablistHeaderFooter(player);
 
-        //TODO
-        deathrunChallenge = new DeathrunChallenge();
+        //Deactivate PVP in the lobby
+        Bukkit.getWorld("lobby").setPVP(false);
+        Bukkit.getWorld("lobby_nether").setPVP(false);
+        Bukkit.getWorld("lobby_the_end").setPVP(false);
 
         //Send info
         getLogger().info(getPrefix() + "Plugin enabled.");
@@ -176,6 +178,20 @@ public final class Main extends JavaPlugin {
         //Save all enderchests
         getLogger().info(getPrefix() + "Save enderchests ...");
         enderchestManager.save();
+
+        //Get the active challenge
+        Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();
+
+        //If the challenge is not null
+        if (challenge != null) {
+
+            //If the challenge is running, end it
+            if (challenge.isRunning()) challenge.end();
+
+            //Unload the challenge
+            challenge.unload();
+
+        }
 
         //Save dimensions of the players
         getLogger().info(getPrefix() + "Save game world ...");
@@ -221,6 +237,9 @@ public final class Main extends JavaPlugin {
     //The plugin prefix
     public static String getPrefix() { return ""; }
 
+    //The IP of the server
+    public String getServerIP() { return serverIP; }
+
     //The permission manager of the permission system
     public PermissionManager getPermissionManager() { return permissionManager; }
 
@@ -258,7 +277,10 @@ public final class Main extends JavaPlugin {
     public MultiverseCore getMultiverseCore() { return multiverseCore; }
     public MultiverseInventories getMultiverseInventories() { return multiverseInventories; }
 
-    //TODO
-    public DeathrunChallenge getDeathrunChallenge() { return deathrunChallenge; }
+
+    //SETTERS
+
+    //The IP of the server
+    public void setServerIP(String serverIP) { this.serverIP = serverIP; }
 
 }

@@ -69,3 +69,8 @@ commands:
     usage: "Type '/inventory help' for help!"
     permission: server.inventory.control
     permission-message: "§cYou haven't the permission to control your inventory mode and see other inventories!"
+  ip:
+    description: "Set the display server IP [OPERATOR]"
+    usage: "/ip <server-ip>"
+    permission: server.config.ip
+    permission-message: "§cYou haven't the permission to set the server IP!"

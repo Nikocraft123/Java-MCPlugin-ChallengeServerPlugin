@@ -2,12 +2,15 @@
 package de.nikocraft.challengeserver.utils;
 
 
+//IMPORTS
+import de.nikocraft.challengeserver.tablists.TablistManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
+
 
 //SCOREBOARD BUILDER CLASS
 public abstract class ScoreboardBuilder {
@@ -29,10 +32,12 @@ public abstract class ScoreboardBuilder {
         this.player = player;
 
         //Create a new scoreboard for the player
-        if (player.getScoreboard().equals(Bukkit.getScoreboardManager().getMainScoreboard()))
+        if (player.getScoreboard().equals(Bukkit.getScoreboardManager().getMainScoreboard())) {
             player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+            TablistManager.setAllPlayerTeams();
+        }
 
-        //Set the new player scoreboard
+        //Get the new player scoreboard
         scoreboard = player.getScoreboard();
 
         //Unregister old display objective
@@ -44,6 +49,9 @@ public abstract class ScoreboardBuilder {
 
         //Create the scoreboard
         create();
+
+        //Update the scoreboard
+        update();
 
     }
 
@@ -81,6 +89,14 @@ public abstract class ScoreboardBuilder {
 
         //Show score
         showScore(score);
+
+    }
+
+    //Remove a score
+    public void removeScore(int score) {
+
+        //Hide score
+        hideScore(score);
 
     }
 
@@ -154,5 +170,19 @@ public abstract class ScoreboardBuilder {
         scoreboard.resetScores(entry.getName());
 
     }
+
+    //Delete the scoreboard
+    public void delete() {
+
+        //Unregister the display objective
+        objective.unregister();
+
+    }
+
+
+    //GETTERS
+
+    //The player of the scoreboard
+    public Player getPlayer() { return player; }
 
 }

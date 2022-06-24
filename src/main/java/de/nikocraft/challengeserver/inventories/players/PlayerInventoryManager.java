@@ -3,7 +3,9 @@ package de.nikocraft.challengeserver.inventories.players;
 
 
 //IMPORTS
+import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.utils.PlayerInventoryBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.*;
@@ -29,6 +31,15 @@ public class PlayerInventoryManager {
         //Define the inventory and active map
         inventories = new HashMap<>();
         inventoryActive = new HashMap<>();
+
+        //Loop for all online players
+        for (Player player : Bukkit.getOnlinePlayers()) {
+
+            //Set the inventory manager for the player
+            setPlayerInventoryMode(player, new PlayerInventoryDefault(player), false);
+            setPlayerInventoryActive(player, true, true);
+
+        }
 
     }
 

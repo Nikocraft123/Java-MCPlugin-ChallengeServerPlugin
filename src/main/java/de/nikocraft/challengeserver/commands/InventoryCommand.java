@@ -91,7 +91,7 @@ public class InventoryCommand implements CommandExecutor, TabCompleter {
                         ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/inv help|h\n" +
                         ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/inv activate|a\n" +
                         ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/inv deactivate|d\n" +
-                        ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/inv see|s <player>\n");
+                        ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/inv see|s <player>\n ");
 
                 //Return true
                 return true;
@@ -121,6 +121,7 @@ public class InventoryCommand implements CommandExecutor, TabCompleter {
             result.add("activate");
             result.add("deactivate");
             result.add("see");
+            result.add("help");
         }
 
         //Return the formatted result

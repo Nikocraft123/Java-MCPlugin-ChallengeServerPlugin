@@ -7,6 +7,7 @@ import de.nikocraft.challengeserver.Main;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 
 
 //INVENTORY LISTENER CLASS
@@ -20,6 +21,15 @@ public class InventoryListeners implements Listener {
 
         //Call the player inventory manager
         Main.getInstance().getPlayerInventoryManager().onClick(event);
+
+    }
+
+    //Called, if a player dragged
+    @EventHandler
+    public void onDrag(InventoryDragEvent event) {
+
+        //Call the player inventory manager
+        Main.getInstance().getPlayerInventoryManager().onDrag(event);
 
     }
 

@@ -34,7 +34,7 @@ public final class Main extends JavaPlugin {
     private static final String prefix = "[Challenge Server Plugin] ";
 
     //The IP of the server
-    private String serverIP = "Unknown";
+    private String serverIP;
 
     //The permission manager of the permission system
     private PermissionManager permissionManager;
@@ -103,6 +103,9 @@ public final class Main extends JavaPlugin {
         //Load the multiverse api
         multiverseCore = (MultiverseCore) Bukkit.getPluginManager().getPlugin("Multiverse-Core");
         multiverseInventories = (MultiverseInventories) Bukkit.getPluginManager().getPlugin("Multiverse-Inventories");
+
+        //Load the ip
+        if (mainConfig.getConfig().contains("ip")) serverIP = mainConfig.getConfig().getString("ip"); else serverIP = "Unknown";
 
         //Register listeners
         getLogger().info(getPrefix() + "Register listeners ...");
@@ -205,6 +208,13 @@ public final class Main extends JavaPlugin {
         getLogger().info(getPrefix() + "Save parkour data ...");
         parkourManager.save();
 
+        //Save player inventory active
+        getLogger().info(getPrefix() + "Save player inventory active ...");
+        playerInventoryManager.save();
+
+        //Save the ip
+        mainConfig.getConfig().set("ip", getServerIP());
+
         //Save configurations
         getLogger().info(getPrefix() + "Save configurations ...");
         mainConfig.save();
@@ -214,17 +224,6 @@ public final class Main extends JavaPlugin {
 
         //Send info
         getLogger().info(getPrefix() + "Plugin disabled.");
-
-    }
-
-
-    //METHODS
-
-    //Get the ip of the server
-    public static String getIp() {
-
-        //Return the ip
-        return Bukkit.getIp();
 
     }
 

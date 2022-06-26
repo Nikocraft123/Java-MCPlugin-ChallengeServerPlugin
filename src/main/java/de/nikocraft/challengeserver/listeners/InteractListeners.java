@@ -6,6 +6,8 @@ package de.nikocraft.challengeserver.listeners;
 import de.nikocraft.challengeserver.Main;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 
@@ -20,6 +22,24 @@ public class InteractListeners implements Listener {
 
         //Call the player inventory manager
         Main.getInstance().getPlayerInventoryManager().onInteract(event);
+
+    }
+
+    //Called, if a player broke a block
+    @EventHandler
+    public void onBreak(BlockBreakEvent event) {
+
+        //Call the player inventory manager
+        Main.getInstance().getPlayerInventoryManager().onBreak(event);
+
+    }
+
+    //Called, if a player placed a block
+    @EventHandler
+    public void onPlace(BlockPlaceEvent event) {
+
+        //Call the player inventory manager
+        Main.getInstance().getPlayerInventoryManager().onPlace(event);
 
     }
 

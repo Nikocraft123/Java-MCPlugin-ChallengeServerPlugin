@@ -7,6 +7,8 @@ import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.utils.PlayerInventoryBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -37,7 +39,10 @@ public class PlayerInventoryManager {
 
             //Set the inventory manager for the player
             setPlayerInventoryMode(player, new PlayerInventoryDefault(player), false);
-            setPlayerInventoryActive(player, true, true);
+            if (Main.getInstance().getInventoryConfig().getConfig().contains("active." + player.getUniqueId().toString()))
+                setPlayerInventoryActive(player, Main.getInstance().getInventoryConfig().getConfig().getBoolean("active." + player.getUniqueId().toString()), true);
+            else
+                setPlayerInventoryActive(player, true, true);
 
         }
 
@@ -91,7 +96,11 @@ public class PlayerInventoryManager {
         if (inventories.containsKey(player)) inventories.remove(player);
 
         //If the player is not in the active map, remove the player name from the inventory map
-        if (inventoryActive.containsKey(player)) inventoryActive.remove(player);
+        if (inventoryActive.containsKey(player)) {
+            Main.getInstance().getInventoryConfig().getConfig().set("active." + player.getUniqueId().toString(), isPlayerInventoryActive(player));
+            Main.getInstance().getInventoryConfig().save();
+            inventoryActive.remove(player);
+        }
 
         //Return true
         return true;
@@ -109,6 +118,19 @@ public class PlayerInventoryManager {
 
             //Update the client player inventory
             player.updateInventory();
+
+        }
+
+    }
+
+    //Save
+    public void save() {
+
+        //Loop for all online players
+        for (Player player : Bukkit.getOnlinePlayers()) {
+
+            //Remove the player
+            removePlayer(player);
 
         }
 
@@ -202,6 +224,32 @@ public class PlayerInventoryManager {
 
             //Call on open of the inventory mode
             getPlayerInventoryMode(event.getPlayer()).onDrop(event);
+
+        }
+
+    }
+
+    //On break
+    public void onBreak(BlockBreakEvent event) {
+
+        //If the inventory of the player is active and the player is in the lobby
+        if (isPlayerInventoryActive(event.getPlayer()) && event.getPlayer().getWorld().getName().equals("lobby")) {
+
+            //Call on open of the inventory mode
+            getPlayerInventoryMode(event.getPlayer()).onBreak(event);
+
+        }
+
+    }
+
+    //On place
+    public void onPlace(BlockPlaceEvent event) {
+
+        //If the inventory of the player is active and the player is in the lobby
+        if (isPlayerInventoryActive(event.getPlayer()) && event.getPlayer().getWorld().getName().equals("lobby")) {
+
+            //Call on open of the inventory mode
+            getPlayerInventoryMode(event.getPlayer()).onPlace(event);
 
         }
 

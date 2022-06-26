@@ -5,6 +5,8 @@ package de.nikocraft.challengeserver.inventories.players;
 //IMPORTS
 import de.nikocraft.challengeserver.utils.PlayerInventoryBuilder;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -41,9 +43,7 @@ public class PlayerInventoryDefault extends PlayerInventoryBuilder {
 
     //On interact
     @Override
-    public void onInteract(PlayerInteractEvent event) {
-        event.setCancelled(true);
-    }
+    public void onInteract(PlayerInteractEvent event) {}
 
     //On click
     @Override
@@ -66,6 +66,18 @@ public class PlayerInventoryDefault extends PlayerInventoryBuilder {
     //On drop
     @Override
     public void onDrop(PlayerDropItemEvent event) {
+        event.setCancelled(true);
+    }
+
+    //On break
+    @Override
+    public void onBreak(BlockBreakEvent event) {
+        event.setCancelled(true);
+    }
+
+    //On place
+    @Override
+    public void onPlace(BlockPlaceEvent event) {
         event.setCancelled(true);
     }
 

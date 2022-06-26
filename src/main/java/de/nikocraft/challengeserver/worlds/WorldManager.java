@@ -34,7 +34,7 @@ public class WorldManager {
     private boolean resetting = false;
 
     //Open
-    private boolean open = false;
+    private boolean open;
 
 
     //CONSTRUCTOR
@@ -42,6 +42,9 @@ public class WorldManager {
 
         //Get the world config from main
         config = Main.getInstance().getWorldConfig();
+
+        //Load open
+        if (config.getConfig().contains("open")) open = config.getConfig().getBoolean("open"); else open = false;
 
     }
 
@@ -69,7 +72,10 @@ public class WorldManager {
 
         //Set the inventory manager for the player
         Main.getInstance().getPlayerInventoryManager().setPlayerInventoryMode(player, new PlayerInventoryDefault(player), false);
-        Main.getInstance().getPlayerInventoryManager().setPlayerInventoryActive(player, true, true);
+        if (Main.getInstance().getInventoryConfig().getConfig().contains("active." + player.getUniqueId().toString()))
+            Main.getInstance().getPlayerInventoryManager().setPlayerInventoryActive(player, Main.getInstance().getInventoryConfig().getConfig().getBoolean("active." + player.getUniqueId().toString()), true);
+        else
+            Main.getInstance().getPlayerInventoryManager().setPlayerInventoryActive(player, true, true);
 
         //Set the player gamemode
         player.setGameMode(GameMode.ADVENTURE);
@@ -137,6 +143,9 @@ public class WorldManager {
         for (Parkour parkour : Main.getInstance().getParkourManager().getParkours()) {
             parkour.removePlayer(player);
         }
+
+        //Remove the player from the inventory manager
+        Main.getInstance().getPlayerInventoryManager().removePlayer(player);
 
         //Teleport the player to game world player position
         Main.getInstance().getMultiverseCore().teleportPlayer(player, player, getPlayerPosition(player));
@@ -327,6 +336,9 @@ public class WorldManager {
             }
 
         }
+
+        //Save open
+        config.getConfig().set("open", isOpen());
 
     }
 

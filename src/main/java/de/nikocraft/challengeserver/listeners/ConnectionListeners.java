@@ -79,7 +79,10 @@ public class ConnectionListeners implements Listener {
 
         //Set the inventory manager for the player
         Main.getInstance().getPlayerInventoryManager().setPlayerInventoryMode(event.getPlayer(), new PlayerInventoryDefault(event.getPlayer()), false);
-        Main.getInstance().getPlayerInventoryManager().setPlayerInventoryActive(event.getPlayer(), true, true);
+        if (Main.getInstance().getInventoryConfig().getConfig().contains("active." + event.getPlayer().getUniqueId().toString()))
+            Main.getInstance().getPlayerInventoryManager().setPlayerInventoryActive(event.getPlayer(), Main.getInstance().getInventoryConfig().getConfig().getBoolean("active." + event.getPlayer().getUniqueId().toString()), true);
+        else
+            Main.getInstance().getPlayerInventoryManager().setPlayerInventoryActive(event.getPlayer(), true, true);
 
     }
 

@@ -4,6 +4,8 @@ package de.nikocraft.challengeserver.utils;
 
 //IMPORTS
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -60,6 +62,12 @@ public abstract class PlayerInventoryBuilder {
 
     //On drop
     public abstract void onDrop(PlayerDropItemEvent event);
+
+    //On break
+    public abstract void onBreak(BlockBreakEvent event);
+
+    //On place
+    public abstract void onPlace(BlockPlaceEvent event);
 
 
     //GETTERS

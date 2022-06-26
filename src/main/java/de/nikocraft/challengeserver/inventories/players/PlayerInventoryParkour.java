@@ -10,6 +10,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -40,12 +42,12 @@ public class PlayerInventoryParkour extends PlayerInventoryBuilder {
 
         //Build the last checkpoint item
         ItemStack checkpointItem = new ItemBuilder(Material.LIGHT_WEIGHTED_PRESSURE_PLATE, 1)
-                .setDisplayName(ChatColor.GOLD.toString() + ChatColor.BOLD + "Last Checkpoint " + ChatColor.GRAY + "(Right Click)")
+                .setDisplayName(ChatColor.GOLD.toString() + ChatColor.BOLD + "Last Checkpoint " + ChatColor.GRAY + "(Click)")
                 .setLocalizedName("checkpoint").setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Teleport to the last checkpoint.").build();
 
         //Build the cancel item
         ItemStack cancelItem = new ItemBuilder(Material.OAK_DOOR, 1)
-                .setDisplayName(ChatColor.RED.toString() + ChatColor.BOLD + "Cancel " + ChatColor.GRAY + "(Right Click)")
+                .setDisplayName(ChatColor.RED.toString() + ChatColor.BOLD + "Cancel " + ChatColor.GRAY + "(Click)")
                 .setLocalizedName("cancel").setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Cancel the parkour run.").build();
 
         //Set the item to the players inventory
@@ -68,7 +70,6 @@ public class PlayerInventoryParkour extends PlayerInventoryBuilder {
 
         //Get the player, action and item
         Player player = event.getPlayer();
-        Action action = event.getAction();
         ItemStack item = event.getItem();
 
         //If the action is done with an item
@@ -80,19 +81,18 @@ public class PlayerInventoryParkour extends PlayerInventoryBuilder {
                 //If the localized name of the item is checkpoint
                 if (item.getItemMeta().getLocalizedName().equals("checkpoint")) {
                     Main.getInstance().getCommand("parkour_checkpoint").execute(player, "parkour_checkpoint", new String[]{});
+                    event.setCancelled(true);
                 }
 
                 //If the localized name of the item is cancel
                 if (item.getItemMeta().getLocalizedName().equals("cancel")) {
                     Main.getInstance().getCommand("parkour_cancel").execute(player, "parkour_cancel", new String[]{});
+                    event.setCancelled(true);
                 }
 
             }
 
         }
-
-        //Cancel the event
-        event.setCancelled(true);
 
     }
 
@@ -144,6 +144,18 @@ public class PlayerInventoryParkour extends PlayerInventoryBuilder {
     //On drop
     @Override
     public void onDrop(PlayerDropItemEvent event) {
+        event.setCancelled(true);
+    }
+
+    //On break
+    @Override
+    public void onBreak(BlockBreakEvent event) {
+        event.setCancelled(true);
+    }
+
+    //On place
+    @Override
+    public void onPlace(BlockPlaceEvent event) {
         event.setCancelled(true);
     }
 

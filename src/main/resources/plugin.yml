@@ -1,7 +1,7 @@
 name: ChallengeServer
 version: ${project.version}
 main: de.nikocraft.challengeserver.Main
-api-version: 1.18
+api-version: 1.19
 authors: [ Nikocraft ]
 description: The main plugin of the challenge minecraft server
 depend: [ Multiverse-Core, Multiverse-Inventories, Multiverse-NetherPortals ]

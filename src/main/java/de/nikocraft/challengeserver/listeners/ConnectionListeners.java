@@ -12,7 +12,7 @@ import de.nikocraft.challengeserver.permissions.CustomPermissibleBase;
 import de.nikocraft.challengeserver.tablists.TablistManager;
 import de.nikocraft.challengeserver.utils.CommandUtils;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_18_R2.entity.CraftHumanEntity;
+import org.bukkit.craftbukkit.v1_19_R1.entity.CraftHumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;

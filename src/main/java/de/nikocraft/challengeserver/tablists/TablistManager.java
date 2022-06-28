@@ -8,6 +8,8 @@ import de.nikocraft.challengeserver.permissions.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.RenderType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -44,7 +46,13 @@ public class TablistManager {
         //Get the scoreboard of the player
         Scoreboard scoreboard = player.getScoreboard();
 
-        scoreboard.ob
+        //Unregister old health objective
+        if (scoreboard.getObjective("health") != null) scoreboard.getObjective("health").unregister();
+
+        //Register new health objective and set it to sidebar
+        scoreboard.registerNewObjective("health", "health", "");
+        scoreboard.getObjective("health").setDisplaySlot(DisplaySlot.PLAYER_LIST);
+        scoreboard.getObjective("health").setRenderType(RenderType.HEARTS);
 
         //For in all player ranks
         for (Rank rank : Rank.values()) {

@@ -12,10 +12,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerBedEnterEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerPortalEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
+
+import java.util.Arrays;
 
 
 //PLAYER LISTENER CLASS
@@ -45,13 +44,13 @@ public class PlayerListeners implements Listener {
         if (player.getLocation().getWorld().getName().equals("lobby")) {
 
             //Check for void
-            if (player.getLocation().getY() < 40.0) {
+            if (player.getLocation().getY() < 25.0) {
                 Main.getInstance().getMultiverseCore().teleportPlayer(player, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
             }
 
             //Check for lobby area exiting
-            if (player.getLocation().getX() < -100.0 | player.getLocation().getX() > 100.0 |
-                    player.getLocation().getZ() < -100.0 | player.getLocation().getZ() > 100.0) {
+            if (player.getLocation().getX() < -160.0 | player.getLocation().getX() > 160.0 |
+                    player.getLocation().getZ() < -160.0 | player.getLocation().getZ() > 160.0) {
                 Main.getInstance().getMultiverseCore().teleportPlayer(player, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
             }
 
@@ -135,6 +134,20 @@ public class PlayerListeners implements Listener {
 
             //Call the challenge event
             challenge.onPortal(event);
+
+        }
+
+    }
+
+    //Called, if a player took a book from a lectern
+    @EventHandler
+    public void onTakeBook(PlayerTakeLecternBookEvent event) {
+
+        //Check if the player is in the game world
+        if (Main.getInstance().getPlayerInventoryManager().isPlayerInventoryActive(event.getPlayer()) && event.getPlayer().getLocation().getWorld().getName().equals("lobby")) {
+
+            //Cancel the event
+            event.setCancelled(true);
 
         }
 

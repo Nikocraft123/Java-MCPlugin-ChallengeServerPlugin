@@ -9,13 +9,13 @@ de\nikocraft\challengeserver\listeners\ConnectionListeners.class
 de\nikocraft\challengeserver\utils\CommandUtils.class
 de\nikocraft\challengeserver\utils\ScoreboardEntryName.class
 de\nikocraft\challengeserver\utils\Config.class
-de\nikocraft\challengeserver\minigames\parkours\Parkour.class
 de\nikocraft\challengeserver\challenges\deathrun\DeathrunChallenge.class
 de\nikocraft\challengeserver\timers\Timer$1.class
 de\nikocraft\challengeserver\commands\LobbyWorldCommand.class
 de\nikocraft\challengeserver\permissions\PermissionManager.class
 de\nikocraft\challengeserver\inventories\players\PlayerInventoryDefault.class
 de\nikocraft\challengeserver\commands\InventoryCommand.class
+de\nikocraft\challengeserver\parkours\Parkour.class
 de\nikocraft\challengeserver\commands\EnderchestCommand.class
 de\nikocraft\challengeserver\challenges\ChallengeManager$3.class
 de\nikocraft\challengeserver\utils\Base64Utils.class
@@ -39,7 +39,7 @@ de\nikocraft\challengeserver\permissions\CustomPermissibleBase.class
 de\nikocraft\challengeserver\commands\ParkourCommand.class
 de\nikocraft\challengeserver\utils\InventoryBuilder.class
 de\nikocraft\challengeserver\commands\ParkourCheckpointCommand.class
-de\nikocraft\challengeserver\minigames\parkours\ParkourManager.class
+de\nikocraft\challengeserver\parkours\ParkourManager.class
 de\nikocraft\challengeserver\utils\PlayerInventoryBuilder.class
 de\nikocraft\challengeserver\challenges\ChallengeManager.class
 de\nikocraft\challengeserver\commands\TimerCommand.class

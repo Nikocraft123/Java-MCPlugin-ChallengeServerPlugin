@@ -7,3 +7,5 @@ Add coin system
 Add shared challenge
 Add deep dark challenge
 Fix permission command tab complete error
+Complete deathrun dimension selection
+Fix tablist health bug

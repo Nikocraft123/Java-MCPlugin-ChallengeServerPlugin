@@ -84,6 +84,9 @@ public class PlayerInventoryManager {
     //Is the player inventory active
     public boolean isPlayerInventoryActive(Player player) {
 
+        //If inventory active is null, return true
+        if (inventoryActive.get(player) == null) return true;
+
         //Return the player inventory active
         return inventoryActive.get(player);
 

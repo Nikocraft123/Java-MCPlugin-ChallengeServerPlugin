@@ -10,7 +10,7 @@ import com.onarandombox.multiverseinventories.share.Sharables;
 import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.challenges.Challenge;
 import de.nikocraft.challengeserver.inventories.players.PlayerInventoryDefault;
-import de.nikocraft.challengeserver.minigames.parkours.Parkour;
+import de.nikocraft.challengeserver.parkours.Parkour;
 import de.nikocraft.challengeserver.utils.Config;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.*;

@@ -1,6 +1,9 @@
-Barrier particle at border
-Fix scoreboard bug
 Add bossbar
 Add info command
 Add hall of fame
 See inventories
+Add pet system
+Add coin system
+Add shared challenge
+Add deep dark challenge
+Fix permission command tab complete error

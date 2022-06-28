@@ -11,7 +11,7 @@ import de.nikocraft.challengeserver.commands.*;
 import de.nikocraft.challengeserver.inventories.enderchests.EnderchestManager;
 import de.nikocraft.challengeserver.inventories.players.PlayerInventoryManager;
 import de.nikocraft.challengeserver.listeners.*;
-import de.nikocraft.challengeserver.minigames.parkours.ParkourManager;
+import de.nikocraft.challengeserver.parkours.ParkourManager;
 import de.nikocraft.challengeserver.tablists.TablistManager;
 import de.nikocraft.challengeserver.timers.Timer;
 import de.nikocraft.challengeserver.utils.Config;

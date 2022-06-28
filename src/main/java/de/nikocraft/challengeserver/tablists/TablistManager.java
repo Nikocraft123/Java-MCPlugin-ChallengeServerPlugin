@@ -44,6 +44,8 @@ public class TablistManager {
         //Get the scoreboard of the player
         Scoreboard scoreboard = player.getScoreboard();
 
+        scoreboard.ob
+
         //For in all player ranks
         for (Rank rank : Rank.values()) {
 

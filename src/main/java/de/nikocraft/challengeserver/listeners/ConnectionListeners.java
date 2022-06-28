@@ -5,12 +5,10 @@ package de.nikocraft.challengeserver.listeners;
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.challenges.Challenge;
-import de.nikocraft.challengeserver.challenges.deathrun.DeathrunScoreboard;
 import de.nikocraft.challengeserver.inventories.players.PlayerInventoryDefault;
-import de.nikocraft.challengeserver.minigames.parkours.Parkour;
 import de.nikocraft.challengeserver.permissions.CustomPermissibleBase;
 import de.nikocraft.challengeserver.tablists.TablistManager;
-import de.nikocraft.challengeserver.utils.CommandUtils;
+import de.nikocraft.challengeserver.parkours.Parkour;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_19_R1.entity.CraftHumanEntity;
 import org.bukkit.event.EventHandler;

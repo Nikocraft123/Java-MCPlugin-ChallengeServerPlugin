@@ -1,5 +1,5 @@
 //PACKAGE
-package de.nikocraft.challengeserver.minigames.parkours;
+package de.nikocraft.challengeserver.parkours;
 
 
 //IMPORTS

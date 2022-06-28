@@ -1,18 +1,13 @@
 //PACKAGE
-package de.nikocraft.challengeserver.minigames.parkours;
+package de.nikocraft.challengeserver.parkours;
 
 
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.utils.Config;
-import de.nikocraft.challengeserver.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
 import java.util.ArrayList;
 import java.util.List;
 

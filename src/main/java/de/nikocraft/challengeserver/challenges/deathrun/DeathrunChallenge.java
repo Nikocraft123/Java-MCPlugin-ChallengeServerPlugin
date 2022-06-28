@@ -41,6 +41,9 @@ public class DeathrunChallenge extends Challenge {
     //The name of the event
     private String name = "Unnamed";
 
+    //The dimension
+    private String dimension = "world";
+
 
     //CONSTRUCTOR
     public DeathrunChallenge() {
@@ -293,8 +296,7 @@ public class DeathrunChallenge extends Challenge {
                         if (args.length < 4) {
 
                             //Send message to sender
-                            if (isPlayer)
-                                sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Missing fourth argument!");
+                            if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Missing fourth argument!");
                             else sender.sendMessage(CommandUtils.getConsolePrefix() + "Missing fourth argument!");
 
                             //Return false
@@ -309,10 +311,8 @@ public class DeathrunChallenge extends Challenge {
                         if (player == null) {
 
                             //Send message to sender
-                            if (isPlayer)
-                                sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Cannot find the player " + ChatColor.ITALIC + args[3] + ChatColor.RED + "!");
-                            else
-                                sender.sendMessage(CommandUtils.getConsolePrefix() + "Cannot find the player '" + args[3] + "'!");
+                            if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Cannot find the player " + ChatColor.ITALIC + args[3] + ChatColor.RED + "!");
+                            else sender.sendMessage(CommandUtils.getConsolePrefix() + "Cannot find the player '" + args[3] + "'!");
 
                             //Return false
                             return false;
@@ -342,8 +342,7 @@ public class DeathrunChallenge extends Challenge {
                         if (args.length < 4) {
 
                             //Send message to sender
-                            if (isPlayer)
-                                sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Missing fourth argument!");
+                            if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Missing fourth argument!");
                             else sender.sendMessage(CommandUtils.getConsolePrefix() + "Missing fourth argument!");
 
                             //Return false
@@ -358,10 +357,8 @@ public class DeathrunChallenge extends Challenge {
                         if (player == null) {
 
                             //Send message to sender
-                            if (isPlayer)
-                                sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Cannot find the player " + ChatColor.ITALIC + args[3] + ChatColor.RED + "!");
-                            else
-                                sender.sendMessage(CommandUtils.getConsolePrefix() + "Cannot find the player '" + args[3] + "'!");
+                            if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Cannot find the player " + ChatColor.ITALIC + args[3] + ChatColor.RED + "!");
+                            else sender.sendMessage(CommandUtils.getConsolePrefix() + "Cannot find the player '" + args[3] + "'!");
 
                             //Return false
                             return false;
@@ -393,6 +390,402 @@ public class DeathrunChallenge extends Challenge {
                     }
 
                 }
+
+            }
+
+            case "time": {
+
+                //If argument 3 don't exist
+                if (args.length < 3) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Missing third argument!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Missing third argument!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                try {
+                    //Set the time
+                    if (!Main.getInstance().getTimer().TimerTime(Integer.parseInt(args[2]))) {
+
+                        //Send message to sender
+                        if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "The time of the timer is already at " + args[2] + "!");
+                        else sender.sendMessage(CommandUtils.getConsolePrefix() + "The time of the timer is already at " + args[2] + "!");
+
+                        //Return false
+                        return false;
+
+                    }
+                } catch (NumberFormatException e) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Invalid time!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Invalid time!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                //Return true
+                return true;
+
+            }
+
+            case "name": {
+
+                //If argument 3 don't exist
+                if (args.length < 3) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Missing third argument!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Missing third argument!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                //Set the name
+                name = "";
+                for (int i = 2; i < args.length; i++) {
+                    name += args[i] + " ";
+                }
+                name = name.substring(0, name.length() - 1);
+
+                //Update all player scoreboards
+                for (DeathrunScoreboard scoreboard : scoreboards) {
+                    scoreboard.update();
+                }
+
+                //Send message to sender
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Successfully set the name to '" + ChatColor.ITALIC + name + ChatColor.GREEN + "'!");
+                else sender.sendMessage(CommandUtils.getConsolePrefix() + "Successfully set the name to '" + name + "'!");
+
+                //Return true
+                return true;
+
+            }
+
+            case "dimension": {
+
+                //If argument 3 don't exist
+                if (args.length < 3) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Missing third argument!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Missing third argument!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                //Set the dimension
+                switch (args[2].toLowerCase()) {
+
+                    case "overworld":
+                        dimension = "world";
+                        break;
+
+                    case "nether":
+                        dimension = "world_nether";
+                        break;
+
+                    case "end":
+                        dimension = "world_the_end";
+                        break;
+
+                    default:
+
+                        //Send message to sender
+                        if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Invalid dimension!");
+                        else sender.sendMessage(CommandUtils.getConsolePrefix() + "Invalid dimension!");
+
+                        //Return false
+                        return false;
+
+                }
+
+                //Send message to sender
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Successfully set the dimension to '" + ChatColor.ITALIC + args[2].toLowerCase() + ChatColor.GREEN + "'!");
+                else sender.sendMessage(CommandUtils.getConsolePrefix() + "Successfully set the dimension to '" + args[2].toLowerCase() + "'!");
+
+                //Return true
+                return true;
+
+            }
+
+            case "difficulty": {
+
+                //If argument 3 don't exist
+                if (args.length < 3) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Missing third argument!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Missing third argument!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                //Set the difficulty
+                switch (args[2].toLowerCase()) {
+
+                    case "easy":
+                        Bukkit.getWorld("world").setDifficulty(Difficulty.EASY);
+                        Bukkit.getWorld("world_nether").setDifficulty(Difficulty.EASY);
+                        Bukkit.getWorld("world_the_end").setDifficulty(Difficulty.EASY);
+                        break;
+
+                    case "normal":
+                        Bukkit.getWorld("world").setDifficulty(Difficulty.NORMAL);
+                        Bukkit.getWorld("world_nether").setDifficulty(Difficulty.NORMAL);
+                        Bukkit.getWorld("world_the_end").setDifficulty(Difficulty.NORMAL);
+                        break;
+
+                    case "hard":
+                        Bukkit.getWorld("world").setDifficulty(Difficulty.HARD);
+                        Bukkit.getWorld("world_nether").setDifficulty(Difficulty.HARD);
+                        Bukkit.getWorld("world_the_end").setDifficulty(Difficulty.HARD);
+                        break;
+
+                    default:
+
+                        //Send message to sender
+                        if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Invalid difficulty!");
+                        else sender.sendMessage(CommandUtils.getConsolePrefix() + "Invalid difficulty!");
+
+                        //Return false
+                        return false;
+
+                }
+
+                //Send message to sender
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Successfully set the difficulty to '" + ChatColor.ITALIC + args[2].toLowerCase() + ChatColor.GREEN + "'!");
+                else sender.sendMessage(CommandUtils.getConsolePrefix() + "Successfully set the difficulty to '" + args[2].toLowerCase() + "'!");
+
+                //Return true
+                return true;
+
+            }
+
+            case "border_distance": {
+
+                //If argument 3 don't exist
+                if (args.length < 3) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Missing third argument!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Missing third argument!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                try {
+
+                    //Set the border distance
+                    borderDistance = Integer.parseInt(args[2]);
+
+                } catch (NumberFormatException e) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Invalid distance!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Invalid distance!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                //Send message to sender
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Successfully set the border distance to '" + args[2] + "'!");
+                else sender.sendMessage(CommandUtils.getConsolePrefix() + "Successfully set the border distance to '" + args[2] + "'!");
+
+                //Return true
+                return true;
+
+            }
+
+            case "barrier_distance": {
+
+                //If argument 3 don't exist
+                if (args.length < 3) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Missing third argument!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Missing third argument!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                try {
+
+                    //Set the barrier distance
+                    barrierDistance = Integer.parseInt(args[2]);
+
+                } catch (NumberFormatException e) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Invalid distance!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Invalid distance!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                //Send message to sender
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Successfully set the barrier distance to '" + args[2] + "'!");
+                else sender.sendMessage(CommandUtils.getConsolePrefix() + "Successfully set the barrier distance to '" + args[2] + "'!");
+
+                //Return true
+                return true;
+
+            }
+
+            case "barrier_size": {
+
+                //If argument 3 don't exist
+                if (args.length < 3) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Missing third argument!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Missing third argument!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                try {
+
+                    //Set the barrier size
+                    barrierSize = Integer.parseInt(args[2]);
+
+                } catch (NumberFormatException e) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Invalid size!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Invalid size!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                //Send message to sender
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Successfully set the barrier size to '" + args[2] + "'!");
+                else sender.sendMessage(CommandUtils.getConsolePrefix() + "Successfully set the barrier size to '" + args[2] + "'!");
+
+                //Return true
+                return true;
+
+            }
+
+            case "pvp": {
+
+                //If argument 3 don't exist
+                if (args.length < 3) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Missing third argument!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Missing third argument!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                //Set PVP
+                switch (args[2].toLowerCase()) {
+
+                    case "true":
+                        Bukkit.getWorld("world").setPVP(true);
+                        Bukkit.getWorld("world_nether").setPVP(true);
+                        Bukkit.getWorld("world_the_end").setPVP(true);
+                        break;
+
+                    case "false":
+                        Bukkit.getWorld("world").setPVP(false);
+                        Bukkit.getWorld("world_nether").setPVP(false);
+                        Bukkit.getWorld("world_the_end").setPVP(false);
+                        break;
+
+                    default:
+
+                        //Send message to sender
+                        if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Invalid value!");
+                        else sender.sendMessage(CommandUtils.getConsolePrefix() + "Invalid value!");
+
+                        //Return false
+                        return false;
+
+                }
+
+                //Send message to sender
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Successfully set PVP to '" + ChatColor.ITALIC + args[2].toLowerCase() + ChatColor.GREEN + "'!");
+                else sender.sendMessage(CommandUtils.getConsolePrefix() + "Successfully set PVP to '" + args[2].toLowerCase() + "'!");
+
+                //Return true
+                return true;
+
+            }
+
+            case "natural_regeneration": {
+
+                //If argument 3 don't exist
+                if (args.length < 3) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Missing third argument!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Missing third argument!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                //Set natural regeneration
+                switch (args[2].toLowerCase()) {
+
+                    case "true":
+                        Bukkit.getWorld("world").setGameRule(GameRule.NATURAL_REGENERATION, true);
+                        Bukkit.getWorld("world_nether").setGameRule(GameRule.NATURAL_REGENERATION, true);
+                        Bukkit.getWorld("world_the_end").setGameRule(GameRule.NATURAL_REGENERATION, true);
+                        break;
+
+                    case "false":
+                        Bukkit.getWorld("world").setGameRule(GameRule.NATURAL_REGENERATION, false);
+                        Bukkit.getWorld("world_nether").setGameRule(GameRule.NATURAL_REGENERATION, false);
+                        Bukkit.getWorld("world_the_end").setGameRule(GameRule.NATURAL_REGENERATION, false);
+                        break;
+
+                    default:
+
+                        //Send message to sender
+                        if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Invalid value!");
+                        else sender.sendMessage(CommandUtils.getConsolePrefix() + "Invalid value!");
+
+                        //Return false
+                        return false;
+
+                }
+
+                //Send message to sender
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Successfully set natural regeneration to '" + ChatColor.ITALIC + args[2].toLowerCase() + ChatColor.GREEN + "'!");
+                else sender.sendMessage(CommandUtils.getConsolePrefix() + "Successfully set natural regeneration to '" + args[2].toLowerCase() + "'!");
+
+                //Return true
+                return true;
 
             }
 
@@ -429,6 +822,7 @@ public class DeathrunChallenge extends Challenge {
                 result.add("pvp");
                 result.add("natural_regeneration");
                 result.add("difficulty");
+                result.add("dimension");
                 result.add("time");
                 result.add("name");
 
@@ -479,6 +873,14 @@ public class DeathrunChallenge extends Challenge {
                         result.add("easy");
                         result.add("normal");
                         result.add("hard");
+                        break;
+
+                    case "dimension":
+
+                        //Add values to the list
+                        result.add("overworld");
+                        result.add("nether");
+                        result.add("end");
                         break;
 
                     case "time":
@@ -650,7 +1052,7 @@ public class DeathrunChallenge extends Challenge {
         event.setCancelled(true);
 
         //Send a message to player
-        event.getPlayer().sendMessage(ChatColor.RED + "Sorry! The nether is deactivated in this challenge ... :(");
+        event.getPlayer().sendMessage(ChatColor.RED + "Sorry! Other dimensions are deactivated in this challenge ... :(");
 
     }
 
@@ -662,5 +1064,11 @@ public class DeathrunChallenge extends Challenge {
 
     //List of all player positions
     public Map<Player, Integer> getPositions() { return positions; }
+
+    //The name of the event
+    public String getName() { return name; }
+
+    //The dimension
+    public String getDimension() { return dimension; }
 
 }

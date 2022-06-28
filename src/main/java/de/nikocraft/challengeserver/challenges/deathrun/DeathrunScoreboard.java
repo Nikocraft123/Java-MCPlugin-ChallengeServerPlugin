@@ -18,7 +18,7 @@ public class DeathrunScoreboard extends ScoreboardBuilder {
     public DeathrunScoreboard(Player player) {
 
         //Initialize the scoreboard
-        super(player, ChatColor.GOLD.toString() + ChatColor.BOLD + "      Deathrun      ");
+        super(player, ChatColor.GOLD.toString() + ChatColor.BOLD + "Deathrun");
 
     }
 
@@ -28,11 +28,11 @@ public class DeathrunScoreboard extends ScoreboardBuilder {
     //Create
     @Override
     public void create() {
-        setScore(ChatColor.GRAY + "            V2 Overworld       ", 15);
+        setScore("", 15);
         setScore("", 14);
         setScore(ChatColor.DARK_PURPLE + "Initialize ...", 13);
         setScore("", 1);
-        setScore(ChatColor.YELLOW + "      MC Challenge Nikocraft    ", 0);
+        setScore(ChatColor.YELLOW + "    MC Challenge Nikocraft    ", 0);
     }
 
     //Update
@@ -45,9 +45,15 @@ public class DeathrunScoreboard extends ScoreboardBuilder {
         }
 
         //Render all scores
+        String eventName = ((DeathrunChallenge) Main.getInstance().getChallengeManager().getActiveChallenge()).getName();
+        if (eventName.length() < 24) {
+            eventName = StringUtils.repeat(" ", 17 - eventName.length() / 2) + eventName;
+            setScore(ChatColor.GRAY + eventName, 15);
+        }
+        else setScore(ChatColor.GRAY + StringUtils.repeat(" ", 17 - "INVALID NAME".length() / 2) + "INVALID NAME", 15);
+        setScore(ChatColor.DARK_PURPLE + "No players ...", 13);
         int score = 13;
         int position = 1;
-        setScore(ChatColor.DARK_PURPLE + "No players ...", 13);
         for (Map.Entry<Player, Integer> entry : ((DeathrunChallenge) Main.getInstance().getChallengeManager().getActiveChallenge()).getSortedPositions()) {
             if (score < 2) break;
             String name = entry.getKey().getName() + ChatColor.RESET + " ";

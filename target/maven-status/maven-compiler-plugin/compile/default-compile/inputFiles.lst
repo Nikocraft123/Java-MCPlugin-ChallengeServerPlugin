@@ -4,7 +4,6 @@ C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\inventories\players\PlayerInventoryParkour.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\inventories\players\PlayerInventoryDefault.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\listeners\ChatListeners.java
-C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\minigames\parkours\Parkour.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\utils\CommandUtils.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\challenges\Challenge.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\listeners\InteractListeners.java
@@ -15,6 +14,7 @@ C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\commands\IpCommand.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\commands\PermissionCommand.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\tablists\TablistManager.java
+C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\parkours\Parkour.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\utils\Base64Utils.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\worlds\WorldManager.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\utils\PlayerInventoryBuilder.java
@@ -31,7 +31,6 @@ C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\commands\EnderchestCommand.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\utils\MathUtils.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\inventories\enderchests\EnderchestManager.java
-C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\minigames\parkours\ParkourManager.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\commands\LobbyWorldCommand.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\challenges\deathrun\DeathrunScoreboard.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\commands\ParkourCommand.java
@@ -40,6 +39,7 @@ C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\listeners\ConnectionListeners.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\listeners\InventoryListeners.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\inventories\enderchests\Enderchest.java
+C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\parkours\ParkourManager.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\inventories\players\PlayerInventoryManager.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\commands\InventoryCommand.java
 C:\Users\Nikocraft\Dev\Java\Java-MCPlugin-ChallengeServerPlugin\src\main\java\de\nikocraft\challengeserver\timers\Timer.java

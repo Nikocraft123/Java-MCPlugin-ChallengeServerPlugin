@@ -85,6 +85,9 @@ public class WorldManager {
         player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 99999, 255, false, false));
         player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 99999, 255, false, false));
 
+        //Check for op
+        if (player.hasPermission("server.op")) player.setOp(true);
+
         //Get the active challenge
         Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();
 
@@ -149,6 +152,12 @@ public class WorldManager {
 
         //Teleport the player to game world player position
         Main.getInstance().getMultiverseCore().teleportPlayer(player, player, getPlayerPosition(player));
+
+        //Check for op
+        if (player.isOp()) {
+            Main.getInstance().getPermissionManager().addPlayerExtraPermission(player, "server.op");
+            player.setOp(false);
+        }
 
         //Get the active challenge
         Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();

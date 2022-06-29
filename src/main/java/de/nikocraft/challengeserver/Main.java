@@ -115,6 +115,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new InteractListeners(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryListeners(), this);
         Bukkit.getPluginManager().registerEvents(new ItemListeners(), this);
+        Bukkit.getPluginManager().registerEvents(new EntityListeners(), this);
 
         //Register commands
         getLogger().info(getPrefix() + "Register commands ...");

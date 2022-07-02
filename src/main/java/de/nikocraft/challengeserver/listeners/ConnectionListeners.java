@@ -7,6 +7,7 @@ import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.challenges.Challenge;
 import de.nikocraft.challengeserver.inventories.players.PlayerInventoryDefault;
 import de.nikocraft.challengeserver.permissions.CustomPermissibleBase;
+import de.nikocraft.challengeserver.shop.CoinCookieInfo;
 import de.nikocraft.challengeserver.tablists.TablistManager;
 import de.nikocraft.challengeserver.parkours.Parkour;
 import org.bukkit.ChatColor;

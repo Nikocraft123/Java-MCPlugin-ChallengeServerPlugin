@@ -148,6 +148,18 @@ public class ChallengeManager {
     }
 
 
+    //STATIC METHODS
+
+    //Get the prefix of the command for the chat
+    public static String getChatPrefix() {
+
+        //Return prefix string
+        return ChatColor.GRAY + "[" + ChatColor.RED + ChatColor.BOLD + "Challenge" + ChatColor.RESET +
+                ChatColor.GRAY + "] " + ChatColor.WHITE;
+
+    }
+
+
     //GETTERS
 
     //The map of all challenges

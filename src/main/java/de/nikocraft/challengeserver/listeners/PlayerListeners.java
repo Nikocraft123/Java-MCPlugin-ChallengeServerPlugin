@@ -50,7 +50,7 @@ public class PlayerListeners implements Listener {
 
             //Check for lobby area exiting
             if (player.getLocation().getX() < -160.0 | player.getLocation().getX() > 160.0 |
-                    player.getLocation().getZ() < -160.0 | player.getLocation().getZ() > 160.0) {
+                    player.getLocation().getZ() < -160.0 | player.getLocation().getZ() > 170.0) {
                 Main.getInstance().getMultiverseCore().teleportPlayer(player, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
             }
 
@@ -66,6 +66,30 @@ public class PlayerListeners implements Listener {
             for (Parkour parkour : Main.getInstance().getParkourManager().getParkours()) {
                 parkour.handleMovement(event);
             }
+
+        }
+
+    }
+
+    //Called, if a player sneaked
+    @EventHandler
+    public void onSneak(PlayerToggleSneakEvent event) {
+
+        //Get the player
+        Player player = event.getPlayer();
+
+        //Check for cookies
+        if (player.getLocation().getX() >= -20.0 & player.getLocation().getX() <= 10.0 &
+                player.getLocation().getY() >= 70.0 & player.getLocation().getY() <= 100.0 &
+                player.getLocation().getZ() >= -60.0 & player.getLocation().getZ() <= -35.0 &
+                event.isSneaking()) {
+
+            //Update the cookies
+            Main.getInstance().getCookieManager().setCookies(player, Main.getInstance().getCookieManager().getCookies(player) + Main.getInstance().getCookieManager().getLevel(player));
+
+            //Check for level upgrade
+            if (Main.getInstance().getCookieManager().getCookies(player) >= 20 * Math.pow(Main.getInstance().getCookieManager().getLevel(player), 2))
+                Main.getInstance().getCookieManager().setLevel(player, Main.getInstance().getCookieManager().getLevel(player) + 1);
 
         }
 
@@ -143,7 +167,7 @@ public class PlayerListeners implements Listener {
     @EventHandler
     public void onTakeBook(PlayerTakeLecternBookEvent event) {
 
-        //Check if the player is in the game world
+        //Check if the player is in the lobby world
         if (Main.getInstance().getPlayerInventoryManager().isPlayerInventoryActive(event.getPlayer()) && event.getPlayer().getLocation().getWorld().getName().equals("lobby")) {
 
             //Cancel the event

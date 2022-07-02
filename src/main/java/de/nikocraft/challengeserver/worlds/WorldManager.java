@@ -78,7 +78,7 @@ public class WorldManager {
             Main.getInstance().getPlayerInventoryManager().setPlayerInventoryActive(player, true, true);
 
         //Set the player gamemode
-        player.setGameMode(GameMode.ADVENTURE);
+        if (Main.getInstance().getPlayerInventoryManager().isPlayerInventoryActive(player)) player.setGameMode(GameMode.ADVENTURE);
 
         //Give the player effects
         player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 255, false, false));

@@ -74,3 +74,9 @@ commands:
     usage: "/ip <server-ip>"
     permission: server.config.ip
     permission-message: "§cYou haven't the permission to set the server IP!"
+  player:
+    aliases: [ p ]
+    description: "Control visibility of and list players [DEFAULT]"
+    usage: "Type '/player help' for help!"
+    permission: server.player.control
+    permission-message: "§cYou haven't the permission to control visibility of or list players!"

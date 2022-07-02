@@ -4,6 +4,7 @@ package de.nikocraft.challengeserver.listeners;
 
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -19,6 +20,24 @@ public class InteractListeners implements Listener {
     //Called, if a player interacted
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
+
+        //Check if the player is in the lobby world
+        if (Main.getInstance().getPlayerInventoryManager().isPlayerInventoryActive(event.getPlayer()) && event.getPlayer().getLocation().getWorld().getName().equals("lobby")) {
+
+            //If the block is not null
+            if (event.getClickedBlock() != null) {
+
+                //If the block is a dragon egg
+                if (event.getClickedBlock().getType().equals(Material.DRAGON_EGG)) {
+
+                    //Cancel the event
+                    event.setCancelled(true);
+
+                }
+
+            }
+
+        }
 
         //Call the player inventory manager
         Main.getInstance().getPlayerInventoryManager().onInteract(event);

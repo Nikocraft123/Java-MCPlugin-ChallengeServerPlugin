@@ -50,9 +50,20 @@ public class PlayerInventoryParkour extends PlayerInventoryBuilder {
                 .setDisplayName(ChatColor.RED.toString() + ChatColor.BOLD + "Cancel " + ChatColor.GRAY + "(Click)")
                 .setLocalizedName("cancel").setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Cancel the parkour run.").build();
 
+        //Build the visibility item
+        ItemStack visibilityItem = new ItemBuilder(Material.LIME_DYE, 1)
+                .setDisplayName(ChatColor.WHITE + "Players: " + ChatColor.RED.toString() + ChatColor.ITALIC + "Visible " + ChatColor.GRAY + "(Click)")
+                .setLocalizedName("visible").setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Click to hide all players.").build();
+        if (Main.getInstance().getVisibilityManager().isHidden(getPlayer())) {
+            visibilityItem = new ItemBuilder(Material.GRAY_DYE, 1)
+                    .setDisplayName(ChatColor.WHITE + "Players: " + ChatColor.RED.toString() + ChatColor.ITALIC + "Hidden " + ChatColor.GRAY + "(Click)")
+                    .setLocalizedName("hidden").setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Click to show all players.").build();
+        }
+
         //Set the item to the players inventory
         getInventory().setItem(3, checkpointItem);
         getInventory().setItem(5, cancelItem);
+        getInventory().setItem(8, visibilityItem);
 
     }
 
@@ -90,6 +101,18 @@ public class PlayerInventoryParkour extends PlayerInventoryBuilder {
                     event.setCancelled(true);
                 }
 
+                //If the localized name of the item is visible
+                if (item.getItemMeta().getLocalizedName().equals("visible")) {
+                    Main.getInstance().getCommand("player").execute(player, "player", new String[]{"hide"});
+                    event.setCancelled(true);
+                }
+
+                //If the localized name of the item is hidden
+                if (item.getItemMeta().getLocalizedName().equals("hidden")) {
+                    Main.getInstance().getCommand("player").execute(player, "player", new String[]{"show"});
+                    event.setCancelled(true);
+                }
+
             }
 
         }
@@ -118,6 +141,16 @@ public class PlayerInventoryParkour extends PlayerInventoryBuilder {
                 //If the localized name of the item is cancel
                 if (item.getItemMeta().getLocalizedName().equals("cancel")) {
                     Main.getInstance().getCommand("parkour_cancel").execute(player, "parkour_cancel", new String[]{});
+                }
+
+                //If the localized name of the item is visible
+                if (item.getItemMeta().getLocalizedName().equals("visible")) {
+                    Main.getInstance().getCommand("player").execute(player, "player", new String[]{"hide"});
+                }
+
+                //If the localized name of the item is hidden
+                if (item.getItemMeta().getLocalizedName().equals("hidden")) {
+                    Main.getInstance().getCommand("player").execute(player, "player", new String[]{"show"});
                 }
 
             }

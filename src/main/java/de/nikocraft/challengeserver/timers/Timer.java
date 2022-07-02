@@ -135,10 +135,12 @@ public class Timer {
 
                 //Update actionbars
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (isRunning()) player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY +
-                            "« " + formattedTime + ChatColor.GRAY + " »"));
-                    else player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "« " +
-                            formattedTime + ChatColor.GREEN + ChatColor.ITALIC + " paused" + ChatColor.GRAY + " »"));
+                    if (!player.getWorld().getName().equals("lobby")) {
+                        if (isRunning()) player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY +
+                                "« " + formattedTime + ChatColor.GRAY + " »"));
+                        else player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY + "« " +
+                                formattedTime + ChatColor.GREEN + ChatColor.ITALIC + " paused" + ChatColor.GRAY + " »"));
+                    }
                 }
 
             }

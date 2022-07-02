@@ -27,7 +27,7 @@ public class InventoryCommand implements CommandExecutor, TabCompleter {
         //If the sender is not a player
         if (!(sender instanceof Player)) {
             //Send message to sender
-            sender.sendMessage(CommandUtils.getConsolePrefix() + "You must be a player to teleport to game world!");
+            sender.sendMessage(CommandUtils.getConsolePrefix() + "You must be a player to manage inventories!");
 
             //Return false
             return false;
@@ -54,6 +54,10 @@ public class InventoryCommand implements CommandExecutor, TabCompleter {
                 //Set the player inventory to activated
                 Main.getInstance().getPlayerInventoryManager().setPlayerInventoryActive(player, true, true);
 
+                //Save changes
+                Main.getInstance().getInventoryConfig().getConfig().set("active." + player.getUniqueId().toString(), true);
+                Main.getInstance().getInventoryConfig().save();
+
                 //Send message to player
                 player.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Successfully activated your inventory!");
 
@@ -65,6 +69,10 @@ public class InventoryCommand implements CommandExecutor, TabCompleter {
 
                 //Set the player inventory to activated
                 Main.getInstance().getPlayerInventoryManager().setPlayerInventoryActive(player, false, true);
+
+                //Save changes
+                Main.getInstance().getInventoryConfig().getConfig().set("active." + player.getUniqueId().toString(), false);
+                Main.getInstance().getInventoryConfig().save();
 
                 //Send message to player
                 player.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Successfully deactivated your inventory!");

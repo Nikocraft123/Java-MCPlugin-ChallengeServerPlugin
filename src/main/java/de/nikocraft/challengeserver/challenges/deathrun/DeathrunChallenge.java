@@ -5,6 +5,7 @@ package de.nikocraft.challengeserver.challenges.deathrun;
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.challenges.Challenge;
+import de.nikocraft.challengeserver.challenges.ChallengeManager;
 import de.nikocraft.challengeserver.utils.CommandUtils;
 import net.minecraft.world.level.block.BlockBarrier;
 import org.apache.commons.lang.StringUtils;
@@ -14,6 +15,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.*;
 
@@ -43,6 +45,12 @@ public class DeathrunChallenge extends Challenge {
 
     //The dimension
     private String dimension = "world";
+
+    //Countdown
+    private int countdown = 0;
+
+    //Started
+    private boolean started = false;
 
 
     //CONSTRUCTOR
@@ -103,11 +111,30 @@ public class DeathrunChallenge extends Challenge {
     @Override
     public void start() {
 
-        //Broadcast message
-        Bukkit.broadcastMessage(ChatColor.GOLD + " \nChallenge started! Good luck!\n ");
+        //If the countdown is not 0
+        if (countdown > 0) {
 
-        //Set running to true
+            //Set running to true
+            setRunning(true);
+
+            //Return
+            return;
+
+        }
+
+        //Broadcast message
+        Bukkit.broadcastMessage(" \n" + ChallengeManager.getChatPrefix() + ChatColor.GOLD + "!CHALLENGE STARTED!\n ");
+        Bukkit.broadcastMessage(ChallengeManager.getChatPrefix() + ChatColor.GREEN + "Good luck!\n ");
+
+        //Broadcast title
+        for (Player player : Bukkit.getOnlinePlayers()) player.sendTitle(ChatColor.GREEN + "GO!", ChatColor.GRAY.toString() + ChatColor.ITALIC + "Good luck!", 0, 30, 10);
+
+        //Play sounds
+        for (Player player : Bukkit.getOnlinePlayers()) player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, SoundCategory.MASTER, 1, 2);
+
+        //Set running and started to true
         setRunning(true);
+        started = true;
 
         //Set the time
         Bukkit.getWorld("world").setTime(0);
@@ -123,6 +150,43 @@ public class DeathrunChallenge extends Challenge {
     //Update
     @Override
     public void update() {
+
+        //If the countdown is 0 and not started
+        if (countdown <= 0 & !started) start();
+
+        //If the countdown is not 0
+        if (countdown > 0) {
+
+            //Render title info
+            if (countdown == 1) for (Player player : Bukkit.getOnlinePlayers()) player.sendTitle(ChatColor.RED + "1", ChatColor.GRAY.toString() + ChatColor.ITALIC + "Ready?", 0, 30, 0);
+            if (countdown == 2) for (Player player : Bukkit.getOnlinePlayers()) player.sendTitle(ChatColor.RED + "2", ChatColor.GRAY.toString() + ChatColor.ITALIC + "Ready?", 0, 30, 0);
+            if (countdown == 3) for (Player player : Bukkit.getOnlinePlayers()) player.sendTitle(ChatColor.RED + "3", ChatColor.GRAY.toString() + ChatColor.ITALIC + "Ready?", 0, 30, 0);
+            if (countdown == 4) for (Player player : Bukkit.getOnlinePlayers()) player.sendTitle(ChatColor.YELLOW + "4", ChatColor.GRAY.toString() + ChatColor.ITALIC + "Ready?", 0, 30, 0);
+            if (countdown == 5) for (Player player : Bukkit.getOnlinePlayers()) player.sendTitle(ChatColor.YELLOW + "5", ChatColor.GRAY.toString() + ChatColor.ITALIC + "Ready?", 0, 30, 0);
+            if (countdown == 10) for (Player player : Bukkit.getOnlinePlayers()) player.sendTitle(ChatColor.GREEN + "10", ChatColor.GRAY.toString() + ChatColor.ITALIC + "Prepare ...", 0, 30, 10);
+
+            //Render chat info
+            if (countdown == 1) Bukkit.broadcastMessage(ChallengeManager.getChatPrefix() + ChatColor.RED + "1");
+            if (countdown == 2) Bukkit.broadcastMessage(ChallengeManager.getChatPrefix() + ChatColor.RED + "2");
+            if (countdown == 3) Bukkit.broadcastMessage(ChallengeManager.getChatPrefix() + ChatColor.RED + "3");
+            if (countdown == 4) Bukkit.broadcastMessage(ChallengeManager.getChatPrefix() + ChatColor.YELLOW + "4");
+            if (countdown == 5) Bukkit.broadcastMessage(ChallengeManager.getChatPrefix() + ChatColor.YELLOW + "5");
+            if (countdown == 10) Bukkit.broadcastMessage(ChallengeManager.getChatPrefix() + ChatColor.GREEN + "10");
+            if (countdown == 30) Bukkit.broadcastMessage(ChallengeManager.getChatPrefix() + ChatColor.GREEN + "The challenge starts in 30 seconds! Prepare ...");
+            if (countdown == 60) Bukkit.broadcastMessage(ChallengeManager.getChatPrefix() + ChatColor.GREEN + "The challenge starts in a minute! Prepare ...");
+            if (countdown == 300) Bukkit.broadcastMessage(ChallengeManager.getChatPrefix() + ChatColor.GREEN + "The challenge starts in 5 minutes! Prepare ...");
+            if (countdown == 600) Bukkit.broadcastMessage(ChallengeManager.getChatPrefix() + ChatColor.GREEN + "The challenge starts in 10 minutes! Prepare ...");
+
+            //Play sounds
+            if (countdown == 10 | countdown <= 5) for (Player player : Bukkit.getOnlinePlayers()) player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, SoundCategory.MASTER, 1, 1);
+
+            //Update the countdown
+            countdown--;
+
+            //Return
+            return;
+
+        }
 
         //Update the position map
         for (Player player : positions.keySet()) {
@@ -193,20 +257,20 @@ public class DeathrunChallenge extends Challenge {
         update();
 
         //Broadcast the result
-        Bukkit.broadcastMessage(ChatColor.GOLD + " \n!EVENT IS OVER!\n ");
+        Bukkit.broadcastMessage(" \n" + ChallengeManager.getChatPrefix() + ChatColor.GOLD + "!CHALLENGE IS OVER!\n ");
         Bukkit.broadcastMessage(ChatColor.AQUA + "Result:");
         int position = 1;
         for (Map.Entry<Player, Integer> entry : getSortedPositions()) {
             String name = entry.getKey().getName() + ChatColor.RESET + " ";
             String positionString = ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD + "#" + position;
             positionString += StringUtils.repeat(" ", 8 - positionString.length());
-            if (position == 1) Bukkit.broadcastMessage(positionString + ChatColor.GOLD + name + ChatColor.AQUA + entry.getValue());
-            else if (position == 2) Bukkit.broadcastMessage(positionString + ChatColor.YELLOW + name + ChatColor.AQUA + entry.getValue());
-            else if (position == 3) Bukkit.broadcastMessage(positionString + ChatColor.RED + name + ChatColor.AQUA + entry.getValue());
-            else Bukkit.broadcastMessage(positionString + ChatColor.WHITE + name + ChatColor.AQUA + entry.getValue());
+            if (position == 1) Bukkit.broadcastMessage(positionString + ChatColor.GOLD + name + ChatColor.AQUA + entry.getValue() + ChatColor.RED + ChatColor.ITALIC + " " + (int) entry.getKey().getHealth() + "HP");
+            else if (position == 2) Bukkit.broadcastMessage(positionString + ChatColor.YELLOW + name + ChatColor.AQUA + entry.getValue() + ChatColor.RED + ChatColor.ITALIC + " " + (int) entry.getKey().getHealth() + "HP");
+            else if (position == 3) Bukkit.broadcastMessage(positionString + ChatColor.RED + name + ChatColor.AQUA + entry.getValue() + ChatColor.RED + ChatColor.ITALIC + " " + (int) entry.getKey().getHealth() + "HP");
+            else Bukkit.broadcastMessage(positionString + ChatColor.WHITE + name + ChatColor.AQUA + entry.getValue() + ChatColor.RED + ChatColor.ITALIC + " " + (int) entry.getKey().getHealth() + "HP");
             position++;
         }
-        Bukkit.broadcastMessage(ChatColor.GREEN + " \nCONGRATULATION!\n");
+        Bukkit.broadcastMessage(" \n" + ChallengeManager.getChatPrefix() + ChatColor.GREEN + "Congratulation!\n ");
 
         //Loop for all online players
         for (Player player : Bukkit.getOnlinePlayers()) {
@@ -231,8 +295,12 @@ public class DeathrunChallenge extends Challenge {
             scoreboard.update();
         }
 
-        //Set running to false
+        //Play sounds
+        for (Player player : Bukkit.getOnlinePlayers()) player.playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH, SoundCategory.MASTER, 1, 1);
+
+        //Set running and started to false
         setRunning(false);
+        started = false;
 
     }
 
@@ -429,6 +497,45 @@ public class DeathrunChallenge extends Challenge {
                     return false;
 
                 }
+
+                //Return true
+                return true;
+
+            }
+
+            case "countdown": {
+
+                //If argument 3 don't exist
+                if (args.length < 3) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Missing third argument!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Missing third argument!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                try {
+
+                    //Set the countdown
+                    countdown = Integer.parseInt(args[2]);
+
+                } catch (NumberFormatException e) {
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Invalid countdown!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Invalid countdown!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                //Send message to sender
+                if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Successfully set the countdown to '" + args[2] + "'!");
+                else sender.sendMessage(CommandUtils.getConsolePrefix() + "Successfully set the countdown to '" + args[2] + "'!");
 
                 //Return true
                 return true;
@@ -789,6 +896,49 @@ public class DeathrunChallenge extends Challenge {
 
             }
 
+            case "spawn": {
+
+                //Check for player
+                if (!isPlayer) {
+                    //Send message to sender
+                    sender.sendMessage(CommandUtils.getConsolePrefix() + "You must be a player to execute this command!");
+
+                    //Return false
+                    return false;
+                }
+
+                //Get the player position
+                Player player = (Player) sender;
+
+                //Check if the player is in the game world
+                if (Arrays.asList("world", "world_nether", "world_the_end").contains(player.getLocation().getWorld().getName())) {
+
+                    //Send message to player
+                    player.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "You must be in the game world to do this!");
+
+                    //Return false
+                    return false;
+
+                }
+
+                //Set the world spawn
+                player.getWorld().setSpawnLocation(new Location(player.getWorld(), player.getLocation().getBlockX(), player.getLocation().getBlockY(),
+                        player.getLocation().getBlockZ(), -90, 0));
+                Main.getInstance().getMultiverseCore().getMVWorldManager().getMVWorld(player.getWorld().getName()).setSpawnLocation(new Location(player.getWorld(),
+                        player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ(), -90, 0));
+
+                //Build the spawn
+                player.getWorld().getBlockAt(player.getLocation().getBlockX(), player.getLocation().getBlockY() - 1, player.getLocation().getBlockZ()).setType(Material.GOLD_BLOCK);
+
+                //Send message to player
+                player.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Successfully set the spawn to X" +
+                        player.getLocation().getBlockX() + " Y" + player.getLocation().getBlockY() + " Z" + player.getLocation().getBlockZ() + "!");
+
+                //Return true
+                return true;
+
+            }
+
             default:
 
                 //Send message to sender
@@ -825,6 +975,8 @@ public class DeathrunChallenge extends Challenge {
                 result.add("dimension");
                 result.add("time");
                 result.add("name");
+                result.add("spawn");
+                result.add("countdown");
 
                 break;
 
@@ -894,6 +1046,17 @@ public class DeathrunChallenge extends Challenge {
                         result.add("21600");
                         result.add("43200");
                         result.add("86400");
+                        break;
+
+                    case "countdown":
+
+                        //Add times to the list
+                        result.add("0");
+                        result.add("10");
+                        result.add("30");
+                        result.add("60");
+                        result.add("300");
+                        result.add("600");
                         break;
 
                 }
@@ -1035,6 +1198,14 @@ public class DeathrunChallenge extends Challenge {
 
         //If the player is not in the challenge, set the gamemode to spectator
         if (!getPositions().containsKey(player)) player.setGameMode(GameMode.SPECTATOR);
+
+        //If the player is not in the right dimension
+        if (!player.getWorld().getName().equals(dimension)) {
+
+            //Teleport the player to the spawn of the right dimension
+            Main.getInstance().getMultiverseCore().teleportPlayer(player, player, Bukkit.getWorld(dimension).getSpawnLocation().clone());
+
+        }
 
     }
 

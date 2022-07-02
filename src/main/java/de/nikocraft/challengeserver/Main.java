@@ -12,10 +12,14 @@ import de.nikocraft.challengeserver.inventories.enderchests.EnderchestManager;
 import de.nikocraft.challengeserver.inventories.players.PlayerInventoryManager;
 import de.nikocraft.challengeserver.listeners.*;
 import de.nikocraft.challengeserver.parkours.ParkourManager;
+import de.nikocraft.challengeserver.shop.CoinCookieInfo;
+import de.nikocraft.challengeserver.shop.CoinManager;
+import de.nikocraft.challengeserver.shop.CookieManager;
 import de.nikocraft.challengeserver.tablists.TablistManager;
 import de.nikocraft.challengeserver.timers.Timer;
 import de.nikocraft.challengeserver.utils.Config;
 import de.nikocraft.challengeserver.permissions.PermissionManager;
+import de.nikocraft.challengeserver.visibility.VisibilityManager;
 import de.nikocraft.challengeserver.worlds.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -54,8 +58,20 @@ public final class Main extends JavaPlugin {
     //The player inventory manager for players in the lobby
     private PlayerInventoryManager playerInventoryManager;
 
+    //The cookie manager of the lobby
+    private CookieManager cookieManager;
+
+    //The coin manager of the lobby
+    private CoinManager coinManager;
+
+    //The visibility manager of the lobby
+    private VisibilityManager visibilityManager;
+
     //The timer
     private Timer timer;
+
+    //The coin and cookie info
+    private CoinCookieInfo coinCookieInfo;
 
     //The main configuration of the plugin
     private Config mainConfig;
@@ -131,6 +147,7 @@ public final class Main extends JavaPlugin {
         getCommand("parkour_cancel").setExecutor(new ParkourCancelCommand());
         getCommand("inventory").setExecutor(new InventoryCommand());
         getCommand("ip").setExecutor(new IpCommand());
+        getCommand("player").setExecutor(new PlayerCommand());
 
         //Define the permission manager
         getLogger().info(getPrefix() + "Load permission system ...");
@@ -155,6 +172,21 @@ public final class Main extends JavaPlugin {
         //Define the player inventory manager
         getLogger().info(getPrefix() + "Load player inventory manager ...");
         playerInventoryManager = new PlayerInventoryManager();
+
+        //Define the cookie manager
+        getLogger().info(getPrefix() + "Load cookies ...");
+        cookieManager = new CookieManager();
+
+        //Define the coin manager
+        getLogger().info(getPrefix() + "Load coins ...");
+        coinManager = new CoinManager();
+
+        //Define the visibility manager
+        getLogger().info(getPrefix() + "Load visibility manager ...");
+        visibilityManager = new VisibilityManager();
+
+        //Define the coin and cookie info
+        coinCookieInfo = new CoinCookieInfo();
 
         //Define the timer
         getLogger().info(getPrefix() + "Load timer ...");
@@ -213,6 +245,14 @@ public final class Main extends JavaPlugin {
         getLogger().info(getPrefix() + "Save player inventory active ...");
         playerInventoryManager.save();
 
+        //Save cookies
+        getLogger().info(getPrefix() + "Save cookies ...");
+        cookieManager.save();
+
+        //Save coins
+        getLogger().info(getPrefix() + "Save coins ...");
+        coinManager.save();
+
         //Save the ip
         mainConfig.getConfig().set("ip", getServerIP());
 
@@ -258,8 +298,20 @@ public final class Main extends JavaPlugin {
     //The player inventory manager for players in the lobby
     public PlayerInventoryManager getPlayerInventoryManager() { return playerInventoryManager; }
 
+    //The cookie manager of the lobby
+    public CookieManager getCookieManager() { return cookieManager; }
+
+    //The coin manager of the lobby
+    public CoinManager getCoinManager() { return coinManager; }
+
+    //The visibility manager of the lobby
+    public VisibilityManager getVisibilityManager() { return visibilityManager; }
+
     //The timer
     public Timer getTimer() { return timer; }
+
+    //The coin and cookie info
+    public CoinCookieInfo getCoinCookieInfo() { return coinCookieInfo; }
 
     //The main configuration of the plugin
     public Config getMainConfig() { return mainConfig; }

@@ -38,7 +38,7 @@ public class PlayerInventoryDefault extends PlayerInventoryBuilder {
 
         //Build the visibility item
         ItemStack visibilityItem = new ItemBuilder(Material.LIME_DYE, 1)
-                .setDisplayName(ChatColor.WHITE + "Players: " + ChatColor.RED.toString() + ChatColor.ITALIC + "Visible " + ChatColor.GRAY + "(Click)")
+                .setDisplayName(ChatColor.WHITE + "Players: " + ChatColor.GREEN.toString() + ChatColor.ITALIC + "Visible " + ChatColor.GRAY + "(Click)")
                 .setLocalizedName("visible").setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Click to hide all players.").build();
         if (Main.getInstance().getVisibilityManager().isHidden(getPlayer())) {
             visibilityItem = new ItemBuilder(Material.GRAY_DYE, 1)

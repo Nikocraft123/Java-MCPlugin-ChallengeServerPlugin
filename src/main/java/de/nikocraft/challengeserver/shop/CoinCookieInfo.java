@@ -59,8 +59,8 @@ public class CoinCookieInfo {
 
             //Render the actionbar
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColor.GRAY +
-                    "« " + ChatColor.YELLOW + "Coins: " + ChatColor.GOLD + Main.getInstance().getCoinManager().getCoins(player) + ChatColor.GRAY + " | " + ChatColor.YELLOW + "Cookies: " + ChatColor.GOLD + Main.getInstance().getCookieManager().getCookies(player) + ChatColor.DARK_GRAY + " (" + ChatColor.YELLOW +
-                    "Level: " + ChatColor.GOLD + Main.getInstance().getCookieManager().getLevel(player) + ChatColor.DARK_GRAY + ")" + ChatColor.GRAY + " »"));
+                    "« " + ChatColor.YELLOW + "Coins: " + ChatColor.GOLD + Main.getInstance().getCoinManager().getCoins(player) + ChatColor.GRAY + " | " + ChatColor.YELLOW + "Cookies: " + ChatColor.GOLD + Main.getInstance().getCookieManager().getCookies(player) + ChatColor.GRAY + " (" + ChatColor.YELLOW +
+                    "Level: " + ChatColor.GOLD + Main.getInstance().getCookieManager().getLevel(player) + ChatColor.GRAY + ") »"));
 
         }
 

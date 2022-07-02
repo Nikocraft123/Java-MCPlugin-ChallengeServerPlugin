@@ -52,7 +52,7 @@ public class VisibilityManager {
             if (player.equals(p)) continue;
 
             //Hide the player
-            p.hidePlayer(Main.getInstance(), player);
+            player.hidePlayer(Main.getInstance(), p);
 
         }
 
@@ -71,7 +71,7 @@ public class VisibilityManager {
             if (player.equals(p)) continue;
 
             //Show the player
-            p.showPlayer(Main.getInstance(), player);
+            player.showPlayer(Main.getInstance(), p);
 
         }
 

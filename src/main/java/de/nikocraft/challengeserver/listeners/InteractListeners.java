@@ -4,6 +4,7 @@ package de.nikocraft.challengeserver.listeners;
 
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
+import de.nikocraft.challengeserver.challenges.Challenge;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -51,6 +52,17 @@ public class InteractListeners implements Listener {
         //Call the player inventory manager
         Main.getInstance().getPlayerInventoryManager().onBreak(event);
 
+        //Get the active challenge
+        Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();
+
+        //If the challenge is not null
+        if (challenge != null) {
+
+            //Call the challenge event
+            challenge.onBreak(event);
+
+        }
+
     }
 
     //Called, if a player placed a block
@@ -59,6 +71,17 @@ public class InteractListeners implements Listener {
 
         //Call the player inventory manager
         Main.getInstance().getPlayerInventoryManager().onPlace(event);
+
+        //Get the active challenge
+        Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();
+
+        //If the challenge is not null
+        if (challenge != null) {
+
+            //Call the challenge event
+            challenge.onPlace(event);
+
+        }
 
     }
 

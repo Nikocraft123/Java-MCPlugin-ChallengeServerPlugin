@@ -6,6 +6,8 @@ package de.nikocraft.challengeserver.challenges;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 
@@ -85,6 +87,12 @@ public abstract class Challenge {
 
     //On portal
     public abstract void onPortal(PlayerPortalEvent event);
+
+    //On place block
+    public abstract void onPlace(BlockPlaceEvent event);
+
+    //On break block
+    public abstract void onBreak(BlockBreakEvent event);
 
 
     //GETTERS

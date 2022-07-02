@@ -13,8 +13,11 @@ import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
 import org.checkerframework.checker.units.qual.C;
 
 import java.util.*;
@@ -1140,11 +1143,16 @@ public class DeathrunChallenge extends Challenge {
     @Override
     public void onMove(PlayerMoveEvent event) {
 
-        //Check for border
-        if (event.getPlayer().getLocation().getZ() < -borderDistance)
-            event.getPlayer().teleport(event.getPlayer().getLocation().add(0, 0, 1));
-        if (event.getPlayer().getLocation().getZ() > borderDistance)
-            event.getPlayer().teleport(event.getPlayer().getLocation().add(0, 0, -1));
+        //Check if the player is in the game world
+        if (Arrays.asList("world", "world_nether", "world_the_end").contains(event.getPlayer().getLocation().getWorld().getName())) {
+
+            //Check for border
+            if (event.getPlayer().getLocation().getZ() < -borderDistance)
+                event.getPlayer().teleport(event.getPlayer().getLocation().add(0, 0, 1));
+            if (event.getPlayer().getLocation().getZ() > borderDistance)
+                event.getPlayer().teleport(event.getPlayer().getLocation().add(0, 0, -1));
+
+        }
 
     }
 
@@ -1152,22 +1160,27 @@ public class DeathrunChallenge extends Challenge {
     @Override
     public void onDeath(PlayerDeathEvent event) {
 
-        //Get the player
-        Player player = event.getEntity();
+        //Check if the player is in the game world
+        if (Arrays.asList("world", "world_nether", "world_the_end").contains(event.getEntity().getLocation().getWorld().getName())) {
 
-        //Set the gamemode
-        player.setGameMode(GameMode.SPECTATOR);
+            //Get the player
+            Player player = event.getEntity();
 
-        //Remove the player from the positions
-        getPositions().remove(player);
+            //Set the gamemode
+            player.setGameMode(GameMode.SPECTATOR);
 
-        //Update all player scoreboards
-        for (DeathrunScoreboard scoreboard : scoreboards) {
-            scoreboard.update();
+            //Remove the player from the positions
+            getPositions().remove(player);
+
+            //Update all player scoreboards
+            for (DeathrunScoreboard scoreboard : scoreboards) {
+                scoreboard.update();
+            }
+
+            //Send a message to player
+            player.sendMessage(ChatColor.RED + " \nOh no! You died! Unfortunately you are out ... :(\n ");
+
         }
-
-        //Send a message to player
-        player.sendMessage(ChatColor.RED + " \nOh no! You died! Unfortunately you are out ... :(\n ");
 
     }
 
@@ -1175,8 +1188,13 @@ public class DeathrunChallenge extends Challenge {
     @Override
     public void onRespawn(PlayerRespawnEvent event) {
 
-        //Set the respawn location
-        event.setRespawnLocation(event.getPlayer().getLocation());
+        //Check if the player is in the game world
+        if (Arrays.asList("world", "world_nether", "world_the_end").contains(event.getPlayer().getLocation().getWorld().getName())) {
+
+            //Set the respawn location
+            event.setRespawnLocation(event.getPlayer().getLocation());
+
+        }
 
     }
 
@@ -1184,11 +1202,16 @@ public class DeathrunChallenge extends Challenge {
     @Override
     public void onSleep(PlayerBedEnterEvent event) {
 
-        //Cancel the event
-        event.setCancelled(true);
+        //Check if the player is in the game world
+        if (Arrays.asList("world", "world_nether", "world_the_end").contains(event.getPlayer().getLocation().getWorld().getName())) {
 
-        //Send a message to player
-        event.getPlayer().sendMessage(ChatColor.RED + "Sorry! Sleeping is deactivated in this challenge ... :(");
+            //Cancel the event
+            event.setCancelled(true);
+
+            //Send a message to player
+            event.getPlayer().sendMessage(ChatColor.RED + "Sorry! Sleeping is deactivated in this challenge ... :(");
+
+        }
 
     }
 
@@ -1211,19 +1234,47 @@ public class DeathrunChallenge extends Challenge {
 
     //On enter game
     @Override
-    public void onLeaveGame(Player player) {
-
-    }
+    public void onLeaveGame(Player player) {}
 
     //On portal
     @Override
     public void onPortal(PlayerPortalEvent event) {
 
-        //Cancel the event
-        event.setCancelled(true);
+        //Check if the player is in the game world
+        if (Arrays.asList("world", "world_nether", "world_the_end").contains(event.getPlayer().getLocation().getWorld().getName())) {
 
-        //Send a message to player
-        event.getPlayer().sendMessage(ChatColor.RED + "Sorry! Other dimensions are deactivated in this challenge ... :(");
+            //Cancel the event
+            event.setCancelled(true);
+
+            //Send a message to player
+            event.getPlayer().sendMessage(ChatColor.RED + "Sorry! Other dimensions are deactivated in this challenge ... :(");
+
+        }
+
+    }
+
+    //On place block
+    @Override
+    public void onPlace(BlockPlaceEvent event) {}
+
+    //On break block
+    @Override
+    public void onBreak(BlockBreakEvent event) {
+
+        //Check if the player is in the game world
+        if (Arrays.asList("world", "world_nether", "world_the_end").contains(event.getPlayer().getLocation().getWorld().getName())) {
+
+            //If the broken block is nether roots
+            if (Arrays.asList(Material.WARPED_ROOTS, Material.CRIMSON_ROOTS, Material.NETHER_SPROUTS).contains(event.getBlock().getType())) {
+
+                //Cancel drop
+                event.setDropItems(false);
+
+                //Drop wheat
+                event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), new ItemStack(Material.WHEAT));
+
+            }
+        }
 
     }
 

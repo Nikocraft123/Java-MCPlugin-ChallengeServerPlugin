@@ -67,6 +67,9 @@ public class WorldManager {
             parkour.removePlayer(player);
         }
 
+        //Show all players
+        Main.getInstance().getVisibilityManager().show(player);
+
         //Teleport the player to lobby
         Main.getInstance().getMultiverseCore().teleportPlayer(player, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
 

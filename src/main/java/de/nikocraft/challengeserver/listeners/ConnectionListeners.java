@@ -10,8 +10,10 @@ import de.nikocraft.challengeserver.permissions.CustomPermissibleBase;
 import de.nikocraft.challengeserver.shop.CoinCookieInfo;
 import de.nikocraft.challengeserver.tablists.TablistManager;
 import de.nikocraft.challengeserver.parkours.Parkour;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_19_R1.entity.CraftHumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -76,6 +78,19 @@ public class ConnectionListeners implements Listener {
         TablistManager.setTablistHeaderFooter(event.getPlayer());
         TablistManager.setAllPlayerTeams();
 
+        //Loop for all players
+        for (Player player : Bukkit.getOnlinePlayers()) {
+
+            //If the player is hidden
+            if (Main.getInstance().getVisibilityManager().isHidden(player)) {
+
+                //Hide the player
+                player.hidePlayer(Main.getInstance(), event.getPlayer());
+
+            }
+
+        }
+
         //Set the inventory manager for the player
         Main.getInstance().getPlayerInventoryManager().setPlayerInventoryMode(event.getPlayer(), new PlayerInventoryDefault(event.getPlayer()), false);
         if (Main.getInstance().getInventoryConfig().getConfig().contains("active." + event.getPlayer().getUniqueId().toString()))
@@ -101,6 +116,9 @@ public class ConnectionListeners implements Listener {
         for (Parkour parkour : Main.getInstance().getParkourManager().getParkours()) {
             parkour.removePlayer(event.getPlayer());
         }
+
+        //Show all players
+        Main.getInstance().getVisibilityManager().show(event.getPlayer());
 
         //Remove the player from the inventory manager
         Main.getInstance().getPlayerInventoryManager().removePlayer(event.getPlayer());

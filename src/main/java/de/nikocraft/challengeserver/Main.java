@@ -153,13 +153,13 @@ public final class Main extends JavaPlugin {
         getLogger().info(getPrefix() + "Load permission system ...");
         permissionManager = new PermissionManager();
 
-        //Define the enderchest manager
-        getLogger().info(getPrefix() + "Load enderchests ...");
-        enderchestManager = new EnderchestManager();
-
         //Define the world manager
         getLogger().info(getPrefix() + "Load world manager ...");
         worldManager = new WorldManager();
+
+        //Define the visibility manager
+        getLogger().info(getPrefix() + "Load visibility manager ...");
+        visibilityManager = new VisibilityManager();
 
         //Define the challenge manager
         getLogger().info(getPrefix() + "Load challenge manager ...");
@@ -173,6 +173,10 @@ public final class Main extends JavaPlugin {
         getLogger().info(getPrefix() + "Load player inventory manager ...");
         playerInventoryManager = new PlayerInventoryManager();
 
+        //Define the enderchest manager
+        getLogger().info(getPrefix() + "Load enderchests ...");
+        enderchestManager = new EnderchestManager();
+
         //Define the cookie manager
         getLogger().info(getPrefix() + "Load cookies ...");
         cookieManager = new CookieManager();
@@ -180,10 +184,6 @@ public final class Main extends JavaPlugin {
         //Define the coin manager
         getLogger().info(getPrefix() + "Load coins ...");
         coinManager = new CoinManager();
-
-        //Define the visibility manager
-        getLogger().info(getPrefix() + "Load visibility manager ...");
-        visibilityManager = new VisibilityManager();
 
         //Define the coin and cookie info
         coinCookieInfo = new CoinCookieInfo();

@@ -104,16 +104,16 @@ public class PlayerCommand implements CommandExecutor, TabCompleter {
 
                 //Send message to sender
                 if (isPlayer) {
-                    sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.AQUA + "List of all online players" + ChatColor.GRAY + ":\n");
+                    sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.AQUA + "List of all online players" + ChatColor.GRAY + ":");
                     for (Player player : Bukkit.getOnlinePlayers()) {
-                        sender.sendMessage(ChatColor.DARK_GRAY + "- " + player.getDisplayName() + "\n");
+                        sender.sendMessage(ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + player.getName());
                     }
                     if (Bukkit.getOnlinePlayers().isEmpty()) sender.sendMessage(ChatColor.DARK_PURPLE.toString() + ChatColor.ITALIC + "No players found!");
                     sender.sendMessage("\n ");
                 } else {
-                    sender.sendMessage(CommandUtils.getConsolePrefix() + "List of all online players:\n");
+                    sender.sendMessage(CommandUtils.getConsolePrefix() + "List of all online players:");
                     for (Player player : Bukkit.getOnlinePlayers()) {
-                        sender.sendMessage("- " + player.getDisplayName() + "\n");
+                        sender.sendMessage("- " + player.getName());
                     }
                     if (Bukkit.getOnlinePlayers().isEmpty()) sender.sendMessage("No players found!");
                     sender.sendMessage("\n ");

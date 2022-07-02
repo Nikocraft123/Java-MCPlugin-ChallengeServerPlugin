@@ -114,6 +114,13 @@ public class DeathrunChallenge extends Challenge {
     @Override
     public void start() {
 
+        //Set health
+        for (Player player : getPositions().keySet()) player.setHealth(20);
+
+        //Set hunger
+        for (Player player : getPositions().keySet()) player.setFoodLevel(20);
+        for (Player player : getPositions().keySet()) player.setSaturation(20);
+
         //If the countdown is not 0
         if (countdown > 0) {
 
@@ -914,7 +921,7 @@ public class DeathrunChallenge extends Challenge {
                 Player player = (Player) sender;
 
                 //Check if the player is in the game world
-                if (Arrays.asList("world", "world_nether", "world_the_end").contains(player.getLocation().getWorld().getName())) {
+                if (!Arrays.asList("world", "world_nether", "world_the_end").contains(player.getLocation().getWorld().getName())) {
 
                     //Send message to player
                     player.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "You must be in the game world to do this!");
@@ -1274,6 +1281,15 @@ public class DeathrunChallenge extends Challenge {
                 event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), new ItemStack(Material.WHEAT));
 
             }
+
+            //If the player is in the game
+            if (getPositions().containsKey(event.getPlayer()) & countdown > 0) {
+
+                //Cancel
+                event.setCancelled(true);
+
+            }
+
         }
 
     }

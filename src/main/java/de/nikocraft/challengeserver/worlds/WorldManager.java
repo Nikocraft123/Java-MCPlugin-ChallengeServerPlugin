@@ -87,6 +87,7 @@ public class WorldManager {
         player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 99999, 255, false, false));
         player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 99999, 255, false, false));
         player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 99999, 255, false, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 99999, 255, false, false));
 
         //Check for op
         if (player.hasPermission("server.op")) player.setOp(true);
@@ -141,6 +142,7 @@ public class WorldManager {
         player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
         player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
         player.removePotionEffect(PotionEffectType.SATURATION);
+        player.removePotionEffect(PotionEffectType.NIGHT_VISION);
 
         //Set the player gamemode
         player.setGameMode(GameMode.SURVIVAL);

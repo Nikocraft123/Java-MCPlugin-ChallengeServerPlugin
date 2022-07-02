@@ -52,6 +52,11 @@ public class ConnectionListeners implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
 
+        //Create a new scoreboard for the player
+        if (event.getPlayer().getScoreboard().equals(Bukkit.getScoreboardManager().getMainScoreboard())) {
+            event.getPlayer().setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+        }
+
         //Teleport the player to lobby
         Main.getInstance().getWorldManager().teleportToLobby(event.getPlayer(), false);
 

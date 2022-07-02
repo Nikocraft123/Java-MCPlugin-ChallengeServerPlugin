@@ -3,8 +3,6 @@ package de.nikocraft.challengeserver.utils;
 
 
 //IMPORTS
-import de.nikocraft.challengeserver.tablists.TablistManager;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -30,12 +28,6 @@ public abstract class ScoreboardBuilder {
 
         //Set the player
         this.player = player;
-
-        //Create a new scoreboard for the player
-        if (player.getScoreboard().equals(Bukkit.getScoreboardManager().getMainScoreboard())) {
-            player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
-            TablistManager.setAllPlayerTeams();
-        }
 
         //Get the new player scoreboard
         scoreboard = player.getScoreboard();

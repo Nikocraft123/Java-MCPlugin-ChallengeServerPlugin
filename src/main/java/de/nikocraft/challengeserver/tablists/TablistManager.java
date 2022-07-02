@@ -46,13 +46,15 @@ public class TablistManager {
         //Get the scoreboard of the player
         Scoreboard scoreboard = player.getScoreboard();
 
-        //Unregister old health objective
-        if (scoreboard.getObjective("health") != null) scoreboard.getObjective("health").unregister();
+        //If there is no objective health
+        if (scoreboard.getObjective("health") == null) {
 
-        //Register new health objective and set it to sidebar
-        scoreboard.registerNewObjective("health", "health", "");
-        scoreboard.getObjective("health").setDisplaySlot(DisplaySlot.PLAYER_LIST);
-        scoreboard.getObjective("health").setRenderType(RenderType.HEARTS);
+            //Register new health objective and set it to sidebar
+            scoreboard.registerNewObjective("health", "health", "");
+            scoreboard.getObjective("health").setDisplaySlot(DisplaySlot.PLAYER_LIST);
+            scoreboard.getObjective("health").setRenderType(RenderType.HEARTS);
+
+        }
 
         //For in all player ranks
         for (Rank rank : Rank.values()) {

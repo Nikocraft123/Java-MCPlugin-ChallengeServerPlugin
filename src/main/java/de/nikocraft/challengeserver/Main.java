@@ -156,6 +156,7 @@ public final class Main extends JavaPlugin {
         getCommand("inventory").setExecutor(new InventoryCommand());
         getCommand("display_ip").setExecutor(new IpCommand());
         getCommand("player").setExecutor(new PlayerCommand());
+        getCommand("serv").setExecutor(new ServerCommand());
 
         //Define the permission manager
         getLogger().info(getPrefix() + "Load permission system ...");

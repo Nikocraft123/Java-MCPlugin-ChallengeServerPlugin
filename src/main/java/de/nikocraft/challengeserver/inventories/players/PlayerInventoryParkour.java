@@ -119,9 +119,9 @@ public class PlayerInventoryParkour extends PlayerInventoryBuilder {
                     event.setCancelled(true);
                 }
 
-                //If the localized name of the item is server
+                //If the localized name of the item is hidden
                 if (item.getItemMeta().getLocalizedName().equals("server")) {
-                    Main.getInstance().getCommand("player").execute(player, "player", new String[]{"show"});
+                    Main.getInstance().getCommand("serv").execute(player, "serv", new String[]{});
                     event.setCancelled(true);
                 }
 
@@ -163,6 +163,11 @@ public class PlayerInventoryParkour extends PlayerInventoryBuilder {
                 //If the localized name of the item is hidden
                 if (item.getItemMeta().getLocalizedName().equals("hidden")) {
                     Main.getInstance().getCommand("player").execute(player, "player", new String[]{"show"});
+                }
+
+                //If the localized name of the item is hidden
+                if (item.getItemMeta().getLocalizedName().equals("server")) {
+                    Main.getInstance().getCommand("serv").execute(player, "serv", new String[]{});
                 }
 
             }

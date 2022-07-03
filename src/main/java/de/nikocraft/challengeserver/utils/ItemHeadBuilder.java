@@ -10,11 +10,12 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import java.util.Arrays;
 
 
-//ITEM BUILDER CLASS
-public class ItemBuilder {
+//ITEM HEAD BUILDER CLASS
+public class ItemHeadBuilder {
 
     //VARIABLES
 
@@ -26,7 +27,7 @@ public class ItemBuilder {
 
 
     //CONSTRUCTOR
-    public ItemBuilder(Material material, int amount){
+    public ItemHeadBuilder(Material material, int amount){
 
         //Define variables
         itemStack = new ItemStack(material);
@@ -39,50 +40,56 @@ public class ItemBuilder {
     //METHODS
 
     //Set the display name
-    public ItemBuilder setDisplayName(String displayName){
+    public ItemHeadBuilder setDisplayName(String displayName){
         itemMeta.setDisplayName(displayName);
         return this;
     }
 
     //Set the localized name
-    public ItemBuilder setLocalizedName(String localizedName){
+    public ItemHeadBuilder setLocalizedName(String localizedName){
         itemMeta.setLocalizedName(localizedName);
         return this;
     }
 
     //Set the item lore
-    public ItemBuilder setLore(String... lore){
+    public ItemHeadBuilder setLore(String... lore){
         itemMeta.setLore(Arrays.asList(lore));
         return this;
     }
 
     //Set the item unbreakable
-    public ItemBuilder setUnbreakable(boolean unbreakable){
+    public ItemHeadBuilder setUnbreakable(boolean unbreakable){
         itemMeta.setUnbreakable(unbreakable);
         return this;
     }
 
     //Add item flags
-    public ItemBuilder addItemFlags(ItemFlag... itemFlags){
+    public ItemHeadBuilder addItemFlags(ItemFlag... itemFlags){
         itemMeta.addItemFlags(itemFlags);
         return this;
     }
 
     //Add an enchantment
-    public ItemBuilder addEnchantment(Enchantment enchantment, int level) {
+    public ItemHeadBuilder addEnchantment(Enchantment enchantment, int level) {
         itemMeta.addEnchant(enchantment, level, true);
         return this;
     }
 
     //Set custom model data
-    public ItemBuilder setCustomModelData(int customModelData) {
+    public ItemHeadBuilder setCustomModelData(int customModelData) {
         itemMeta.setCustomModelData(customModelData);
         return this;
     }
 
     //Add an attribute modifier
-    public ItemBuilder addAttributeModifier(Attribute attribute, AttributeModifier attributeModifier) {
+    public ItemHeadBuilder addAttributeModifier(Attribute attribute, AttributeModifier attributeModifier) {
         itemMeta.addAttributeModifier(attribute, attributeModifier);
+        return this;
+    }
+
+    //Set head
+    public ItemHeadBuilder setHead(String name) {
+        ((SkullMeta) itemMeta).setOwner(name);
         return this;
     }
 

@@ -80,3 +80,8 @@ commands:
     usage: "Type '/player help' for help!"
     permission: server.player.control
     permission-message: "§cYou haven't the permission to control visibility of or list players!"
+  serv:
+    description: "Open server selection menu [DEFAULT]"
+    usage: "No arguments"
+    permission: server.world.teleport
+    permission-message: "§cYou haven't the permission to switch the server!"

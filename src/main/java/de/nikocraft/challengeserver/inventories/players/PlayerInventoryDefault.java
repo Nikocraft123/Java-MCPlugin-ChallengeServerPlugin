@@ -36,17 +36,23 @@ public class PlayerInventoryDefault extends PlayerInventoryBuilder {
         //Clear the inventory
         getInventory().clear();
 
+        //Build the server selection item
+        ItemStack serverItem = new ItemBuilder(Material.COMPASS, 1)
+                .setDisplayName(ChatColor.AQUA.toString() + ChatColor.BOLD + "Server Selector " + ChatColor.GRAY + ChatColor.ITALIC + "(Click)")
+                .setLocalizedName("server").setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Click to open the server selection menu.").build();
+
         //Build the visibility item
         ItemStack visibilityItem = new ItemBuilder(Material.LIME_DYE, 1)
-                .setDisplayName(ChatColor.WHITE + "Players: " + ChatColor.GREEN.toString() + ChatColor.ITALIC + "Visible " + ChatColor.GRAY + "(Click)")
+                .setDisplayName(ChatColor.WHITE + "Players: " + ChatColor.GREEN + ChatColor.BOLD + "Visible " + ChatColor.GRAY + ChatColor.ITALIC + "(Click)")
                 .setLocalizedName("visible").setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Click to hide all players.").build();
         if (Main.getInstance().getVisibilityManager().isHidden(getPlayer())) {
             visibilityItem = new ItemBuilder(Material.GRAY_DYE, 1)
-                    .setDisplayName(ChatColor.WHITE + "Players: " + ChatColor.RED.toString() + ChatColor.ITALIC + "Hidden " + ChatColor.GRAY + "(Click)")
+                    .setDisplayName(ChatColor.WHITE + "Players: " + ChatColor.RED + ChatColor.BOLD + "Hidden " + ChatColor.GRAY + ChatColor.ITALIC + "(Click)")
                     .setLocalizedName("hidden").setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Click to show all players.").build();
         }
 
         //Set the item to the players inventory
+        getInventory().setItem(0, serverItem);
         getInventory().setItem(8, visibilityItem);
 
     }

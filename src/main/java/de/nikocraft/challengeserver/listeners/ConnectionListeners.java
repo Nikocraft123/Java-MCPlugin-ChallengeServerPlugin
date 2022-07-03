@@ -10,6 +10,7 @@ import de.nikocraft.challengeserver.permissions.CustomPermissibleBase;
 import de.nikocraft.challengeserver.shop.CoinCookieInfo;
 import de.nikocraft.challengeserver.tablists.TablistManager;
 import de.nikocraft.challengeserver.parkours.Parkour;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_19_R1.entity.CraftHumanEntity;
@@ -19,6 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.potion.PotionEffectType;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
@@ -60,14 +62,16 @@ public class ConnectionListeners implements Listener {
         //Teleport the player to lobby
         Main.getInstance().getWorldManager().teleportToLobby(event.getPlayer(), false);
 
+        //Send blank lines
+        event.getPlayer().sendMessage("\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n ");
+
         //Send welcome message to player
         event.getPlayer().sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD + ChatColor.UNDERLINE + "Welcome on the Challenge Server!" +
                 ChatColor.GREEN + ChatColor.ITALIC + " " + event.getPlayer().getName() + "\n \n" + ChatColor.DARK_PURPLE +
                 "To get help, type '/info'!\nGood fun!\n ");
 
         //Set join message
-        event.setJoinMessage(ChatColor.GRAY + ">> " + ChatColor.DARK_GREEN + ChatColor.BOLD + event.getPlayer().getName() +
-                ChatColor.RESET + ChatColor.GRAY + " joined the server!");
+        event.setJoinMessage(ChatColor.GRAY + "> " + ChatColor.DARK_GREEN + ChatColor.BOLD + event.getPlayer().getName());
 
         //Get the active challenge
         Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();
@@ -128,6 +132,12 @@ public class ConnectionListeners implements Listener {
         //Remove the player from the inventory manager
         Main.getInstance().getPlayerInventoryManager().removePlayer(event.getPlayer());
 
+        //Remove the player effects
+        event.getPlayer().removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+        event.getPlayer().removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+        event.getPlayer().removePotionEffect(PotionEffectType.SATURATION);
+        event.getPlayer().removePotionEffect(PotionEffectType.NIGHT_VISION);
+
         //Get the active challenge
         Challenge challenge = Main.getInstance().getChallengeManager().getActiveChallenge();
 
@@ -139,8 +149,7 @@ public class ConnectionListeners implements Listener {
         }
 
         //Set quit message
-        event.setQuitMessage(ChatColor.GRAY + "<< " + ChatColor.DARK_RED + ChatColor.BOLD + event.getPlayer().getName() +
-                ChatColor.RESET + ChatColor.GRAY + " left the server!");
+        event.setQuitMessage(ChatColor.GRAY + "< " + ChatColor.DARK_RED + ChatColor.BOLD + event.getPlayer().getName());
 
     }
 

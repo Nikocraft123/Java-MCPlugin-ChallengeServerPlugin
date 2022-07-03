@@ -7,6 +7,7 @@ import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.challenges.Challenge;
 import de.nikocraft.challengeserver.parkours.Parkour;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,11 +15,26 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 
-import java.util.Arrays;
+import java.util.*;
 
 
 //PLAYER LISTENER CLASS
 public class PlayerListeners implements Listener {
+
+    //VARIABLES
+
+    //Server teleport available
+    private List<UUID> serverTeleport;
+
+
+    //CONSTRUCTOR
+    public PlayerListeners() {
+
+        //Define server teleport
+        serverTeleport = new ArrayList<>();
+
+    }
+
 
     //EVENT HANDLER METHODS
 
@@ -49,8 +65,8 @@ public class PlayerListeners implements Listener {
             }
 
             //Check for lobby area exiting
-            if (player.getLocation().getX() < -160.0 | player.getLocation().getX() > 160.0 |
-                    player.getLocation().getZ() < -160.0 | player.getLocation().getZ() > 170.0) {
+            if (player.getLocation().getX() < -170.0 | player.getLocation().getX() > 170.0 |
+                    player.getLocation().getZ() < -170.0 | player.getLocation().getZ() > 170.0) {
                 Main.getInstance().getMultiverseCore().teleportPlayer(player, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
             }
 
@@ -60,6 +76,21 @@ public class PlayerListeners implements Listener {
                     player.getLocation().getZ() >= 39.0 & player.getLocation().getZ() <= 40.0 &
                     player.hasPermission("server.world.teleport")) {
                 Main.getInstance().getWorldManager().teleportToGame(player, true);
+            }
+
+            //Check for among us
+            if (player.getLocation().getX() >= -35.0 & player.getLocation().getX() <= -25.0 &
+                    player.getLocation().getY() >= 105.0 & player.getLocation().getY() <= 110.0 &
+                    player.getLocation().getZ() >= 38.0 & player.getLocation().getZ() <= 52.0 &
+                    player.hasPermission("server.world.teleport")) {
+                if (serverTeleport.contains(player.getUniqueId())) {
+                    if (!Main.getInstance().sendPlayer(player, "amongus")) player.sendMessage(ChatColor.RED + "Server teleport failed!");
+                    else player.sendMessage(ChatColor.GREEN + "Sending to 'amongus' ...");
+                    serverTeleport.remove(player.getUniqueId());
+                }
+            }
+            else {
+                if (!serverTeleport.contains(player.getUniqueId())) serverTeleport.add(player.getUniqueId());
             }
 
             //Handle parkour

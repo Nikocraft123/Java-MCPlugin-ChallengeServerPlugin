@@ -200,7 +200,7 @@ public class DeathrunChallenge extends Challenge {
 
         //Update the position map
         for (Player player : positions.keySet()) {
-            if (player.isOnline() & Arrays.asList("world", "world_nether", "world_the_end").contains(player.getWorld().getName()))
+            if (player.isOnline() & Arrays.asList("world", "world_nether", "world_the_end").contains(player.getWorld().getName()) & player.getLocation().getBlockX() >= 0)
                 positions.put(player, player.getLocation().getBlockX());
             else
                 positions.put(player, 0);
@@ -932,10 +932,9 @@ public class DeathrunChallenge extends Challenge {
                 }
 
                 //Set the world spawn
-                player.getWorld().setSpawnLocation(new Location(player.getWorld(), player.getLocation().getBlockX(), player.getLocation().getBlockY(),
-                        player.getLocation().getBlockZ(), -90, 0));
+                player.getWorld().setSpawnLocation(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), -90, 0));
                 Main.getInstance().getMultiverseCore().getMVWorldManager().getMVWorld(player.getWorld().getName()).setSpawnLocation(new Location(player.getWorld(),
-                        player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ(), -90, 0));
+                        player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), -90, 0));
 
                 //Build the spawn
                 player.getWorld().getBlockAt(player.getLocation().getBlockX(), player.getLocation().getBlockY() - 1, player.getLocation().getBlockZ()).setType(Material.GOLD_BLOCK);

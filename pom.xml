@@ -66,6 +66,10 @@
             <id>OnARandomBox</id>
             <url>https://repo.onarandombox.com/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>ranull-repo-external</id>
+            <url>https://repo.ranull.com/maven/external/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -91,6 +95,12 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.11.0</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.sergiferry</groupId>
+            <artifactId>playernpc</artifactId>
+            <version>2022.4</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

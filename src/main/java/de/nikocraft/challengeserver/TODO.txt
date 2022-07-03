@@ -8,7 +8,5 @@ Add shared challenge
 Add deep dark challenge
 Fix permission command tab complete error
 Complete spawn creation
-Fix tablist health bug
 Coins and cookie command
-Full hungry and life on start
 Finish countdown

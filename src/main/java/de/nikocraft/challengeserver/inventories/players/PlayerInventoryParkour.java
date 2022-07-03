@@ -40,27 +40,33 @@ public class PlayerInventoryParkour extends PlayerInventoryBuilder {
         //Clear the inventory
         getInventory().clear();
 
+        //Build the server selection item
+        ItemStack serverItem = new ItemBuilder(Material.COMPASS, 1)
+                .setDisplayName(ChatColor.AQUA.toString() + ChatColor.BOLD + "Server Selector " + ChatColor.GRAY + ChatColor.ITALIC + "(Click)")
+                .setLocalizedName("server").setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Click to open the server selection menu.").build();
+
         //Build the last checkpoint item
         ItemStack checkpointItem = new ItemBuilder(Material.LIGHT_WEIGHTED_PRESSURE_PLATE, 1)
-                .setDisplayName(ChatColor.GOLD.toString() + ChatColor.BOLD + "Last Checkpoint " + ChatColor.GRAY + "(Click)")
+                .setDisplayName(ChatColor.GOLD.toString() + ChatColor.BOLD + "Last Checkpoint " + ChatColor.GRAY + ChatColor.ITALIC + "(Click)")
                 .setLocalizedName("checkpoint").setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Teleport to the last checkpoint.").build();
 
         //Build the cancel item
         ItemStack cancelItem = new ItemBuilder(Material.OAK_DOOR, 1)
-                .setDisplayName(ChatColor.RED.toString() + ChatColor.BOLD + "Cancel " + ChatColor.GRAY + "(Click)")
+                .setDisplayName(ChatColor.RED.toString() + ChatColor.BOLD + "Cancel " + ChatColor.GRAY + ChatColor.ITALIC + "(Click)")
                 .setLocalizedName("cancel").setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Cancel the parkour run.").build();
 
         //Build the visibility item
         ItemStack visibilityItem = new ItemBuilder(Material.LIME_DYE, 1)
-                .setDisplayName(ChatColor.WHITE + "Players: " + ChatColor.GREEN.toString() + ChatColor.ITALIC + "Visible " + ChatColor.GRAY + "(Click)")
+                .setDisplayName(ChatColor.WHITE + "Players: " + ChatColor.GREEN + ChatColor.BOLD + "Visible " + ChatColor.GRAY + ChatColor.ITALIC + "(Click)")
                 .setLocalizedName("visible").setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Click to hide all players.").build();
         if (Main.getInstance().getVisibilityManager().isHidden(getPlayer())) {
             visibilityItem = new ItemBuilder(Material.GRAY_DYE, 1)
-                    .setDisplayName(ChatColor.WHITE + "Players: " + ChatColor.RED.toString() + ChatColor.ITALIC + "Hidden " + ChatColor.GRAY + "(Click)")
+                    .setDisplayName(ChatColor.WHITE + "Players: " + ChatColor.RED + ChatColor.BOLD + "Hidden " + ChatColor.GRAY + ChatColor.ITALIC + "(Click)")
                     .setLocalizedName("hidden").setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Click to show all players.").build();
         }
 
         //Set the item to the players inventory
+        getInventory().setItem(0, serverItem);
         getInventory().setItem(3, checkpointItem);
         getInventory().setItem(5, cancelItem);
         getInventory().setItem(8, visibilityItem);
@@ -109,6 +115,12 @@ public class PlayerInventoryParkour extends PlayerInventoryBuilder {
 
                 //If the localized name of the item is hidden
                 if (item.getItemMeta().getLocalizedName().equals("hidden")) {
+                    Main.getInstance().getCommand("player").execute(player, "player", new String[]{"show"});
+                    event.setCancelled(true);
+                }
+
+                //If the localized name of the item is server
+                if (item.getItemMeta().getLocalizedName().equals("server")) {
                     Main.getInstance().getCommand("player").execute(player, "player", new String[]{"show"});
                     event.setCancelled(true);
                 }

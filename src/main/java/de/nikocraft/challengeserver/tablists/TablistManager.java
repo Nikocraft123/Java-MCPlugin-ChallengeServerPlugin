@@ -24,7 +24,7 @@ public class TablistManager {
 
         //Set the header of the tablist
         player.setPlayerListHeader(ChatColor.GRAY + "               [ " + ChatColor.GOLD + ChatColor.BOLD + "CHALLENGE SERVER" + ChatColor.GRAY + " ]               " +
-                ChatColor.RED + ChatColor.BOLD + "\n" + "!Vorsicht ALPHA Server!" + "\n");
+                ChatColor.RED + ChatColor.BOLD + "\n \n" + "!WARNING ALPHA SERVER!" + "\n");
 
         //Set the footer of the tablist
         player.setPlayerListFooter("\n" + ChatColor.GRAY +

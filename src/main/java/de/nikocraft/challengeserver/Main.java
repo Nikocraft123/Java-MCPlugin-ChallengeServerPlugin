@@ -25,6 +25,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 
 //MAIN CLASS
 public final class Main extends JavaPlugin {
@@ -120,6 +124,10 @@ public final class Main extends JavaPlugin {
         multiverseCore = (MultiverseCore) Bukkit.getPluginManager().getPlugin("Multiverse-Core");
         multiverseInventories = (MultiverseInventories) Bukkit.getPluginManager().getPlugin("Multiverse-Inventories");
 
+        //Register channels
+        getLogger().info(getPrefix() + "Register channels ...");
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+
         //Load the ip
         if (mainConfig.getConfig().contains("ip")) serverIP = mainConfig.getConfig().getString("ip"); else serverIP = "Unknown";
 
@@ -146,7 +154,7 @@ public final class Main extends JavaPlugin {
         getCommand("parkour_checkpoint").setExecutor(new ParkourCheckpointCommand());
         getCommand("parkour_cancel").setExecutor(new ParkourCancelCommand());
         getCommand("inventory").setExecutor(new InventoryCommand());
-        getCommand("ip").setExecutor(new IpCommand());
+        getCommand("display_ip").setExecutor(new IpCommand());
         getCommand("player").setExecutor(new PlayerCommand());
 
         //Define the permission manager
@@ -211,6 +219,10 @@ public final class Main extends JavaPlugin {
     @Override
     public void onDisable() {
 
+        //Unregister channels
+        getLogger().info(getPrefix() + "Unregister channels ...");
+        getServer().getMessenger().unregisterOutgoingPluginChannel(this, "BungeeCord");
+
         //Save all enderchests
         getLogger().info(getPrefix() + "Save enderchests ...");
         enderchestManager.save();
@@ -265,6 +277,41 @@ public final class Main extends JavaPlugin {
 
         //Send info
         getLogger().info(getPrefix() + "Plugin disabled.");
+
+    }
+
+
+    //METHODS
+
+    //Send player
+    public boolean sendPlayer(Player player, String server) {
+
+        //Define the streams
+        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        final DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
+
+        //Write the message
+        try {
+            dataOutputStream.writeUTF("Connect");
+            dataOutputStream.writeUTF(server);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        //Send the message
+        player.sendPluginMessage(this, "BungeeCord", byteArrayOutputStream.toByteArray());
+
+        //Close the streams
+        try {
+            dataOutputStream.close();
+            byteArrayOutputStream.close();
+        } catch (IOException e) {
+            return false;
+        }
+
+        //Return true
+        return true;
 
     }
 

@@ -4,7 +4,6 @@ package de.nikocraft.challengeserver.commands;
 
 //IMPORTS
 import de.nikocraft.challengeserver.Main;
-import de.nikocraft.challengeserver.permissions.Rank;
 import de.nikocraft.challengeserver.utils.CommandUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

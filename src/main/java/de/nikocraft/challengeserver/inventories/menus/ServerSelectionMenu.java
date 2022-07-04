@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 public class ServerSelectionMenu extends InventoryBuilder {
 
     //CONSTRUCTORS
-    public ServerSelectionMenu(Player player) {
+    public ServerSelectionMenu() {
 
         //Initialize the inventory of the enderchest
         super(3*9, ChatColor.AQUA.toString() + ChatColor.BOLD + "Server Selector");

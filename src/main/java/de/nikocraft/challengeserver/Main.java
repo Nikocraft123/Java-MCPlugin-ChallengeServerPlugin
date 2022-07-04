@@ -157,6 +157,8 @@ public final class Main extends JavaPlugin {
         getCommand("display_ip").setExecutor(new IpCommand());
         getCommand("player").setExecutor(new PlayerCommand());
         getCommand("serv").setExecutor(new ServerCommand());
+        getCommand("cookies").setExecutor(new CookiesCommand());
+        getCommand("coins").setExecutor(new CoinsCommand());
 
         //Define the permission manager
         getLogger().info(getPrefix() + "Load permission system ...");

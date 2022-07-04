@@ -85,3 +85,15 @@ commands:
     usage: "No arguments"
     permission: server.world.teleport
     permission-message: "§cYou haven't the permission to switch the server!"
+  cookies:
+    aliases: [ ck ]
+    description: "Control the cookies of players [OPERATOR]"
+    usage: "Type '/cookies help' for help!"
+    permission: server.cookies.control
+    permission-message: "§cYou haven't the permission to control the cookies of players!"
+  coins:
+    aliases: [ cn ]
+    description: "Control the coins of players [OPERATOR]"
+    usage: "Type '/coins help' for help!"
+    permission: server.coins.control
+    permission-message: "§cYou haven't the permission to control the coins of players!"

@@ -13,8 +13,11 @@ de\nikocraft\challengeserver\utils\Config.class
 de\nikocraft\challengeserver\challenges\deathrun\DeathrunChallenge.class
 de\nikocraft\challengeserver\timers\Timer$1.class
 de\nikocraft\challengeserver\commands\LobbyWorldCommand.class
+de\nikocraft\challengeserver\commands\ServerCommand.class
 de\nikocraft\challengeserver\permissions\PermissionManager.class
+de\nikocraft\challengeserver\commands\CookiesCommand.class
 de\nikocraft\challengeserver\inventories\players\PlayerInventoryDefault.class
+de\nikocraft\challengeserver\inventories\menus\ServerSelectionMenu.class
 de\nikocraft\challengeserver\shop\CoinCookieInfo.class
 de\nikocraft\challengeserver\commands\InventoryCommand.class
 de\nikocraft\challengeserver\parkours\Parkour.class
@@ -50,7 +53,9 @@ de\nikocraft\challengeserver\parkours\ParkourManager.class
 de\nikocraft\challengeserver\utils\PlayerInventoryBuilder.class
 de\nikocraft\challengeserver\challenges\ChallengeManager.class
 de\nikocraft\challengeserver\commands\TimerCommand.class
+de\nikocraft\challengeserver\utils\ItemHeadBuilder.class
 de\nikocraft\challengeserver\listeners\PlayerListeners.class
 de\nikocraft\challengeserver\commands\IpCommand.class
 de\nikocraft\challengeserver\inventories\enderchests\EnderchestManager.class
+de\nikocraft\challengeserver\commands\CoinsCommand.class
 de\nikocraft\challengeserver\challenges\Challenge.class

@@ -37,7 +37,7 @@ public class ServerCommand implements CommandExecutor, TabCompleter {
         Player player = (Player) sender;
 
         //Create the menu
-        ServerSelectionMenu menu = new ServerSelectionMenu(player);
+        ServerSelectionMenu menu = new ServerSelectionMenu();
 
         //Open the menu
         player.openInventory(menu.getInventory());

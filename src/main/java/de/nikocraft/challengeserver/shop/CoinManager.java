@@ -53,7 +53,7 @@ public class CoinManager {
     }
 
     //Set player coins
-    public void setCookies(Player player, int amount) {
+    public void setCoins(Player player, int amount) {
 
         //Set the amount
         coins.put(player.getUniqueId(), amount);

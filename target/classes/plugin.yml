@@ -85,6 +85,11 @@ commands:
     usage: "No arguments"
     permission: server.world.teleport
     permission-message: "§cYou haven't the permission to switch the server!"
+  shop:
+    description: "Open a shop menu [DEFAULT]"
+    usage: "Type '/shop help' for help!"
+    permission: server.shop.open
+    permission-message: "§cYou haven't the permission to open a shop!"
   cookies:
     aliases: [ ck ]
     description: "Control the cookies of players [OPERATOR]"
@@ -97,3 +102,6 @@ commands:
     usage: "Type '/coins help' for help!"
     permission: server.coins.control
     permission-message: "§cYou haven't the permission to control the coins of players!"
+  cookie_fountain_animation:
+    permission: server.animation.create
+    permission-message: "§cYou haven't the permission to create animations!"

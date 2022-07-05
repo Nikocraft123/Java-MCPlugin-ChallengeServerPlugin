@@ -20,8 +20,21 @@ public class ServerSelectionMenu extends InventoryBuilder {
         //Initialize the inventory of the enderchest
         super(3*9, ChatColor.AQUA.toString() + ChatColor.BOLD + "Server Selector");
 
-        //Set the content
+        //Render the menu
+        render();
+
+    }
+
+
+    //METHODS
+
+    //Render
+    public void render() {
+
+        //Background
         for (int i = 0; i < 27; i++) getInventory().setItem(i, new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE, 1).setDisplayName(" ").build());
+
+        //Servers
         getInventory().setItem(10, new ItemHeadBuilder(Material.PLAYER_HEAD, 1).setDisplayName(ChatColor.RED + "Among Us")
                 .setLore(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Click to teleport to server.").setLocalizedName("amongus").setHead("Jur").build());
         getInventory().setItem(13, new ItemBuilder(Material.DIAMOND_SWORD, 1).setDisplayName(ChatColor.BLUE + "PVP")

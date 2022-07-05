@@ -7,6 +7,7 @@ import de.nikocraft.challengeserver.Main;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.entity.ItemMergeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
 
@@ -30,6 +31,15 @@ public class ItemListeners implements Listener {
 
         //Call the player inventory manager
         Main.getInstance().getPlayerInventoryManager().onPickup(event);
+
+    }
+
+    //Called, if two items merged
+    @EventHandler
+    public void onMerge(ItemMergeEvent event) {
+
+        //If the item has the tag "no_stack"
+        if (event.getEntity().getScoreboardTags().contains("no_stack")) event.setCancelled(true);
 
     }
 

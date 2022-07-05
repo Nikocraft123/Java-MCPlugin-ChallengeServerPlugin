@@ -5,6 +5,7 @@ package de.nikocraft.challengeserver;
 //IMPORTS
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.multiverseinventories.MultiverseInventories;
+import de.nikocraft.challengeserver.animations.AnimationManager;
 import de.nikocraft.challengeserver.challenges.Challenge;
 import de.nikocraft.challengeserver.challenges.ChallengeManager;
 import de.nikocraft.challengeserver.commands.*;
@@ -24,6 +25,7 @@ import de.nikocraft.challengeserver.worlds.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.checkerframework.checker.units.qual.A;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -70,6 +72,9 @@ public final class Main extends JavaPlugin {
 
     //The visibility manager of the lobby
     private VisibilityManager visibilityManager;
+
+    //The animation manager of all animations is the lobby
+    private AnimationManager animationManager;
 
     //The timer
     private Timer timer;
@@ -157,8 +162,12 @@ public final class Main extends JavaPlugin {
         getCommand("display_ip").setExecutor(new IpCommand());
         getCommand("player").setExecutor(new PlayerCommand());
         getCommand("serv").setExecutor(new ServerCommand());
+        getCommand("shop").setExecutor(new ShopCommand());
         getCommand("cookies").setExecutor(new CookiesCommand());
         getCommand("coins").setExecutor(new CoinsCommand());
+
+        //TODO
+        getCommand("cookie_fountain_animation").setExecutor(new CookieFountainAnimationCommand());
 
         //Define the permission manager
         getLogger().info(getPrefix() + "Load permission system ...");
@@ -171,6 +180,10 @@ public final class Main extends JavaPlugin {
         //Define the visibility manager
         getLogger().info(getPrefix() + "Load visibility manager ...");
         visibilityManager = new VisibilityManager();
+
+        //Define the animation manager
+        getLogger().info(getPrefix() + "Load animation manager ...");
+        animationManager = new AnimationManager();
 
         //Define the challenge manager
         getLogger().info(getPrefix() + "Load challenge manager ...");
@@ -243,6 +256,10 @@ public final class Main extends JavaPlugin {
             challenge.unload();
 
         }
+
+        //Stop all animations
+        getLogger().info(getPrefix() + "Stop animations ...");
+        animationManager.stopAll();
 
         //Save dimensions of the players
         getLogger().info(getPrefix() + "Save game world ...");
@@ -356,6 +373,9 @@ public final class Main extends JavaPlugin {
 
     //The visibility manager of the lobby
     public VisibilityManager getVisibilityManager() { return visibilityManager; }
+
+    //The animation manager of all animations is the lobby
+    public AnimationManager getAnimationManager() { return animationManager; }
 
     //The timer
     public Timer getTimer() { return timer; }

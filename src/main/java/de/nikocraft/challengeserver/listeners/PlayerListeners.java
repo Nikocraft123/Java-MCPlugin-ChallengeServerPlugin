@@ -65,8 +65,8 @@ public class PlayerListeners implements Listener {
             }
 
             //Check for lobby area exiting
-            if (player.getLocation().getX() < -170.0 | player.getLocation().getX() > 170.0 |
-                    player.getLocation().getZ() < -170.0 | player.getLocation().getZ() > 170.0) {
+            if (player.getLocation().getX() < -300.0 | player.getLocation().getX() > 300.0 |
+                    player.getLocation().getZ() < -300.0 | player.getLocation().getZ() > 300.0) {
                 Main.getInstance().getMultiverseCore().teleportPlayer(player, player, new Location(Bukkit.getWorld("lobby"), 0.5, 100, 0.5, 0, 0));
             }
 
@@ -117,9 +117,10 @@ public class PlayerListeners implements Listener {
 
             //Update the cookies
             Main.getInstance().getCookieManager().setCookies(player, Main.getInstance().getCookieManager().getCookies(player) + Main.getInstance().getCookieManager().getLevel(player));
+            Main.getInstance().getCookieManager().setAbsolute(player, Main.getInstance().getCookieManager().getAbsolute(player) + Main.getInstance().getCookieManager().getLevel(player));
 
             //Check for level upgrade
-            if (Main.getInstance().getCookieManager().getCookies(player) >= 20 * Math.pow(Main.getInstance().getCookieManager().getLevel(player), 2))
+            if (Main.getInstance().getCookieManager().getAbsolute(player) >= 20 * Math.pow(Main.getInstance().getCookieManager().getLevel(player), 2))
                 Main.getInstance().getCookieManager().setLevel(player, Main.getInstance().getCookieManager().getLevel(player) + 1);
 
         }

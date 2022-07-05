@@ -49,6 +49,7 @@ public class CookiesCommand implements CommandExecutor, TabCompleter {
                         ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/cookies help\n" +
                         ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/cookies <player>\n" +
                         ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/cookies <player> amount <amount>\n" +
+                        ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/cookies <player> absolute <amount>\n" +
                         ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/cookies <player> level <level>\n ");
             }
             else {
@@ -57,6 +58,7 @@ public class CookiesCommand implements CommandExecutor, TabCompleter {
                         "/cookies help\n" +
                         "/cookies <player>\n" +
                         "/cookies <player> amount <amount>\n" +
+                        "/cookies <player> absolute <amount>\n" +
                         "/cookies <player> level <level>\n ");
             }
 
@@ -87,10 +89,12 @@ public class CookiesCommand implements CommandExecutor, TabCompleter {
             if (isPlayer) {
                 sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.AQUA + "Cookie information of the player " + ChatColor.YELLOW + args[0] +
                         ChatColor.GRAY + ":\n \n" + ChatColor.AQUA + "Amount" + ChatColor.GRAY + ": " + ChatColor.YELLOW + Main.getInstance().getCookieManager().getCookies(target) +
+                        ChatColor.AQUA + "\nAbsolute" + ChatColor.GRAY + ": " + ChatColor.YELLOW + Main.getInstance().getCookieManager().getAbsolute(target) +
                         ChatColor.AQUA + "\nLevel" + ChatColor.GRAY + ": " + ChatColor.YELLOW + Main.getInstance().getCookieManager().getLevel(target) + "\n ");
             }
             else {
                 sender.sendMessage(CommandUtils.getConsolePrefix() + "Cookie information of the player '" + args[0] + "':\n \n" + "Amount: " + Main.getInstance().getCookieManager().getCookies(target) +
+                        "\nAbsolute: " + Main.getInstance().getCookieManager().getAbsolute(target) +
                         "\nLevel: " + Main.getInstance().getCookieManager().getLevel(target) + "\n ");
             }
 
@@ -119,7 +123,7 @@ public class CookiesCommand implements CommandExecutor, TabCompleter {
                     try {
 
                         //Set the amount
-                        Main.getInstance().getCookieManager().setCookies(target, Integer.parseInt(args[2]));
+                        Main.getInstance().getCookieManager().setCookies(target, Long.parseLong(args[2]));
 
                     }
                     catch (NumberFormatException e) {
@@ -136,6 +140,43 @@ public class CookiesCommand implements CommandExecutor, TabCompleter {
                     //Send message to sender
                     if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Successfully set the amount of cookies of the player " + args[0] + " to " + args[2] + "!");
                     else sender.sendMessage(CommandUtils.getConsolePrefix() + "Successfully set the amount of cookies of the player " + args[0] + " to " + args[2] + "!");
+
+                    //Return true
+                    return true;
+
+                }
+                case "absolute": {
+
+                    //If there is no more argument
+                    if (args.length <= 2) {
+                        //Send message to sender
+                        if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Missing third argument!");
+                        else sender.sendMessage(CommandUtils.getConsolePrefix() + "Missing third argument!");
+
+                        //Return false
+                        return false;
+                    }
+
+                    try {
+
+                        //Set the absolute amount
+                        Main.getInstance().getCookieManager().setAbsolute(target, Long.parseLong(args[2]));
+
+                    }
+                    catch (NumberFormatException e) {
+
+                        //Send message to sender
+                        if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "Invalid number!");
+                        else sender.sendMessage(CommandUtils.getConsolePrefix() + "Invalid number!");
+
+                        //Return false
+                        return false;
+
+                    }
+
+                    //Send message to sender
+                    if (isPlayer) sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Successfully set the absolute amount of cookies of the player " + args[0] + " to " + args[2] + "!");
+                    else sender.sendMessage(CommandUtils.getConsolePrefix() + "Successfully set the absolute amount of cookies of the player " + args[0] + " to " + args[2] + "!");
 
                     //Return true
                     return true;
@@ -212,6 +253,7 @@ public class CookiesCommand implements CommandExecutor, TabCompleter {
         //If the length of arguments is two
         else if (args.length == 2) {
             result.add("amount");
+            result.add("absolute");
             result.add("level");
         }
 

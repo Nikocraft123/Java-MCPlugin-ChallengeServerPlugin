@@ -1,7 +1,7 @@
 name: ChallengeServer
 version: ${project.version}
 main: de.nikocraft.challengeserver.Main
-api-version: 1.19
+api-version: '1.20'
 authors: [ Nikocraft ]
 description: The main plugin of the challenge minecraft server
 depend: [ Multiverse-Core, Multiverse-Inventories, Multiverse-NetherPortals ]
@@ -105,3 +105,6 @@ commands:
   cookie_fountain_animation:
     permission: server.animation.create
     permission-message: "§cYou haven't the permission to create animations!"
+  challenge_deathrun_restart:
+    description: "Restart in the deathrun challenge [DEFAULT]"
+    usage: "No arguments"

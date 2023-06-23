@@ -165,6 +165,7 @@ public final class Main extends JavaPlugin {
         getCommand("shop").setExecutor(new ShopCommand());
         getCommand("cookies").setExecutor(new CookiesCommand());
         getCommand("coins").setExecutor(new CoinsCommand());
+        getCommand("challenge_deathrun_restart").setExecutor(new ChallengeDeathrunRestartCommand());
 
         //TODO
         getCommand("cookie_fountain_animation").setExecutor(new CookieFountainAnimationCommand());

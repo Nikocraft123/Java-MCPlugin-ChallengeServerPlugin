@@ -7,11 +7,15 @@ import de.nikocraft.challengeserver.Main;
 import de.nikocraft.challengeserver.challenges.Challenge;
 import de.nikocraft.challengeserver.challenges.ChallengeManager;
 import de.nikocraft.challengeserver.utils.CommandUtils;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.world.level.block.BlockBarrier;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -32,7 +36,10 @@ public class DeathrunChallenge extends Challenge {
     private final List<DeathrunScoreboard> scoreboards;
 
     //List of all player positions
-    private Map<Player, Integer> positions;
+    private final Map<Player, Integer> positions;
+
+    //List of all died players
+    private final List<Player> died;
 
     //The distance to the border from Z 0
     private int borderDistance = 250;
@@ -64,6 +71,9 @@ public class DeathrunChallenge extends Challenge {
 
         //Define a map for the player positions
         positions = new HashMap<>();
+
+        //Define a list for all died players
+        died = new ArrayList<>();
 
     }
 
@@ -150,6 +160,23 @@ public class DeathrunChallenge extends Challenge {
         Bukkit.getWorld("world").setTime(0);
         Bukkit.getWorld("world_nether").setTime(0);
         Bukkit.getWorld("world_the_end").setTime(0);
+
+        //Kill mobs
+        for (Entity entity : Bukkit.getWorld(dimension).getEntities()) {
+            if (entity.getType() != EntityType.PLAYER) {
+                if (entity.getLocation().distance(Bukkit.getWorld(dimension).getSpawnLocation()) < 30) {
+                    entity.remove();
+                }
+            }
+        }
+
+        //Break glass
+        for (int z = -2; z <= 2; z++) {
+            for (int y = 0; y <= 2; y++) {
+                Location spawn = Bukkit.getWorld(dimension).getSpawnLocation();
+                Bukkit.getWorld(dimension).getBlockAt(spawn.getBlockX() + 3, spawn.getBlockY() + y, spawn.getBlockZ() + z).setType(Material.AIR);
+            }
+        }
 
         //Start the timer
         Main.getInstance().getTimer().setMode("count");
@@ -938,7 +965,12 @@ public class DeathrunChallenge extends Challenge {
 
                 //Build the spawn
                 player.getWorld().getBlockAt(player.getLocation().getBlockX(), player.getLocation().getBlockY() - 1, player.getLocation().getBlockZ()).setType(Material.GOLD_BLOCK);
-
+                for (int z = -2; z <= 2; z++) {
+                    for (int y = 0; y <= 2; y++) {
+                        player.getWorld().getBlockAt(player.getLocation().getBlockX() + 3, player.getLocation().getBlockY() + y, player.getLocation().getBlockZ() + z).setType(Material.GLASS);
+                    }
+                }
+                
                 //Send message to player
                 player.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Successfully set the spawn to X" +
                         player.getLocation().getBlockX() + " Y" + player.getLocation().getBlockY() + " Z" + player.getLocation().getBlockZ() + "!");
@@ -1172,6 +1204,9 @@ public class DeathrunChallenge extends Challenge {
             //Get the player
             Player player = event.getEntity();
 
+            //Add to died
+            died.add(player);
+
             //Set the gamemode
             player.setGameMode(GameMode.SPECTATOR);
 
@@ -1184,7 +1219,13 @@ public class DeathrunChallenge extends Challenge {
             }
 
             //Send a message to player
-            player.sendMessage(ChatColor.RED + " \nOh no! You died! Unfortunately you are out ... :(\n ");
+            player.sendMessage(ChatColor.RED + " \nOh no! You died! Unfortunately you are out ... :(\n \n");
+            ClickEvent clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/challenge_deathrun_restart");
+            TextComponent clickText = new TextComponent(ChatColor.GRAY + "[" + ChatColor.YELLOW + "RESTART" + ChatColor.GRAY + "]\n ");
+            TextComponent message = new TextComponent(ChatColor.GRAY + "Do you want to restart? Click here: ");
+            clickText.setClickEvent(clickEvent);
+            message.addExtra(clickText);
+            player.spigot().sendMessage(message);
 
         }
 
@@ -1267,6 +1308,15 @@ public class DeathrunChallenge extends Challenge {
     @Override
     public void onBreak(BlockBreakEvent event) {
 
+        //Check for spawn
+        if (event.getBlock().getWorld() == Bukkit.getWorld(dimension)) {
+            if (event.getBlock().getLocation().distance(event.getBlock().getWorld().getSpawnLocation()) < 10) {
+                if (!event.getPlayer().hasPermission("server.world.control")) {
+                    event.setCancelled(true);
+                }
+            }
+        }
+
         //Check if the player is in the game world
         if (Arrays.asList("world", "world_nether", "world_the_end").contains(event.getPlayer().getLocation().getWorld().getName())) {
 
@@ -1307,5 +1357,11 @@ public class DeathrunChallenge extends Challenge {
 
     //The dimension
     public String getDimension() { return dimension; }
+
+    //Countdown
+    public int getCountdown() { return countdown; }
+
+    //List of died players
+    public List<Player> getDied() { return died; }
 
 }

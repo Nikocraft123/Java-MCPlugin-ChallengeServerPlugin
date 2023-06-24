@@ -47,7 +47,7 @@ public class ChallengeDeathrunRestartCommand implements CommandExecutor, TabComp
             return false;
         }
         DeathrunChallenge challenge = (DeathrunChallenge) Main.getInstance().getChallengeManager().getActiveChallenge();
-        if (!Main.getInstance().getChallengeManager().getActiveChallenge().isRunning() & challenge.getCountdown() > 0) {
+        if (!Main.getInstance().getChallengeManager().getActiveChallenge().isRunning() | challenge.getCountdown() > 0) {
             //Send message to sender
             sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "The Challenge Deathrun isn't running!");
 
@@ -59,9 +59,9 @@ public class ChallengeDeathrunRestartCommand implements CommandExecutor, TabComp
         Player player = (Player) sender;
 
         //Check for died
-        if (!challenge.getDied().contains(player)) {
+        if (!(challenge.getDied().contains(player) | challenge.getPositions().containsKey(player))) {
             //Send message to sender
-            sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "You aren't a player of the event or still alive!");
+            sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.RED + "You aren't a player of the event!");
 
             //Return false
             return false;

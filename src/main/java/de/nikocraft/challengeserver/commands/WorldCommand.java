@@ -48,6 +48,15 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
         //Switch in argument 1
         switch (args[0].toLowerCase()) {
 
+            case "clear_position":
+            case "clr_pos":
+
+                //Reset all players positions
+                Main.getInstance().getWorldConfig().getConfig().set("positions", null);
+
+                //Send message
+                sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Cleared all player positions!");
+
             case "reset":
             case "r":
 
@@ -268,6 +277,7 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                             "\n \n" + ChatColor.AQUA + "Usage" + ChatColor.GRAY + ":\n" +
                             ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world help|h\n" +
                             ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world reset|r <seed> confirm\n" +
+                            ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world clear_position|clr_pos\n" +
                             ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world lobby|l <player>\n" +
                             ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world game|g <player>\n" +
                             ChatColor.DARK_GRAY + "- " + ChatColor.YELLOW + "/world open|o\n" +
@@ -278,6 +288,7 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                             "\n \nUsage:\n" +
                             "- /world help|h\n" +
                             "- /world reset|r <seed> confirm\n" +
+                            "- /world clear_position|clr_pos\n" +
                             "- /world lobby|l <player>\n" +
                             "- /world game|g <player>\n" +
                             "- /world open|o\n" +
@@ -314,6 +325,7 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
 
                 //Add commands to the list
                 result.add("reset");
+                result.add("clear_position");
                 result.add("lobby");
                 result.add("game");
                 result.add("open");

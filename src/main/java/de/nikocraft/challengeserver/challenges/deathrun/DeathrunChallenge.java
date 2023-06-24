@@ -131,6 +131,9 @@ public class DeathrunChallenge extends Challenge {
         for (Player player : getPositions().keySet()) player.setFoodLevel(20);
         for (Player player : getPositions().keySet()) player.setSaturation(20);
 
+        //Clear inventory
+        for (Player player : getPositions().keySet()) player.getInventory().clear();
+
         //If the countdown is not 0
         if (countdown > 0) {
 
@@ -333,7 +336,7 @@ public class DeathrunChallenge extends Challenge {
         }
 
         //Play sounds
-        for (Player player : Bukkit.getOnlinePlayers()) player.playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH, SoundCategory.MASTER, 1, 1);
+        for (Player player : Bukkit.getOnlinePlayers()) player.playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH, SoundCategory.MASTER, 0.5f, 1);
 
         //Set running and started to false
         setRunning(false);

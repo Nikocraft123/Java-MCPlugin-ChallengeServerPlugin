@@ -175,9 +175,11 @@ public class PermissionCommand implements CommandExecutor, TabCompleter {
                                 result.add("!minecraft.");
                                 result.add("!multiverse.");
                                 result.add("!worldedit.");
+                                break;
                             case 2:
                                 result.add(args[3].split("[.]")[0] + ".*");
                                 result.add(args[3].split("[.]")[0] + ".command.");
+                                break;
                             default:
                                 result.add(args[3].split("[.]")[args[3].split("[.]").length - 2] + ".*");
                         }

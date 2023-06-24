@@ -108,3 +108,7 @@ commands:
   challenge_deathrun_restart:
     description: "Restart in the deathrun challenge [DEFAULT]"
     usage: "No arguments"
+  visit:
+    aliases: [ vs ]
+    description: "Visit another player in spectator mode [DEFAULT]"
+    usage: "Type '/visit help' for help!"

@@ -1349,6 +1349,19 @@ public class DeathrunChallenge extends Challenge {
 
     }
 
+    @Override
+    public List<Player> getVisit() {
+
+        List<Player> list = new ArrayList<>();
+
+        for (Player p : positions.keySet()) {
+            if (p.getWorld().getName().equals(dimension)) list.add(p);
+        }
+
+        return list;
+
+    }
+
 
     //GETTERS
 

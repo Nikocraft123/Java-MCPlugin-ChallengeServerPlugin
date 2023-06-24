@@ -94,6 +94,9 @@ public abstract class Challenge {
     //On break block
     public abstract void onBreak(BlockBreakEvent event);
 
+    //Get all players, that can be visited
+    public abstract List<Player> getVisit();
+
 
     //GETTERS
 

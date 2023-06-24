@@ -57,6 +57,9 @@ public class WorldCommand implements CommandExecutor, TabCompleter {
                 //Send message
                 sender.sendMessage(CommandUtils.getChatPrefix() + ChatColor.GREEN + "Cleared all player positions!");
 
+                //Return true
+                return true;
+
             case "reset":
             case "r":
 

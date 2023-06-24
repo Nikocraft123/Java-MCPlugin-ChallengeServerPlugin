@@ -71,7 +71,9 @@ public class ChallengeDeathrunRestartCommand implements CommandExecutor, TabComp
         challenge.getDied().remove(player);
 
         //Teleport the player to the spawn of the right dimension
-        Main.getInstance().getMultiverseCore().teleportPlayer(player, player, Bukkit.getWorld(challenge.getDimension()).getSpawnLocation().clone());
+        Location spawn = Bukkit.getWorld(challenge.getDimension()).getSpawnLocation().add(0.5, 0.5, 0.5);
+        spawn.setYaw(-90);
+        Main.getInstance().getMultiverseCore().teleportPlayer(player, player, spawn);
 
         //Add the player to the positions
         challenge.getPositions().put(player, 0);
@@ -86,6 +88,7 @@ public class ChallengeDeathrunRestartCommand implements CommandExecutor, TabComp
         player.setHealth(20);
         player.setFoodLevel(20);
         player.setSaturation(20);
+        player.getInventory().clear();
         player.sendTitle(ChatColor.GREEN + "GO!", ChatColor.GRAY.toString() + ChatColor.ITALIC + "Good luck!", 0, 30, 10);
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, SoundCategory.MASTER, 1, 2);
 

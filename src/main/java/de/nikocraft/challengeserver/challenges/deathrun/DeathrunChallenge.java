@@ -962,9 +962,10 @@ public class DeathrunChallenge extends Challenge {
                 }
 
                 //Set the world spawn
-                player.getWorld().setSpawnLocation(new Location(player.getWorld(), player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), -90, 0));
-                Main.getInstance().getMultiverseCore().getMVWorldManager().getMVWorld(player.getWorld().getName()).setSpawnLocation(new Location(player.getWorld(),
-                        player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), -90, 0));
+                Location spawn = new Location(player.getWorld(),
+                        player.getLocation().getBlockX() + 0.5, player.getLocation().getBlockY() + 0.5, player.getLocation().getBlockZ() + 0.5, -90, 0);
+                player.getWorld().setSpawnLocation(spawn);
+                Main.getInstance().getMultiverseCore().getMVWorldManager().getMVWorld(player.getWorld().getName()).setSpawnLocation(spawn);
 
                 //Build the spawn
                 player.getWorld().getBlockAt(player.getLocation().getBlockX(), player.getLocation().getBlockY() - 1, player.getLocation().getBlockZ()).setType(Material.GOLD_BLOCK);
@@ -1273,10 +1274,12 @@ public class DeathrunChallenge extends Challenge {
         if (!getPositions().containsKey(player)) player.setGameMode(GameMode.SPECTATOR);
 
         //If the player is not in the right dimension
-        if (!player.getWorld().getName().equals(dimension)) {
+        if (!player.getWorld().getName().equals(dimension) | player.getWorld().getSpawnLocation().distance(player.getLocation()) < 5) {
 
             //Teleport the player to the spawn of the right dimension
-            Main.getInstance().getMultiverseCore().teleportPlayer(player, player, Bukkit.getWorld(dimension).getSpawnLocation().clone());
+            Location spawn = Bukkit.getWorld(dimension).getSpawnLocation().add(0.5, 0.5, 0.5);
+            spawn.setYaw(-90);
+            Main.getInstance().getMultiverseCore().teleportPlayer(player, player, spawn);
 
         }
 
